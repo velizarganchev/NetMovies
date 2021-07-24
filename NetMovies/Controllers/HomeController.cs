@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using NetMovies.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NetMovies.Controllers
+﻿namespace NetMovies.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using NetMovies.Models;
+    using System.Diagnostics;
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
