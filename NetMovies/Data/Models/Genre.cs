@@ -15,6 +15,6 @@
         [MaxLength(DefaultNameMaxLenght)]
         public string Name { get; set; }
 
-        public ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
+        public ICollection<Movie> Movies { get; set; } = new List<Movie>();
     }
 }
