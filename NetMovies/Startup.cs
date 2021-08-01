@@ -8,6 +8,8 @@ namespace NetMovies
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using NetMovies.Data;
+    using NetMovies.Infrastructure;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -37,6 +39,7 @@ namespace NetMovies
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
 
             if (env.IsDevelopment())
             {

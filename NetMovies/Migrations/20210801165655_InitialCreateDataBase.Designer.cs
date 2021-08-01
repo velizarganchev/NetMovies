@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetMovies.Data;
 
-namespace NetMovies.Data.Migrations
+namespace NetMovies.Migrations
 {
     [DbContext(typeof(NetMoviesDbContext))]
-    [Migration("20210724170837_AddApplicationBuilderExtensions")]
-    partial class AddApplicationBuilderExtensions
+    [Migration("20210801165655_InitialCreateDataBase")]
+    partial class InitialCreateDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,47 +23,17 @@ namespace NetMovies.Data.Migrations
 
             modelBuilder.Entity("ActorMovie", b =>
                 {
-                    b.Property<string>("ActorsActorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ActorsActorId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("MoviesMovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MoviesMovieId")
+                        .HasColumnType("int");
 
                     b.HasKey("ActorsActorId", "MoviesMovieId");
 
                     b.HasIndex("MoviesMovieId");
 
                     b.ToTable("ActorMovie");
-                });
-
-            modelBuilder.Entity("DirectorMovie", b =>
-                {
-                    b.Property<string>("DirectorsDirectorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MoviesMovieId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("DirectorsDirectorId", "MoviesMovieId");
-
-                    b.HasIndex("MoviesMovieId");
-
-                    b.ToTable("DirectorMovie");
-                });
-
-            modelBuilder.Entity("GenreMovie", b =>
-                {
-                    b.Property<string>("GenresGenreId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("MoviesMovieId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("GenresGenreId", "MoviesMovieId");
-
-                    b.HasIndex("MoviesMovieId");
-
-                    b.ToTable("GenreMovie");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -268,8 +238,10 @@ namespace NetMovies.Data.Migrations
 
             modelBuilder.Entity("NetMovies.Data.Models.Actor", b =>
                 {
-                    b.Property<string>("ActorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ActorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -288,8 +260,10 @@ namespace NetMovies.Data.Migrations
 
             modelBuilder.Entity("NetMovies.Data.Models.Director", b =>
                 {
-                    b.Property<string>("DirectorId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("DirectorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -308,10 +282,12 @@ namespace NetMovies.Data.Migrations
 
             modelBuilder.Entity("NetMovies.Data.Models.Genre", b =>
                 {
-                    b.Property<string>("GenreId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("GenreId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name")
+                    b.Property<string>("GenreName")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
@@ -323,8 +299,10 @@ namespace NetMovies.Data.Migrations
 
             modelBuilder.Entity("NetMovies.Data.Models.Movie", b =>
                 {
-                    b.Property<string>("MovieId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("MovieId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Country")
                         .IsRequired()
@@ -336,14 +314,20 @@ namespace NetMovies.Data.Migrations
                         .HasMaxLength(10000)
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DirectorId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
@@ -353,6 +337,10 @@ namespace NetMovies.Data.Migrations
 
                     b.HasKey("MovieId");
 
+                    b.HasIndex("DirectorId");
+
+                    b.HasIndex("GenreId");
+
                     b.ToTable("Movies");
                 });
 
@@ -361,36 +349,6 @@ namespace NetMovies.Data.Migrations
                     b.HasOne("NetMovies.Data.Models.Actor", null)
                         .WithMany()
                         .HasForeignKey("ActorsActorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("NetMovies.Data.Models.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesMovieId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DirectorMovie", b =>
-                {
-                    b.HasOne("NetMovies.Data.Models.Director", null)
-                        .WithMany()
-                        .HasForeignKey("DirectorsDirectorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("NetMovies.Data.Models.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesMovieId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GenreMovie", b =>
-                {
-                    b.HasOne("NetMovies.Data.Models.Genre", null)
-                        .WithMany()
-                        .HasForeignKey("GenresGenreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -450,6 +408,35 @@ namespace NetMovies.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.Movie", b =>
+                {
+                    b.HasOne("NetMovies.Data.Models.Director", "Director")
+                        .WithMany("Movies")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NetMovies.Data.Models.Genre", "Genre")
+                        .WithMany("Movies")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Director");
+
+                    b.Navigation("Genre");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.Director", b =>
+                {
+                    b.Navigation("Movies");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.Genre", b =>
+                {
+                    b.Navigation("Movies");
                 });
 #pragma warning restore 612, 618
         }

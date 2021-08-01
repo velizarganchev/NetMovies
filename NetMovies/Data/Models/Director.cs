@@ -9,7 +9,7 @@
     {
         [Key]
         [Required]
-        public string DirectorId { get; set; } = Guid.NewGuid().ToString();
+        public int DirectorId { get; set; }
 
         [Required]
         [MaxLength(DefaultNameMaxLenght)]

@@ -9,12 +9,12 @@
     {
         [Key]
         [Required]
-        public string GenreId { get; set; } = Guid.NewGuid().ToString();
+        public int GenreId { get; set; }
 
         [Required]
         [MaxLength(DefaultNameMaxLenght)]
-        public string Name { get; set; }
+        public string GenreName { get; set; }
 
-        public ICollection<Movie> Movies { get; set; } = new List<Movie>();
+        public ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
     }
 }

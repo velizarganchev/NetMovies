@@ -9,7 +9,7 @@
     {
         [Key]
         [Required]
-        public string ActorId { get; set; } = Guid.NewGuid().ToString();
+        public int ActorId { get; set; }
 
         [Required]
         [MaxLength(DefaultNameMaxLenght)]

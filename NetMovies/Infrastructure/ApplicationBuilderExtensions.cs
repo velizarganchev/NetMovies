@@ -6,7 +6,6 @@
     using NetMovies.Data;
     using NetMovies.Data.Models;
     using System.Linq;
-
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(
@@ -20,6 +19,7 @@
 
             data.Database.Migrate();
 
+            SeedGenres(data);
 
             return app;
         }
@@ -33,15 +33,15 @@
 
             data.Genres.AddRange(new[] 
             {
-                new Genre{ Name = "Drama"},
-                new Genre{ Name = "Fantasy"},
-                new Genre{ Name = "Thriller"},
-                new Genre{ Name = "Action"},
-                new Genre{ Name = "Horror"},
-                new Genre{ Name = "Mystery"},
-                new Genre{ Name = "Romance"},
-                new Genre{ Name = "Comedy"},
-                new Genre{ Name = "Western"},
+                new Genre{ GenreName = "Drama"},
+                new Genre{ GenreName = "Fantasy"},
+                new Genre{ GenreName = "Thriller"},
+                new Genre{ GenreName = "Action"},
+                new Genre{ GenreName = "Horror"},
+                new Genre{ GenreName = "Mystery"},
+                new Genre{ GenreName = "Romance"},
+                new Genre{ GenreName = "Comedy"},
+                new Genre{ GenreName = "Western"},
             });
 
             data.SaveChanges();

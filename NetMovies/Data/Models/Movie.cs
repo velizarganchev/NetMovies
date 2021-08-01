@@ -3,16 +3,17 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using static DataConstants;
     public class Movie
     {
         [Key]
         [Required]
-        public string MovieId { get; set; } = Guid.NewGuid().ToString();
+        public int MovieId { get; set; }
 
         [Required]
-        [MaxLength(MovieNameMaxLenght)]
-        public string Name { get; set; }
+        [MaxLength(MovieTitleMaxLenght)]
+        public string Title { get; set; }
 
         public int Year { get; set; }
 
@@ -31,8 +32,10 @@
 
         public ICollection<Actor> Actors { get; set; } = new HashSet<Actor>();
 
-        public ICollection<Director> Directors { get; set; } = new HashSet<Director>();
+        public int DirectorId { get; set; }
+        public Director Director { get; set; }
 
-        public ICollection<Genre> Genres { get; set; } = new HashSet<Genre>();
+        public int GenreId { get; set; }
+        public Genre Genre { get; set; }
     }
 }
