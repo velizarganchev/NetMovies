@@ -42,6 +42,7 @@
                 new Genre{ GenreName = "Romance"},
                 new Genre{ GenreName = "Comedy"},
                 new Genre{ GenreName = "Western"},
+                new Genre{ GenreName = "Animation"}
             });
 
             data.SaveChanges();

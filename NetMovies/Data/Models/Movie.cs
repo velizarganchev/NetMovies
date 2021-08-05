@@ -21,6 +21,9 @@
         public string ImageUrl { get; set; }
 
         [Required]
+        public string WatchUrl { get; set; }
+
+        [Required]
         [MaxLength(MovieCountryMaxLenght)]
         public string Country { get; set; }
 

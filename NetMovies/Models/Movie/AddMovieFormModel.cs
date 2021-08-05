@@ -19,6 +19,11 @@ namespace NetMovies.Models.Movie
         [Url]
         public string ImageUrl { get; init; }
 
+        [Display(Name = "Watch Url")]
+        [Required]
+        [Url]
+        public string WatchUrl { get; init; }
+
         [Required]
         [StringLength(MovieCountryMaxLenght, MinimumLength = MovieCountryMinLenght)]
         public string Country { get; init; }
@@ -38,7 +43,6 @@ namespace NetMovies.Models.Movie
         [MinLength(MovieDescriptionsMinLenght)]
         public string Descriptions { get; init; }
 
-        //??????????????
         [Display(Name = "Genre")]
         [Required]
         public int GenreId { get; init; }

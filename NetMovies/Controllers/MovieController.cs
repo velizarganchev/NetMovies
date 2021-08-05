@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using NetMovies.Data;
     using NetMovies.Data.Models;
+    using NetMovies.Models.Home;
     using NetMovies.Models.Movie;
 
     public class MovieController : Controller
@@ -15,6 +16,24 @@
         {
             this.data = data;
         }
+
+        public IActionResult All()
+        {
+            var movies = this.data
+                .Movies
+                .OrderByDescending(m => m.MovieId)
+                .Select(m => new AllMovieQueryModel
+                {
+                    MovieId = m.MovieId,
+                    Title = m.Title,
+                    Year = m.Year,
+                    ImageUrl = m.ImageUrl,
+                    Country = m.Country
+                }).ToList();
+
+            return View(movies);
+        }
+
 
         public IActionResult Add() => View(new AddMovieFormModel
         {
@@ -34,13 +53,11 @@
 
                 return View(movie);
             }
-
             var director = new Director 
             {
                 FirstName = movie.Director.Split(" ")[0],
                 LastName = movie.Director.Split(" ")[1] 
             };
-
             var existDirector = this.data
                 .Directors
                 .FirstOrDefault(x => x.FirstName == director.FirstName && x.LastName == director.LastName);
@@ -54,19 +71,18 @@
             {
                 director.DirectorId = existDirector.DirectorId;
             }
-
             var movieData = new Movie
             {
                 Title = movie.Title,
                 DirectorId = director.DirectorId,
                 Year = movie.Year,
                 ImageUrl = movie.ImageUrl,
+                WatchUrl = movie.WatchUrl,
                 Country = movie.Country,
                 Duration = movie.Duration,
                 Descriptions = movie.Descriptions,
                 GenreId = movie.GenreId
             };
-
             var actorsList =  movie.Actors.Split(", ").ToList();
             foreach (var actor in actorsList)
             {
@@ -84,10 +100,8 @@
                     movieData.Actors.Add(existActor);
                     continue;
                 }
-
                 movieData.Actors.Add(currActor);
             }
-
             if (this.data.Movies.Contains(movieData))
             {
                 return RedirectToAction("Add", "Movie");
@@ -95,9 +109,8 @@
 
             this.data.Movies.Add(movieData);
             this.data.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
-
         private IEnumerable<MovieGenreViewModel> GetGenreCategories()
             => data.Genres.Select(g => new MovieGenreViewModel
             {
