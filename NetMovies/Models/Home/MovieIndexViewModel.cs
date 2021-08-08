@@ -10,6 +10,8 @@
 
         public string ImageUrl { get; set; }
 
+        public string Genre { get; set; }
+
         public string Country { get; set; }
     }
 }

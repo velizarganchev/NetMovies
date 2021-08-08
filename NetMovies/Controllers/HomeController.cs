@@ -28,9 +28,9 @@
                     Title = m.Title,
                     Year = m.Year,
                     ImageUrl = m.ImageUrl,
+                    Genre = m.Genre.GenreName,
                     Country = m.Country
                 })
-                .Take(3)
                 .ToList();
 
             return View(new IndexViewModel 

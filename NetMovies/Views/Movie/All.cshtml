@@ -8,7 +8,7 @@
     {
         <div class="col-md-4">
             <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
-                <div class="card">
+                <div class="card mb-4" >
                     <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Country (@movie.Year)">
                     <div class="card-body">
                         <h5 class="card-title">@movie.Title</h5>
