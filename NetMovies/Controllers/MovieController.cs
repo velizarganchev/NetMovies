@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using NetMovies.Data;
     using NetMovies.Data.Models;
-    using NetMovies.Models.Home;
     using NetMovies.Models.Movie;
 
     public class MovieController : Controller
@@ -22,7 +22,7 @@
             var movies = this.data
                 .Movies
                 .OrderByDescending(m => m.MovieId)
-                .Select(m => new AllMovieQueryModel
+                .Select(m => new MovieListingViewModel
                 {
                     MovieId = m.MovieId,
                     Title = m.Title,
@@ -31,16 +31,20 @@
                     Country = m.Country
                 }).ToList();
 
-            return View(movies);
+            return View(new AllMovieQueryModel
+            {
+                Movies = movies
+            });
         }
 
-
+        [Authorize]
         public IActionResult Add() => View(new AddMovieFormModel
         {
             Genres = this.GetGenreCategories()
         });
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddMovieFormModel movie)
         {
             if (!this.data.Genres.Any(g => g.GenreId == movie.GenreId))
@@ -89,7 +93,8 @@
                 var currActor = new Actor 
                 {
                     FirstName = actor.Split(" ")[0],
-                    LastName = actor.Split(" ")[1]
+                    LastName = actor.Split(" ")[1],
+                    FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
                 };
 
                 var existActor = this.data.Actors.FirstOrDefault(x => x.FirstName == currActor.FirstName 

@@ -10,8 +10,8 @@ using NetMovies.Data;
 namespace NetMovies.Migrations
 {
     [DbContext(typeof(NetMoviesDbContext))]
-    [Migration("20210802095234_AddWatchProperty")]
-    partial class AddWatchProperty
+    [Migration("20210809083227_InitialCreateDateBase")]
+    partial class InitialCreateDateBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,6 +247,10 @@ namespace NetMovies.Migrations
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()

@@ -6,14 +6,8 @@ namespace NetMovies.Models.Movie
 {
     public class AllMovieQueryModel
     {
-        public int MovieId { get; set; }
+        public string SearchTerm { get; init; }
 
-        public string Title { get; set; }
-
-        public int Year { get; set; }
-
-        public string ImageUrl { get; set; }
-  
-        public string Country { get; set; }
+        public IEnumerable<MovieListingViewModel> Movies { get; set; }
     }
 }
