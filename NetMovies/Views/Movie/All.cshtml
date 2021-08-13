@@ -6,8 +6,8 @@
 
 @if (!Model.Movies.Any())
 {
-     <div class="jumbotron">
-         <h1 class="display-3">There are no movies in the system currently available!</h1>
+    <div class="jumbotron">
+        <h1 class="display-3">There are no movies in the system currently available!</h1>
         <hr class="my-4">
         <p class="lead">
             <a asp-controller="Movie" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Movie</a>
@@ -15,12 +15,14 @@
     </div>
 }
 
+<div class="mb-5"></div>
+
 <div class="row">
     @foreach (var movie in Model.Movies)
     {
         <div class="col-md-4">
             <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
-                <div class="card mb-4" >
+                <div class="card mb-4">
                     <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Country (@movie.Year)">
                     <div class="card-body">
                         <h5 class="card-title">@movie.Title</h5>
@@ -30,4 +32,47 @@
         </div>
     }
 </div>
+
+@{
+    var maxPage = Math.Ceiling((double)Model.TotalMovies / AllMovieQueryModel.MoviesPerPage);
+
+    var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+                                     !Model.Movies.Any();
+
+    var nextPage = (Model.CurrentPage + 1);
+
+}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link"
+               asp-controller="Movie"
+               asp-action="All"
+               asp-route-currentPage="@previousPage">Previous</a>
+        </li>
+        @for (int i = 1; i <= maxPage; i++)
+        {
+            var active = i < maxPage ? "active" : string.Empty;
+            <li class="@active">
+                <a class="page-link" asp-controller="Movie" asp-action="All" asp-route-currentPage="@i">
+                    @i
+                </a>
+            </li>
+        }
+        <li class="page-item">
+            <a class="page-link @(shouldButtonBeDisabled ? "disabled" : string.Empty)"
+               asp-controller="Movie"
+               asp-action="All"
+               asp-route-currentPage="@nextPage">Next</a>
+        </li>
+    </ul>
+</nav>
+
 

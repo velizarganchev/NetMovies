@@ -17,10 +17,14 @@
             this.data = data;
         }
 
-        public IActionResult All()
+        public IActionResult All([FromQuery] AllMovieQueryModel query)
         {
-            var movies = this.data
-                .Movies
+            var movisQuery = this.data.Movies.AsQueryable();
+            var totalMovies = this.data.Movies.Count();
+
+            var movies = movisQuery
+                .Skip((query.CurrentPage - 1) * AllMovieQueryModel.MoviesPerPage)
+                .Take(AllMovieQueryModel.MoviesPerPage)
                 .OrderByDescending(m => m.MovieId)
                 .Select(m => new MovieListingViewModel
                 {
@@ -31,10 +35,10 @@
                     Country = m.Country
                 }).ToList();
 
-            return View(new AllMovieQueryModel
-            {
-                Movies = movies
-            });
+            query.Movies = movies;
+            query.TotalMovies = totalMovies;
+
+            return View(query);
         }
 
         [Authorize]
