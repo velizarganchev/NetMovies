@@ -17,6 +17,7 @@
         public IActionResult Search([FromQuery] AllMovieQueryModel query) 
         {
             var movisQuery = this.data.Movies.AsQueryable();
+            var totalMovies = this.data.Movies.Count();
 
             if (!string.IsNullOrWhiteSpace(query.SearchTerm))
             {
@@ -27,8 +28,6 @@
             }
 
             var movies = movisQuery
-                .Skip((query.CurrentPage - 1) * AllMovieQueryModel.MoviesPerPage)
-                .Take(AllMovieQueryModel.MoviesPerPage)
                 .OrderByDescending(m => m.MovieId)
                 .Select(m => new MovieListingViewModel
                 {
@@ -39,6 +38,7 @@
                     Country = m.Country
                 }).ToList();
 
+            query.TotalMovies = totalMovies;
             query.Movies = movies;
 
             return View(query);

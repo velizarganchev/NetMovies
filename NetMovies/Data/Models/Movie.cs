@@ -1,5 +1,6 @@
 ﻿namespace NetMovies.Data.Models
 {
+    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -40,5 +41,7 @@
 
         public int GenreId { get; set; }
         public Genre Genre { get; set; }
+
+        public string CreatorId { get; set; }
     }
 }

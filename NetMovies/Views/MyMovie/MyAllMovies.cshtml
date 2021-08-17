@@ -1,8 +1,33 @@
-﻿<div class="jumbotron">
-    <h1 class="display-4">Welcome to the world of movies</h1>
-    <p class="lead">There are no movies in the system currently available!</p>
-    <hr class="my-4">
-    <p class="lead">
-        <a asp-controller="Movie" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Movie</a>
-    </p>
+﻿@model AllMovieQueryModel
+
+<div class="mb-5"></div>
+
+<div class="row">
+    @foreach (var movie in Model.Movies)
+    {
+        <div class="col-md-4">
+            <a asp-controller="MyMovie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
+                <div class="card mb-4">
+                    <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Country (@movie.Year)">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Title</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
 </div>
+
+@if (!Model.Movies.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to the world of movies</h1>
+        <p class="lead">There are no movies in the system currently available!</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a asp-controller="Movie" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Movie</a>
+        </p>
+    </div>
+}
+
+

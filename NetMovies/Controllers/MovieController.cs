@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using NetMovies.Data;
     using NetMovies.Data.Models;
+    using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
 
     public class MovieController : Controller
@@ -81,6 +82,7 @@
             }
             var movieData = new Movie
             {
+                CreatorId = this.User.Id(),
                 Title = movie.Title,
                 DirectorId = director.DirectorId,
                 Year = movie.Year,
