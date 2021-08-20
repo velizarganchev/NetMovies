@@ -9,6 +9,7 @@ namespace NetMovies
     using Microsoft.Extensions.Hosting;
     using NetMovies.Data;
     using NetMovies.Infrastructure;
+    using NetMovies.Services.Movies;
 
     public class Startup
     {
@@ -35,7 +36,13 @@ namespace NetMovies
                 })
                 .AddEntityFrameworkStores<NetMoviesDbContext>();
             services
+                .AddAutoMapper(typeof(Startup));
+            services
                 .AddControllersWithViews();
+
+            services.AddTransient<IMovieService,MovieService>();
+
+
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

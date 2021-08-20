@@ -3,15 +3,13 @@
     using NetMovies.Data.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    public class AllMovieQueryModel
+    public class MovieQueryServiceModel
     {
-        public const int MoviesPerPage = 3;
+        public int MoviesPerPage { get; set; }
 
-        public string SearchTerm { get; set; }
+        public int TotalMovies { get; init; }
 
-        public int TotalMovies { get; set; }
-
-        public int CurrentPage { get; set; } = 1;
+        public int CurrentPage { get; init; } = 1;
 
         public IEnumerable<MovieServiceModel> Movies { get; set; }
     }

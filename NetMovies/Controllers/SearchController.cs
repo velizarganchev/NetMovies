@@ -3,43 +3,27 @@
     using Microsoft.AspNetCore.Mvc;
     using NetMovies.Data;
     using NetMovies.Models.Movie;
-    using System.Linq;
+    using NetMovies.Services.Movies;
 
     public class SearchController : Controller
     {
-        private readonly NetMoviesDbContext data;
+        private readonly IMovieService movies;
 
-        public SearchController(NetMoviesDbContext data)
+        public SearchController(IMovieService movies)
         {
-            this.data = data;
+            this.movies = movies;
         }
 
         public IActionResult Search([FromQuery] AllMovieQueryModel query) 
         {
-            var movisQuery = this.data.Movies.AsQueryable();
-            var totalMovies = this.data.Movies.Count();
 
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                movisQuery = movisQuery.Where(m =>
-                m.Title.ToLower().Contains(query.SearchTerm) ||
-                m.Genre.GenreName.ToLower().Contains(query.SearchTerm) ||
-                m.Actors.FirstOrDefault(a => a.FullName == query.SearchTerm).FullName == query.SearchTerm); 
-            }
+            var queryResult = this.movies.All(              
+               AllMovieQueryModel.MoviesPerPage,
+               query.CurrentPage,
+               query.SearchTerm);
 
-            var movies = movisQuery
-                .OrderByDescending(m => m.MovieId)
-                .Select(m => new MovieListingViewModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Year = m.Year,
-                    ImageUrl = m.ImageUrl,
-                    Country = m.Country
-                }).ToList();
-
-            query.TotalMovies = totalMovies;
-            query.Movies = movies;
+            query.Movies = queryResult.Movies;
+            query.TotalMovies = queryResult.TotalMovies;
 
             return View(query);
         } 

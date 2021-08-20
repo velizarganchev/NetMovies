@@ -1,6 +1,6 @@
 ﻿namespace NetMovies.Models.Movie
 {
-    public class MovieGenreViewModel
+    public class MovieGenreServiceModel
     {
         public int GenreId { get; init; }
 

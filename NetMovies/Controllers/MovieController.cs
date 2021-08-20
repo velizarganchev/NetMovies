@@ -8,49 +8,42 @@
     using NetMovies.Data.Models;
     using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
+    using NetMovies.Services.Movies;
 
     public class MovieController : Controller
     {
         private readonly NetMoviesDbContext data;
+        private readonly IMovieService movies;
 
-        public MovieController(NetMoviesDbContext data)
+        public MovieController(
+            NetMoviesDbContext data,
+            IMovieService movie)
         {
             this.data = data;
+            this.movies = movie;
         }
 
         public IActionResult All([FromQuery] AllMovieQueryModel query)
         {
-            var movisQuery = this.data.Movies.AsQueryable();
-            var totalMovies = this.data.Movies.Count();
+            var queryResult = this.movies.All(
+                query.CurrentPage,
+                AllMovieQueryModel.MoviesPerPage);
 
-            var movies = movisQuery
-                .Skip((query.CurrentPage - 1) * AllMovieQueryModel.MoviesPerPage)
-                .Take(AllMovieQueryModel.MoviesPerPage)
-                .OrderByDescending(m => m.MovieId)
-                .Select(m => new MovieListingViewModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Year = m.Year,
-                    ImageUrl = m.ImageUrl,
-                    Country = m.Country
-                }).ToList();
-
-            query.Movies = movies;
-            query.TotalMovies = totalMovies;
+            query.Movies = queryResult.Movies;
+            query.TotalMovies = query.TotalMovies;
 
             return View(query);
         }
 
         [Authorize]
-        public IActionResult Add() => View(new AddMovieFormModel
+        public IActionResult Add() => View(new MovieFormModel
         {
             Genres = this.GetGenreCategories()
         });
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddMovieFormModel movie)
+        public IActionResult Add(MovieFormModel movie)
         {
             if (!this.data.Genres.Any(g => g.GenreId == movie.GenreId))
             {
@@ -62,10 +55,10 @@
 
                 return View(movie);
             }
-            var director = new Director 
+            var director = new Director
             {
                 FirstName = movie.Director.Split(" ")[0],
-                LastName = movie.Director.Split(" ")[1] 
+                LastName = movie.Director.Split(" ")[1]
             };
             var existDirector = this.data
                 .Directors
@@ -93,17 +86,17 @@
                 Descriptions = movie.Descriptions,
                 GenreId = movie.GenreId
             };
-            var actorsList =  movie.Actors.Split(", ").ToList();
+            var actorsList = movie.Actors.Split(", ").ToList();
             foreach (var actor in actorsList)
             {
-                var currActor = new Actor 
+                var currActor = new Actor
                 {
                     FirstName = actor.Split(" ")[0],
                     LastName = actor.Split(" ")[1],
                     FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
                 };
 
-                var existActor = this.data.Actors.FirstOrDefault(x => x.FirstName == currActor.FirstName 
+                var existActor = this.data.Actors.FirstOrDefault(x => x.FirstName == currActor.FirstName
                 && x.LastName == currActor.LastName);
 
                 if (this.data.Actors.Contains(existActor))
@@ -122,8 +115,8 @@
             this.data.SaveChanges();
             return RedirectToAction(nameof(All));
         }
-        private IEnumerable<MovieGenreViewModel> GetGenreCategories()
-            => data.Genres.Select(g => new MovieGenreViewModel
+        private IEnumerable<MovieGenreServiceModel> GetGenreCategories()
+            => data.Genres.Select(g => new MovieGenreServiceModel
             {
                 GenreId = g.GenreId,
                 Name = g.GenreName

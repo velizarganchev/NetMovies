@@ -16,13 +16,13 @@
             this.data = data;
         }
         [Authorize]
-        public IActionResult MyAllMovies([FromQuery] AllMovieQueryModel query) 
+        public IActionResult MyAllMovies([FromQuery] MovieQueryServiceModel query) 
         {
             var moviesQuery = this.data.Movies.Where(m => m.CreatorId == this.User.Id()).AsQueryable();
 
             var movies = moviesQuery
                 .OrderByDescending(m => m.MovieId)
-                .Select(m => new MovieListingViewModel
+                .Select(m => new MovieServiceModel
                 {
                     MovieId = m.MovieId,
                     Title = m.Title,
