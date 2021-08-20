@@ -1,15 +1,15 @@
-﻿namespace NetMovies.Models.Movie
+﻿namespace NetMovies.Services.Movies.Models
 {
-    using NetMovies.Data.Models;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     public class MovieQueryServiceModel
     {
         public int MoviesPerPage { get; set; }
 
-        public int TotalMovies { get; init; }
+        public string SearchTerm { get; init; }
 
-        public int CurrentPage { get; init; } = 1;
+        public int TotalMovies { get; set; }
+
+        public int CurrentPage { get; set; } = 1;
 
         public IEnumerable<MovieServiceModel> Movies { get; set; }
     }

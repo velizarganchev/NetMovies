@@ -1,8 +1,6 @@
-﻿namespace NetMovies.Models.Movie
+﻿namespace NetMovies.Services.Movies.Models
 {
-    using NetMovies.Services.Movies.Models;
-
-    public class MovieServiceModel : IMovieModel
+    public class MovieServiceModel
     {
         public int MovieId { get; init; }
 
@@ -13,7 +11,6 @@
         public string ImageUrl { get; init; }
 
         public string Country { get; init; }
-
-        public string CreatorId { get; init; }
     }
+    // Замества MovieListingViewModel, да го променя на всякъде
 }

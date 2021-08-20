@@ -1,13 +1,12 @@
 ﻿namespace NetMovies.Models.Movie
 {
-    using NetMovies.Data.Models;
+    using NetMovies.Services.Movies.Models;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     public class AllMovieQueryModel
     {
         public const int MoviesPerPage = 3;
 
-        public string SearchTerm { get; set; }
+        public string SearchTerm { get; init; }
 
         public int TotalMovies { get; set; }
 

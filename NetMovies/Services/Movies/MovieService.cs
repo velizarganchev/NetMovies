@@ -1,47 +1,39 @@
 ﻿namespace NetMovies.Services.Movies
 {
     using NetMovies.Data;
-    using NetMovies.Data.Models;
-    using NetMovies.Models.Movie;
-    using System.Collections.Generic;
+    using NetMovies.Services.Movies.Models;
+    using NetMovies.Services.Statistics;
     using System.Linq;
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
 
     public class MovieService : IMovieService
     {
         private readonly NetMoviesDbContext data;
-        private readonly IConfigurationProvider mapper;
+        private readonly IStatisticService statistics;
 
-        public MovieService(NetMoviesDbContext data, IMapper mapper)
+        public MovieService(NetMoviesDbContext data, IStatisticService statistics)
         {
             this.data = data;
-            this.mapper = mapper.ConfigurationProvider;
+            this.statistics = statistics;
         }
 
         public MovieQueryServiceModel All(
-            int moviesPerPage = int.MaxValue,
-            int currentPage = 1,
-            string searchTerm = null)
+            int currentPage,
+            int moviesPerPage,
+            string searchTerm)
         {
-
-            var movieQuery = this.data.Movies.AsQueryable();
-
-            var moviesTest = this.data.Movies.ToList();
+            var movisQuery = this.data.Movies.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                movieQuery = movieQuery.Where(m =>
+                movisQuery = movisQuery.Where(m =>
                 m.Title.ToLower().Contains(searchTerm) ||
                 m.Genre.GenreName.ToLower().Contains(searchTerm) ||
                 m.Actors.FirstOrDefault(a => a.FullName == searchTerm).FullName == searchTerm);
             }
 
-            var totalMovies = this.data.Movies.Count();
-
-            var movies = movieQuery
-                .Skip((currentPage - 1) * AllMovieQueryModel.MoviesPerPage)
-                .Take(AllMovieQueryModel.MoviesPerPage)
+            var movies = movisQuery
+                .Skip((currentPage - 1) * moviesPerPage)
+                .Take(moviesPerPage)
                 .OrderByDescending(m => m.MovieId)
                 .Select(m => new MovieServiceModel
                 {
@@ -52,18 +44,13 @@
                     Country = m.Country
                 }).ToList();
 
+            var totalStatistics = this.statistics.Total();
+
             return new MovieQueryServiceModel
-            {                
-                TotalMovies = totalMovies,
-                CurrentPage = currentPage,
-                MoviesPerPage = moviesPerPage,
+            {
+                TotalMovies = totalStatistics.TotalMovies,
                 Movies = movies
             };
         }
-
-        private IEnumerable<MovieServiceModel> GetMovies(IQueryable<Movie> movieQuery)
-            => movieQuery
-                .ProjectTo<MovieServiceModel>(this.mapper)
-                .ToList();
     }
 }

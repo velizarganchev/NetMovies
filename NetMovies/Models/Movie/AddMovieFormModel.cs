@@ -1,13 +1,11 @@
 ﻿using NetMovies.Data;
 
 namespace NetMovies.Models.Movie
-{
-    using NetMovies.Services.Movies.Models;
+{   
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     using static DataConstants;
-    public class MovieFormModel : IMovieModel
+    public class AddMovieFormModel
     {
         [Required]
         [StringLength(MovieTitleMaxLenght,MinimumLength = MovieTitleMinLenght)]
@@ -31,7 +29,7 @@ namespace NetMovies.Models.Movie
         public string Country { get; init; }
 
         [Required]
-        //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
+        [RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
         public string Director { get; init; } 
 
         [Required]
@@ -49,6 +47,6 @@ namespace NetMovies.Models.Movie
         [Required]
         public int GenreId { get; init; }
 
-        public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
+        public IEnumerable<MovieGenreViewModel> Genres { get; set; }
     }
 }

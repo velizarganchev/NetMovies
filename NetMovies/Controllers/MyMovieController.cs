@@ -16,21 +16,21 @@
             this.data = data;
         }
         [Authorize]
-        public IActionResult MyAllMovies([FromQuery] MovieQueryServiceModel query) 
+        public IActionResult MyAllMovies([FromQuery] AllMovieQueryModel query) 
         {
             var moviesQuery = this.data.Movies.Where(m => m.CreatorId == this.User.Id()).AsQueryable();
 
-            var movies = moviesQuery
-                .OrderByDescending(m => m.MovieId)
-                .Select(m => new MovieServiceModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Year = m.Year,
-                    ImageUrl = m.ImageUrl,
-                    Country = m.Country
-                }).ToList();
-            query.Movies = movies;
+            //var movies = moviesQuery
+            //    .OrderByDescending(m => m.MovieId)
+            //    .Select(m => new MovieListingViewModel
+            //    {
+            //        MovieId = m.MovieId,
+            //        Title = m.Title,
+            //        Year = m.Year,
+            //        ImageUrl = m.ImageUrl,
+            //        Country = m.Country
+            //    }).ToList();
+            //query.Movies = movies;
 
             return View(query);
         }

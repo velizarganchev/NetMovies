@@ -6,19 +6,21 @@
     using NetMovies.Data;
     using NetMovies.Models;
     using NetMovies.Models.Home;
+    using NetMovies.Services.Statistics;
 
     public class HomeController : Controller
     {
         private readonly NetMoviesDbContext data;
-
-        public HomeController(NetMoviesDbContext data)
+        private readonly IStatisticService statistics;
+        public HomeController(
+            NetMoviesDbContext data,
+            IStatisticService statistics)
         {
             this.data = data;
+            this.statistics = statistics;
         }
         public IActionResult Index()
         {
-            var totalmovies = this.data.Movies.Count();
-
             var movies = this.data
                 .Movies
                 .OrderByDescending(m => m.MovieId)
@@ -33,9 +35,11 @@
                 })
                 .ToList();
 
+            var totalStatistics = this.statistics.Total();
+
             return View(new IndexViewModel 
             {
-                TotalMovies = totalmovies,
+                TotalMovies = totalStatistics.TotalMovies,
                 Movies = movies
             });
         }
