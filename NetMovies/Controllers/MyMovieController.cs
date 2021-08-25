@@ -5,32 +5,23 @@
     using NetMovies.Data;
     using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
+    using NetMovies.Services.Movies;
     using System.Linq;
 
     public class MyMovieController : Controller
     {
-        private readonly NetMoviesDbContext data;
+        private readonly IMovieService movies;
 
-        public MyMovieController(NetMoviesDbContext data)
+        public MyMovieController(IMovieService movies)
         {
-            this.data = data;
+            this.movies = movies;
         }
         [Authorize]
-        public IActionResult MyAllMovies([FromQuery] AllMovieQueryModel query) 
+        public IActionResult MyAllMovies([FromQuery] AllMovieQueryModel query)
         {
-            var moviesQuery = this.data.Movies.Where(m => m.CreatorId == this.User.Id()).AsQueryable();
+            var movies = this.movies.MyAllMovies(this.User.Id());
 
-            //var movies = moviesQuery
-            //    .OrderByDescending(m => m.MovieId)
-            //    .Select(m => new MovieListingViewModel
-            //    {
-            //        MovieId = m.MovieId,
-            //        Title = m.Title,
-            //        Year = m.Year,
-            //        ImageUrl = m.ImageUrl,
-            //        Country = m.Country
-            //    }).ToList();
-            //query.Movies = movies;
+            query.Movies = movies.Movies;
 
             return View(query);
         }

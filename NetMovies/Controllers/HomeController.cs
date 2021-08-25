@@ -1,47 +1,29 @@
 ﻿namespace NetMovies.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using NetMovies.Data;
     using NetMovies.Models;
-    using NetMovies.Models.Home;
-    using NetMovies.Services.Statistics;
+    using NetMovies.Models.Movie;
+    using NetMovies.Services.Movies;
+
 
     public class HomeController : Controller
     {
-        private readonly NetMoviesDbContext data;
-        private readonly IStatisticService statistics;
+        private readonly IMovieService movies;
+
         public HomeController(
-            NetMoviesDbContext data,
-            IStatisticService statistics)
+            IMovieService movies)
         {
-            this.data = data;
-            this.statistics = statistics;
+            this.movies = movies;
         }
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] AllMovieQueryModel query)
         {
-            var movies = this.data
-                .Movies
-                .OrderByDescending(m => m.MovieId)
-                .Select(m => new MovieIndexViewModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Year = m.Year,
-                    ImageUrl = m.ImageUrl,
-                    Genre = m.Genre.GenreName,
-                    Country = m.Country
-                })
-                .ToList();
+            var movies = this.movies.Index();
 
-            var totalStatistics = this.statistics.Total();
+            query.TotalMovies = movies.TotalMovies;
+            query.Movies = movies.Movies;
 
-            return View(new IndexViewModel 
-            {
-                TotalMovies = totalStatistics.TotalMovies,
-                Movies = movies
-            });
+            return View(query);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

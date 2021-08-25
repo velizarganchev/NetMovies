@@ -1,7 +1,8 @@
 ﻿using NetMovies.Data;
 
 namespace NetMovies.Models.Movie
-{   
+{
+    using NetMovies.Services.Movies.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using static DataConstants;
@@ -47,6 +48,6 @@ namespace NetMovies.Models.Movie
         [Required]
         public int GenreId { get; init; }
 
-        public IEnumerable<MovieGenreViewModel> Genres { get; set; }
+        public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
     }
 }

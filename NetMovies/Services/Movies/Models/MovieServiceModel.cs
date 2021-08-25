@@ -10,6 +10,8 @@
 
         public string ImageUrl { get; init; }
 
+        public string Genre { get; set; }
+
         public string Country { get; init; }
     }
     // Замества MovieListingViewModel, да го променя на всякъде

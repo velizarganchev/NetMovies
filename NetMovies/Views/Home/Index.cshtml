@@ -1,15 +1,15 @@
-﻿@model IndexViewModel
+﻿@model AllMovieQueryModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 @{
-    var movies = Model.Movies;
+    var movies = Model.Movies.ToList();
     var carouselMovies = movies.Take(3).ToList();
     var newMovies = movies.Take(4).ToList();
-    var actionmovies = movies.FindAll(m => m.Genre.Contains("Action")).ToList();
-    var animatedMovies = movies.FindAll(m => m.Genre.Contains("Animation")).ToList();
+    var actionmovies = movies.Where(m => m.Genre.Contains("Action")).ToList();
+    var animatedMovies = movies.Where(m => m.Genre.Contains("Animation")).ToList();
 }
 
 @if (!movies.Any())
@@ -33,7 +33,7 @@
             <div class="carousel-inner">
                 @for (int i = 0; i < carouselMovies.Count; i++)
                 {
-                    var movie = Model.Movies[i];
+                    var movie = movies[i];
 
                     @if (movie != null)
                     {

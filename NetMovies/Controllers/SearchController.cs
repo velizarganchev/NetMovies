@@ -1,10 +1,8 @@
 ﻿namespace NetMovies.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using NetMovies.Data;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
-    using System.Linq;
 
     public class SearchController : Controller
     {
