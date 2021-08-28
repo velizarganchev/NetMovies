@@ -1,27 +1,13 @@
-﻿@model IndexViewModel
+﻿@model AllMovieQueryModel
 
-@{
-    ViewData["Title"] = "Home Page";
-}
+@{ ViewData["Title"] = "Watchlist"; }
 
-@*@{
-    var movies = Model.Movies;
-}*@
-
-<section>
-    <div class="row">
-        @*@foreach (var movie in movies)
-        {*@
-            <div class="col-md-3">
-                <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@*@movie.MovieId*@" class="hvr-shutter-out-horizontal">
-                    <div class="card mb-3" style="width: 16rem;">
-                        <img class="card-img-top" src="@*@movie.ImageUrl*@" alt="@*@movie.Title @movie.Country (@movie.Year)*@">
-                        <div class="card-body">
-                            <p class="card-title text-center">@*@movie.Title*@</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        @*}*@
-    </div>
-</section>
+@if (!Model.Movies.Any())
+{
+<div class="jumbotron">
+    <h1 class="display-4">You haven't added movies!</h1>
+    <hr class="my-4">
+    <p class="lead">
+        <a asp-controller="Movie" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Movie</a>
+    </p>
+</div>}

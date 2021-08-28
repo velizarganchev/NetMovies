@@ -12,9 +12,16 @@
             int currentPage,
             int moviesPerPage,
             string searchTerm);
+
+        public IEnumerable<MovieServiceModel> AllApiMovies();
+
         int Create(string[] directorNames, string creatorId,string title,
             int year, string imageUrl, string watchUrl,string country, int duration,
             string descriptions, int genreId, List<string> actors);
+
+        public bool Edit(int id, string[] directorNames, string creatorId,
+            string title, int year, string imageUrl, string watchUrl,
+            string country, int duration, string descriptions, int genreId, List<string> actors);
 
         public MovieQueryServiceModel MyAllMovies(string userId);
 

@@ -62,5 +62,12 @@
             }
             return RedirectToAction(nameof(All));
         }
+
+        //[Authorize]
+        //public IActionResult Edit(int id)
+        //{
+        //    this.movies.Edit();
+        //}
+
     }
 }

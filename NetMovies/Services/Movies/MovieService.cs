@@ -82,6 +82,26 @@
             };
         }
 
+        public IEnumerable<MovieServiceModel> AllApiMovies()
+        {
+            var movisQuery = this.data.Movies.AsQueryable();
+
+            var movies = movisQuery.OrderBy(m => m.MovieId)
+                .Select(m => new MovieServiceModel
+                {
+                    MovieId = m.MovieId,
+                    Title = m.Title,
+                    Year = m.Year,
+                    ImageUrl = m.ImageUrl,
+                    Genre = m.Genre.GenreName,
+                    Country = m.Country
+                }).ToList();
+
+            var totalStatistics = this.statistics.Total();
+
+            return movies;
+
+        }
         public int Create(string[] directorNames, string creatorId,
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, List<string> actors)
@@ -144,12 +164,43 @@
             return movieData.MovieId;
         }
 
-        //public bool Edit(string[] directorNames, string creatorId,
-        //    string title, int year, string imageUrl, string watchUrl,
-        //    string country, int duration, string descriptions, int genreId, List<string> actors) 
-        //{
-        //    var movie = this.data.Movies
-        //}
+        public bool Edit(int id, string[] directorNames, string creatorId,
+            string title, int year, string imageUrl, string watchUrl,
+            string country, int duration, string descriptions, int genreId, List<string> actors)
+        {
+            var movieData = this.data.Movies.Find(id);
+
+            if (movieData == null)
+            {
+                return false;
+            }
+
+            movieData.Director.FirstName = directorNames[0];
+            movieData.Director.LastName = directorNames[1];
+            movieData.CreatorId = creatorId;
+            movieData.Title = title;
+            movieData.Year = year;
+            movieData.ImageUrl = imageUrl;
+            movieData.WatchUrl = watchUrl;
+            movieData.Country = country;
+            movieData.Duration = duration;
+            movieData.Descriptions = descriptions;
+            movieData.GenreId = genreId;
+            foreach (var actor in actors)
+            {
+                var currActor = new Actor
+                {
+                    FirstName = actor.Split(" ")[0],
+                    LastName = actor.Split(" ")[1],
+                    FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
+                };
+                movieData.Actors.Add(currActor);
+            }
+
+            this.data.SaveChanges();
+
+            return true;
+        }
 
         public MovieQueryServiceModel MyAllMovies(string userId)
         {
@@ -187,8 +238,6 @@
                 Name = g.GenreName
             })
             .ToList();
-
-
 
         public bool GenreExists(int genreId)
              => this.data.Genres.Any(g => g.GenreId == genreId);
