@@ -34,7 +34,7 @@
         [MaxLength(MovieDescriptionsMaxLenght)]
         public string Descriptions { get; set; }
 
-        public ICollection<Actor> Actors { get; set; } = new HashSet<Actor>();
+        public ICollection<MovieActor> MovieActors { get; set; } = new HashSet<MovieActor>();
 
         public int DirectorId { get; set; }
         public Director Director { get; set; }

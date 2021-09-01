@@ -1,11 +1,9 @@
 ﻿@model MovieFormModel
 
-@{
-    ViewData["Title"] = "Add Movie";
-}
+@{ ViewData["Title"] = "Edit Movie"; }
 <div class="row">
     <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
-        <h2 class="heading-margin text-center">Add Movie</h2>
+        <h2 class="heading-margin text-center">Edit Movie</h2>
 
         <form method="post">
             <div class="form-group">
@@ -53,8 +51,7 @@
                 <select asp-for="GenreId" class="form-control">
                     @foreach (var genre in Model.Genres)
                     {
-                        <option value="@genre.GenreId">@genre.Name</option>
-                    }
+        <option value="@genre.GenreId">@genre.Name</option>}
                 </select>
                 <span asp-validation-for="GenreId" class="small text-danger"></span>
             </div>

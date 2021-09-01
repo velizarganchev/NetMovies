@@ -1,6 +1,5 @@
 ﻿namespace NetMovies.Data.Models
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -22,6 +21,6 @@
         [Required]
         public string FullName { get; set; }
 
-        public ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
+        public ICollection<MovieActor> MovieActors { get; set; } = new HashSet<MovieActor>();
     }
 }

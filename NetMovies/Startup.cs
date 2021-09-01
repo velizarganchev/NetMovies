@@ -36,8 +36,11 @@ namespace NetMovies
                     options.Password.RequireUppercase = false;
                 })
                 .AddEntityFrameworkStores<NetMoviesDbContext>();
+
             services
                 .AddControllersWithViews();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddTransient<IStatisticService,StatisticService>();
             services.AddTransient<IMovieService, MovieService>();

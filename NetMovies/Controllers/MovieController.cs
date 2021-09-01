@@ -21,7 +21,7 @@
 
         public IActionResult All([FromQuery] AllMovieQueryModel query)
         {
-            var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage,query.SearchTerm);
+            var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
 
             query.TotalMovies = movies.TotalMovies;
             query.Movies = movies.Movies;
@@ -30,7 +30,7 @@
         }
 
         [Authorize]
-        public IActionResult Add() => View(new AddMovieFormModel
+        public IActionResult Add() => View(new MovieFormModel
         {
             Genres = this.movies.GenreCategories()
 
@@ -38,9 +38,9 @@
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddMovieFormModel movie)
+        public IActionResult Add(MovieFormModel movie)
         {
-            if (movies.GenreExists(movie.GenreId))
+            if (!movies.GenreExists(movie.GenreId))
             {
                 this.ModelState.AddModelError(nameof(movie.GenreId), "Genre does not exist.");
             }
@@ -56,18 +56,8 @@
             var movieId = this.movies.Create(directorNames, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
                 movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
 
-            if (movies.MovieExists(movieId))
-            {
-                return RedirectToAction("Add", "Movie");
-            }
             return RedirectToAction(nameof(All));
         }
-
-        //[Authorize]
-        //public IActionResult Edit(int id)
-        //{
-        //    this.movies.Edit();
-        //}
 
     }
 }

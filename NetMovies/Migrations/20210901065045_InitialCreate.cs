@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace NetMovies.Migrations
 {
-    public partial class InitialCreateDateBase : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -208,7 +208,8 @@ namespace NetMovies.Migrations
                     Duration = table.Column<int>(type: "int", nullable: false),
                     Descriptions = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
                     DirectorId = table.Column<int>(type: "int", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: false)
+                    GenreId = table.Column<int>(type: "int", nullable: false),
+                    CreatorId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -228,33 +229,28 @@ namespace NetMovies.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ActorMovie",
+                name: "MovieActors",
                 columns: table => new
                 {
-                    ActorsActorId = table.Column<int>(type: "int", nullable: false),
-                    MoviesMovieId = table.Column<int>(type: "int", nullable: false)
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    ActorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ActorMovie", x => new { x.ActorsActorId, x.MoviesMovieId });
+                    table.PrimaryKey("PK_MovieActors", x => new { x.ActorId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_ActorMovie_Actors_ActorsActorId",
-                        column: x => x.ActorsActorId,
+                        name: "FK_MovieActors_Actors_ActorId",
+                        column: x => x.ActorId,
                         principalTable: "Actors",
                         principalColumn: "ActorId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ActorMovie_Movies_MoviesMovieId",
-                        column: x => x.MoviesMovieId,
+                        name: "FK_MovieActors_Movies_MovieId",
+                        column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "MovieId",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ActorMovie_MoviesMovieId",
-                table: "ActorMovie",
-                column: "MoviesMovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -296,6 +292,11 @@ namespace NetMovies.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MovieActors_MovieId",
+                table: "MovieActors",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Movies_DirectorId",
                 table: "Movies",
                 column: "DirectorId");
@@ -308,9 +309,6 @@ namespace NetMovies.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ActorMovie");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -327,16 +325,19 @@ namespace NetMovies.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Actors");
-
-            migrationBuilder.DropTable(
-                name: "Movies");
+                name: "MovieActors");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Actors");
+
+            migrationBuilder.DropTable(
+                name: "Movies");
 
             migrationBuilder.DropTable(
                 name: "Directors");

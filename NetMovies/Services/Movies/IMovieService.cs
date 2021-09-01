@@ -23,16 +23,18 @@
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, List<string> actors);
 
-        public MovieQueryServiceModel MyAllMovies(string userId);
+        public MovieDetailsServiceModel Details(int id);
 
-        public string[] DirectorNames(AddMovieFormModel movie);
+        public MovieQueryServiceModel AllMovies(string userId);
 
-        public List<string> ActorsList(AddMovieFormModel movie);
+        public string[] DirectorNames(MovieFormModel movie);
+
+        public List<string> ActorsList(MovieFormModel movie);
 
         IEnumerable<MovieGenreServiceModel> GenreCategories();
 
         bool GenreExists(int genreId);
 
-        bool MovieExists(int movieId);
+        //bool MovieExists(int movieId);
     }
 }

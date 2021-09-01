@@ -1,5 +1,6 @@
 ﻿namespace NetMovies.Services.Movies
 {
+    using AutoMapper;
     using NetMovies.Data;
     using NetMovies.Data.Models;
     using NetMovies.Models.Movie;
@@ -12,11 +13,15 @@
     {
         private readonly NetMoviesDbContext data;
         private readonly IStatisticService statistics;
-
-        public MovieService(NetMoviesDbContext data, IStatisticService statistics)
+        private readonly IMapper mapper;
+        public MovieService(
+            NetMoviesDbContext data,
+            IStatisticService statistics,
+            IMapper mapper)
         {
             this.data = data;
             this.statistics = statistics;
+            this.mapper = mapper;
         }
 
         public MovieQueryServiceModel Index()
@@ -56,7 +61,7 @@
                 movisQuery = movisQuery.Where(m =>
                 m.Title.ToLower().Contains(searchTerm) ||
                 m.Genre.GenreName.ToLower().Contains(searchTerm) ||
-                m.Actors.FirstOrDefault(a => a.FullName == searchTerm).FullName == searchTerm);
+                m.MovieActors.FirstOrDefault(a => a.Actor.FullName == searchTerm).Actor.FullName == searchTerm);
             }
 
             var movies = movisQuery
@@ -100,8 +105,8 @@
             var totalStatistics = this.statistics.Total();
 
             return movies;
-
         }
+
         public int Create(string[] directorNames, string creatorId,
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, List<string> actors)
@@ -137,8 +142,8 @@
                 Descriptions = descriptions,
                 GenreId = genreId
             };
-            var actorsList = actors;
-            foreach (var actor in actorsList)
+
+            foreach (var actor in actors)
             {
                 var currActor = new Actor
                 {
@@ -150,17 +155,25 @@
                 var existActor = this.data.Actors.FirstOrDefault(x => x.FirstName == currActor.FirstName
                 && x.LastName == currActor.LastName);
 
-                if (this.data.Actors.Contains(existActor))
+                if (!this.data.Actors.Contains(existActor))
                 {
-                    movieData.Actors.Add(existActor);
-                    continue;
+                    this.data.Actors.Add(currActor);
+                    this.data.SaveChanges();
                 }
-                movieData.Actors.Add(currActor);
+                else
+                {
+                    currActor = existActor;
+                }
+                movieData.MovieActors.Add(new MovieActor { Actor = currActor });
             }
 
-            this.data.Movies.Add(movieData);
-            this.data.SaveChanges();
+            if (!this.data.Movies.Contains(movieData))
+            {
+                this.data.Movies.Add(movieData);
+                this.data.SaveChanges();
 
+                return movieData.MovieId;
+            }
             return movieData.MovieId;
         }
 
@@ -175,9 +188,30 @@
                 return false;
             }
 
-            movieData.Director.FirstName = directorNames[0];
-            movieData.Director.LastName = directorNames[1];
-            movieData.CreatorId = creatorId;
+            var directorForEdit = this.data.Directors
+                .Find(movieData.DirectorId);
+
+            if (directorForEdit != null)
+            {
+                directorForEdit.FirstName = directorNames[0];
+                directorForEdit.LastName = directorNames[1];
+            }
+            else
+            {
+                var director = new Director
+                {
+                    FirstName = directorNames[0],
+                    LastName = directorNames[1]
+                };
+
+                this.data.Directors.Add(director);
+                this.data.SaveChanges();
+
+                movieData.DirectorId = director.DirectorId;
+            }
+
+            
+
             movieData.Title = title;
             movieData.Year = year;
             movieData.ImageUrl = imageUrl;
@@ -186,6 +220,7 @@
             movieData.Duration = duration;
             movieData.Descriptions = descriptions;
             movieData.GenreId = genreId;
+
             foreach (var actor in actors)
             {
                 var currActor = new Actor
@@ -194,15 +229,50 @@
                     LastName = actor.Split(" ")[1],
                     FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
                 };
-                movieData.Actors.Add(currActor);
-            }
 
+                var actorForEdit = this.data.Actors.FirstOrDefault(a => a.FullName == currActor.FullName);
+                if (actorForEdit == null)
+                {
+                    movieData.MovieActors.Add(new MovieActor { Actor = currActor });
+                }
+                else
+                {
+                    actorForEdit.FirstName = currActor.FirstName;
+                    actorForEdit.LastName = currActor.LastName;
+                    actorForEdit.FullName = currActor.FullName;
+                }
+            }
             this.data.SaveChanges();
 
             return true;
         }
 
-        public MovieQueryServiceModel MyAllMovies(string userId)
+        public MovieDetailsServiceModel Details(int id)
+        {
+            var movieData = this.data.Movies.Where(m => m.MovieId == id).FirstOrDefault();
+            var directorFullName = this.data.Directors
+                .Where(d => d.DirectorId == movieData.DirectorId)
+                .FirstOrDefault();
+
+            var movie = this.data.Movies.Where(m => m.MovieId == id)
+                .Select(m => new MovieDetailsServiceModel
+                {
+                    Title = m.Title,
+                    Year = m.Year,
+                    ImageUrl = m.ImageUrl,
+                    WatchUrl = m.WatchUrl,
+                    Country = m.Country,
+                    DirectorId = m.DirectorId,
+                    Director = directorFullName.FirstName + " " + directorFullName.LastName,
+                    Actors = string.Join(", ", m.MovieActors.Select(a => a.Actor.FullName)), // !!!
+                    Duration = m.Duration,
+                    Descriptions = m.Descriptions,
+                    GenreId = m.GenreId
+                }).FirstOrDefault();
+            return movie;
+        }
+
+        public MovieQueryServiceModel AllMovies(string userId)
         {
             var moviesQuery = this.data.Movies.Where(m => m.CreatorId == userId).AsQueryable();
 
@@ -220,15 +290,9 @@
             return new MovieQueryServiceModel { Movies = movies };
         }
 
-        public string[] DirectorNames(AddMovieFormModel movie)
-        {
-            return movie.Director.Split(" ");
-        }
+        public string[] DirectorNames(MovieFormModel movie) => movie.Director.Split(" ");
 
-        public List<string> ActorsList(AddMovieFormModel movie)
-        {
-            return movie.Director.Split(" ").ToList();
-        }
+        public List<string> ActorsList(MovieFormModel movie) => movie.Actors.Split(", ").ToList();
 
         public IEnumerable<MovieGenreServiceModel> GenreCategories()
         =>
@@ -240,9 +304,10 @@
             .ToList();
 
         public bool GenreExists(int genreId)
-             => this.data.Genres.Any(g => g.GenreId == genreId);
+            => this.data.Genres.Any(g => g.GenreId == genreId);
 
-        public bool MovieExists(int movieId)
-            => this.data.Movies.Any(m => m.MovieId == movieId);
+        //public bool MovieExists(Movie movie)
+        //    => this.data.Movies.Contains(movie);
+
     }
 }

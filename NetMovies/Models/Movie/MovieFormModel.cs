@@ -6,7 +6,7 @@ namespace NetMovies.Models.Movie
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using static DataConstants;
-    public class AddMovieFormModel
+    public class MovieFormModel
     {
         [Required]
         [StringLength(MovieTitleMaxLenght,MinimumLength = MovieTitleMinLenght)]
