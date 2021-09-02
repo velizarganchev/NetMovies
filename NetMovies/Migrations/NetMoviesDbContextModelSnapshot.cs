@@ -257,6 +257,11 @@ namespace NetMovies.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(25)

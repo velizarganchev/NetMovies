@@ -10,15 +10,12 @@
     {
         private readonly IMovieService movies;
 
-        public MyMovieController(IMovieService movies)
-        {
-            this.movies = movies;
-        }
+        public MyMovieController(IMovieService movies) => this.movies = movies;
+
         [Authorize]
         public IActionResult MyAllMovies([FromQuery] AllMovieQueryModel query)
         {
             var movies = this.movies.AllMovies(this.User.Id());
-
             query.Movies = movies.Movies;
 
             return View(query);
@@ -43,7 +40,6 @@
                 GenreId = movie.GenreId,
                 Genres = this.movies.GenreCategories()
             });
-            //Title Year ImageUrl WatchUrl Country Director Actors Duration Descriptions GenreId Genres
         }
 
         [Authorize]
@@ -65,7 +61,6 @@
 
             var movieId = this.movies.Edit(id, directorNames, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
                 movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
-
 
             return RedirectToAction(nameof(MyAllMovies));
         }

@@ -2,22 +2,15 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using NetMovies.Data;
     using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
 
     public class MovieController : Controller
     {
-        private readonly NetMoviesDbContext data;
         private readonly IMovieService movies;
-        public MovieController(
-            NetMoviesDbContext data,
-            IMovieService movies)
-        {
-            this.data = data;
-            this.movies = movies;
-        }
+
+        public MovieController(IMovieService movies) => this.movies = movies;
 
         public IActionResult All([FromQuery] AllMovieQueryModel query)
         {
@@ -30,11 +23,7 @@
         }
 
         [Authorize]
-        public IActionResult Add() => View(new MovieFormModel
-        {
-            Genres = this.movies.GenreCategories()
-
-        });
+        public IActionResult Add() => View(new MovieFormModel{Genres = this.movies.GenreCategories()});
 
         [HttpPost]
         [Authorize]
@@ -57,6 +46,12 @@
                 movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
 
             return RedirectToAction(nameof(All));
+        }
+
+        public IActionResult MovieDetails([FromQuery] AllMovieQueryModel query, int id)
+        {
+
+            return View();
         }
 
     }

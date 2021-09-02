@@ -18,5 +18,8 @@ namespace NetMovies.Services.Movies.Models
         public string Descriptions { get; init; }
 
         public int GenreId { get; init; }
+
+        public string CreatorId { get; set; }
+
     }
 }

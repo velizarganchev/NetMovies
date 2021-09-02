@@ -2,12 +2,10 @@
 
 @{ ViewData["Title"] = "Watchlist"; }
 
-@if (!Model.Movies.Any())
-{
 <div class="jumbotron">
     <h1 class="display-4">You haven't added movies!</h1>
     <hr class="my-4">
     <p class="lead">
         <a asp-controller="Movie" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Movie</a>
     </p>
-</div>}
+</div>

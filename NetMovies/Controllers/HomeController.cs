@@ -5,8 +5,6 @@
     using NetMovies.Models;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
-
-
     public class HomeController : Controller
     {
         private readonly IMovieService movies;
@@ -25,8 +23,7 @@
 
             return View(query);
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error() 
             => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }

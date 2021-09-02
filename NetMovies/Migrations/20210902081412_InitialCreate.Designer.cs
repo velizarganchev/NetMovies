@@ -10,7 +10,7 @@ using NetMovies.Data;
 namespace NetMovies.Migrations
 {
     [DbContext(typeof(NetMoviesDbContext))]
-    [Migration("20210901065045_InitialCreate")]
+    [Migration("20210902081412_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -255,6 +255,11 @@ namespace NetMovies.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");

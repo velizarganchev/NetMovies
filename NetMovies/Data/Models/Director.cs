@@ -18,6 +18,10 @@
         [MaxLength(DefaultNameMaxLenght)]
         public string LastName { get; set; }
 
+        [Required]
+        [MaxLength(DefaultNameMaxLenght)]
+        public string FullName { get; set; }
+
         public ICollection<Movie> Movies { get; set; } = new HashSet<Movie>();
     }
 }

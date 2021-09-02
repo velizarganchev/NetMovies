@@ -34,7 +34,5 @@
         IEnumerable<MovieGenreServiceModel> GenreCategories();
 
         bool GenreExists(int genreId);
-
-        //bool MovieExists(int movieId);
     }
 }
