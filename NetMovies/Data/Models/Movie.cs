@@ -43,5 +43,7 @@
         public Genre Genre { get; set; }
 
         public string CreatorId { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

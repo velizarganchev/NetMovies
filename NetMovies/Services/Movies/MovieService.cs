@@ -29,6 +29,7 @@
             var movies = this.data
             .Movies
             .OrderByDescending(m => m.MovieId)
+            .Where(m => m.IsDeleted == false)
             .Select(m => new MovieServiceModel
             {
                 MovieId = m.MovieId,
@@ -68,6 +69,7 @@
                 .Skip((currentPage - 1) * moviesPerPage)
                 .Take(moviesPerPage)
                 .OrderByDescending(m => m.MovieId)
+                .Where(m => m.IsDeleted == false)
                 .Select(m => new MovieServiceModel
                 {
                     MovieId = m.MovieId,
@@ -87,19 +89,12 @@
             };
         }
 
-        public MovieDetailsServiceModel MovieDetails() 
-        {
-
-
-
-            return new MovieDetailsServiceModel { };
-        }
-
         public IEnumerable<MovieServiceModel> AllApiMovies()
         {
             var movisQuery = this.data.Movies.AsQueryable();
 
             var movies = movisQuery.OrderBy(m => m.MovieId)
+                .Where(m => m.IsDeleted == false)
                 .Select(m => new MovieServiceModel
                 {
                     MovieId = m.MovieId,
@@ -244,6 +239,7 @@
             var movieData = this.data.Movies.Where(m => m.MovieId == id).FirstOrDefault();
 
             var movie = this.data.Movies.Where(m => m.MovieId == id)
+                .Where(m => m.IsDeleted == false)
                 .Select(m => new MovieDetailsServiceModel
                 {
                     Title = m.Title,
@@ -268,6 +264,7 @@
 
             var movies = moviesQuery
                 .OrderByDescending(m => m.MovieId)
+                .Where(m => m.IsDeleted == false)
                 .Select(m => new MovieServiceModel
                 {
                     MovieId = m.MovieId,
@@ -296,5 +293,17 @@
         public bool GenreExists(int genreId)
             => this.data.Genres.Any(g => g.GenreId == genreId);
 
+        public bool Delete(int id) 
+        {
+            var movie = this.data.Movies.FirstOrDefault(m => m.MovieId == id);
+            if (movie != null)
+            {
+                movie.IsDeleted = true;
+                this.data.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+            
     }
 }

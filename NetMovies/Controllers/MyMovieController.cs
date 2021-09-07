@@ -64,5 +64,18 @@
 
             return RedirectToAction(nameof(MyAllMovies));
         }
+
+
+        public IActionResult Delete(int id) 
+        {
+            var movieForDeletet = this.movies.Delete(id);
+
+            if (movieForDeletet)
+            {
+                return RedirectToAction(nameof(MyAllMovies));
+            }
+
+            return BadRequest();
+        }
     }
 }

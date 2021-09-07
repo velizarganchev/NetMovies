@@ -48,10 +48,11 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult MovieDetails([FromQuery] AllMovieQueryModel query, int id)
+        public IActionResult MovieDetails(int id)
         {
+            var movie = this.movies.Details(id);
 
-            return View();
+            return View(movie);
         }
 
     }
