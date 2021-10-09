@@ -39,10 +39,10 @@
 
                 return View(movie);
             }
-            var directorNames = movies.DirectorNames(movie);
+            var directorList = movies.DirectorNames(movie);
             var actorsList = movies.ActorsList(movie);
 
-            var movieId = this.movies.Create(directorNames, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
+            var movieId = this.movies.Create(directorList, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
                 movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
 
             return RedirectToAction(nameof(All));

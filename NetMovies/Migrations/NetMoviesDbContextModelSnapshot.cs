@@ -245,6 +245,47 @@ namespace NetMovies.Migrations
                     b.ToTable("Actors");
                 });
 
+            modelBuilder.Entity("NetMovies.Data.Models.Autor", b =>
+                {
+                    b.Property<int>("AutorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("AutorId");
+
+                    b.ToTable("Autors");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.AutorReview", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AutorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ReviewId", "AutorId");
+
+                    b.HasIndex("AutorId");
+
+                    b.ToTable("AutorReviews");
+                });
+
             modelBuilder.Entity("NetMovies.Data.Models.Director", b =>
                 {
                     b.Property<int>("DirectorId")
@@ -309,9 +350,6 @@ namespace NetMovies.Migrations
                         .HasMaxLength(10000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DirectorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Duration")
                         .HasColumnType("int");
 
@@ -339,8 +377,6 @@ namespace NetMovies.Migrations
 
                     b.HasKey("MovieId");
 
-                    b.HasIndex("DirectorId");
-
                     b.HasIndex("GenreId");
 
                     b.ToTable("Movies");
@@ -359,6 +395,58 @@ namespace NetMovies.Migrations
                     b.HasIndex("MovieId");
 
                     b.ToTable("MovieActors");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.MovieDirector", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DirectorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "DirectorId");
+
+                    b.HasIndex("DirectorId");
+
+                    b.ToTable("MovieDirectors");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.MovieReview", b =>
+                {
+                    b.Property<int>("MovieId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieId", "ReviewId");
+
+                    b.HasIndex("ReviewId");
+
+                    b.ToTable("MovieReviews");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.Review", b =>
+                {
+                    b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(10000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("ReviewId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -412,21 +500,32 @@ namespace NetMovies.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("NetMovies.Data.Models.Movie", b =>
+            modelBuilder.Entity("NetMovies.Data.Models.AutorReview", b =>
                 {
-                    b.HasOne("NetMovies.Data.Models.Director", "Director")
-                        .WithMany("Movies")
-                        .HasForeignKey("DirectorId")
+                    b.HasOne("NetMovies.Data.Models.Autor", "Autor")
+                        .WithMany("AutorReviews")
+                        .HasForeignKey("AutorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("NetMovies.Data.Models.Review", "Review")
+                        .WithMany("AutorReviews")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Autor");
+
+                    b.Navigation("Review");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.Movie", b =>
+                {
                     b.HasOne("NetMovies.Data.Models.Genre", "Genre")
                         .WithMany("Movies")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Director");
 
                     b.Navigation("Genre");
                 });
@@ -450,14 +549,57 @@ namespace NetMovies.Migrations
                     b.Navigation("Movie");
                 });
 
+            modelBuilder.Entity("NetMovies.Data.Models.MovieDirector", b =>
+                {
+                    b.HasOne("NetMovies.Data.Models.Director", "Director")
+                        .WithMany("MovieDirectors")
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NetMovies.Data.Models.Movie", "Movie")
+                        .WithMany("MovieDirectors")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Director");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.MovieReview", b =>
+                {
+                    b.HasOne("NetMovies.Data.Models.Movie", "Movie")
+                        .WithMany("MovieReviews")
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NetMovies.Data.Models.Review", "Review")
+                        .WithMany("MovieReviews")
+                        .HasForeignKey("ReviewId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Review");
+                });
+
             modelBuilder.Entity("NetMovies.Data.Models.Actor", b =>
                 {
                     b.Navigation("MovieActors");
                 });
 
+            modelBuilder.Entity("NetMovies.Data.Models.Autor", b =>
+                {
+                    b.Navigation("AutorReviews");
+                });
+
             modelBuilder.Entity("NetMovies.Data.Models.Director", b =>
                 {
-                    b.Navigation("Movies");
+                    b.Navigation("MovieDirectors");
                 });
 
             modelBuilder.Entity("NetMovies.Data.Models.Genre", b =>
@@ -468,6 +610,17 @@ namespace NetMovies.Migrations
             modelBuilder.Entity("NetMovies.Data.Models.Movie", b =>
                 {
                     b.Navigation("MovieActors");
+
+                    b.Navigation("MovieDirectors");
+
+                    b.Navigation("MovieReviews");
+                });
+
+            modelBuilder.Entity("NetMovies.Data.Models.Review", b =>
+                {
+                    b.Navigation("AutorReviews");
+
+                    b.Navigation("MovieReviews");
                 });
 #pragma warning restore 612, 618
         }

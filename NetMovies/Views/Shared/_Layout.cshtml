@@ -12,7 +12,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NetMovies</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -23,10 +23,10 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Add">Add Movie</a>
-                            </li>
-                        }
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Add">Add Movie</a>
+            </li>
+}
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Search">Search Movie</a>
                         </li>
@@ -51,9 +51,11 @@
         </main>
     </div>
 
+    
+
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - NetMovies - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="container text-dark">
+            &copy; @DateTime.Today.Year - NetMovies - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

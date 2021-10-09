@@ -61,7 +61,7 @@
     <div class="mb-5"></div>
 
     <section>
-        <h3>New to NetMovies</h3>
+        <h3 class="text-dark">New to NetMovies</h3>
         <div class="row">
             @foreach (var movie in newMovies)
             {
@@ -82,7 +82,7 @@
     <div class="mb-5"></div>
 
     <section>
-        <h3>Action Movies</h3>
+        <h3 class="text-dark">Action Movies</h3>
         <div class="row">
             @foreach (var movie in actionmovies)
             {
@@ -101,9 +101,10 @@
     </section>
 
     <div class="mb-5"></div>
-
+@if (animatedMovies.Any())
+{
     <section>
-        <h3>Animated Movies</h3>
+        <h3 class="text-dark">Animated Movies</h3>
         <div class="row">
             @foreach (var movie in animatedMovies)
             {
@@ -120,6 +121,8 @@
             }
         </div>
     </section>
+}
+    
 }
 
 

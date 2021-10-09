@@ -30,8 +30,8 @@ namespace NetMovies.Models.Movie
         public string Country { get; init; }
 
         [Required]
-        [RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
-        public string Director { get; init; } 
+        //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
+        public string Directors { get; init; } 
 
         [Required]
         //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]

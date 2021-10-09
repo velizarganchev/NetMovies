@@ -4,24 +4,22 @@
     using System.ComponentModel.DataAnnotations;
 
     using static DataConstants;
-    public class Director
+    public class Autor
     {
         [Key]
         [Required]
-        public int DirectorId { get; set; }
+        public int AutorId { get; set; }
 
         [Required]
         [MaxLength(DefaultNameMaxLenght)]
         public string FirstName { get; set; }
-
         [Required]
         [MaxLength(DefaultNameMaxLenght)]
         public string LastName { get; set; }
-
         [Required]
-        [MaxLength(DefaultNameMaxLenght)]
-        public string FullName { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
-        public ICollection<MovieDirector> MovieDirectors { get; set; } = new HashSet<MovieDirector>();
+        public ICollection<AutorReview> AutorReviews { get; set; } = new HashSet<AutorReview>();
     }
 }

@@ -33,7 +33,7 @@
                 ImageUrl = movie.ImageUrl,
                 WatchUrl = movie.WatchUrl,
                 Country = movie.Country,
-                Director = movie.Director,
+                Directors = movie.Directors,
                 Actors = movie.Actors,
                 Duration = movie.Duration,
                 Descriptions = movie.Descriptions,

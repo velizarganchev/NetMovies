@@ -62,6 +62,21 @@ namespace NetMovies.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Autors",
+                columns: table => new
+                {
+                    AutorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Autors", x => x.AutorId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Directors",
                 columns: table => new
                 {
@@ -87,6 +102,20 @@ namespace NetMovies.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Genres", x => x.GenreId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.ReviewId);
                 });
 
             migrationBuilder.CreateTable(
@@ -208,24 +237,42 @@ namespace NetMovies.Migrations
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     Descriptions = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
-                    DirectorId = table.Column<int>(type: "int", nullable: false),
                     GenreId = table.Column<int>(type: "int", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CreatorId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movies", x => x.MovieId);
                     table.ForeignKey(
-                        name: "FK_Movies_Directors_DirectorId",
-                        column: x => x.DirectorId,
-                        principalTable: "Directors",
-                        principalColumn: "DirectorId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Movies_Genres_GenreId",
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AutorReviews",
+                columns: table => new
+                {
+                    AutorId = table.Column<int>(type: "int", nullable: false),
+                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AutorReviews", x => new { x.ReviewId, x.AutorId });
+                    table.ForeignKey(
+                        name: "FK_AutorReviews_Autors_AutorId",
+                        column: x => x.AutorId,
+                        principalTable: "Autors",
+                        principalColumn: "AutorId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AutorReviews_Reviews_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Reviews",
+                        principalColumn: "ReviewId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -250,6 +297,54 @@ namespace NetMovies.Migrations
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieDirectors",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    DirectorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieDirectors", x => new { x.MovieId, x.DirectorId });
+                    table.ForeignKey(
+                        name: "FK_MovieDirectors_Directors_DirectorId",
+                        column: x => x.DirectorId,
+                        principalTable: "Directors",
+                        principalColumn: "DirectorId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MovieDirectors_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MovieReviews",
+                columns: table => new
+                {
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MovieReviews", x => new { x.MovieId, x.ReviewId });
+                    table.ForeignKey(
+                        name: "FK_MovieReviews_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MovieReviews_Reviews_ReviewId",
+                        column: x => x.ReviewId,
+                        principalTable: "Reviews",
+                        principalColumn: "ReviewId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -293,14 +388,24 @@ namespace NetMovies.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AutorReviews_AutorId",
+                table: "AutorReviews",
+                column: "AutorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MovieActors_MovieId",
                 table: "MovieActors",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Movies_DirectorId",
-                table: "Movies",
+                name: "IX_MovieDirectors_DirectorId",
+                table: "MovieDirectors",
                 column: "DirectorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MovieReviews_ReviewId",
+                table: "MovieReviews",
+                column: "ReviewId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movies_GenreId",
@@ -326,7 +431,16 @@ namespace NetMovies.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "AutorReviews");
+
+            migrationBuilder.DropTable(
                 name: "MovieActors");
+
+            migrationBuilder.DropTable(
+                name: "MovieDirectors");
+
+            migrationBuilder.DropTable(
+                name: "MovieReviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -335,13 +449,19 @@ namespace NetMovies.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Autors");
+
+            migrationBuilder.DropTable(
                 name: "Actors");
+
+            migrationBuilder.DropTable(
+                name: "Directors");
 
             migrationBuilder.DropTable(
                 name: "Movies");
 
             migrationBuilder.DropTable(
-                name: "Directors");
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Genres");

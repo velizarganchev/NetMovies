@@ -1,7 +1,5 @@
 ﻿namespace NetMovies.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -34,16 +32,18 @@
         [MaxLength(MovieDescriptionsMaxLenght)]
         public string Descriptions { get; set; }
 
-        public ICollection<MovieActor> MovieActors { get; set; } = new HashSet<MovieActor>();
-
-        public int DirectorId { get; set; }
-        public Director Director { get; set; }
-
         public int GenreId { get; set; }
+
         public Genre Genre { get; set; }
 
         public string CreatorId { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public ICollection<MovieActor> MovieActors { get; set; } = new HashSet<MovieActor>();
+
+        public ICollection<MovieDirector> MovieDirectors { get; set; } = new HashSet<MovieDirector>();
+
+        public ICollection<MovieReview> MovieReviews { get; set; } = new HashSet<MovieReview>();
     }
 }

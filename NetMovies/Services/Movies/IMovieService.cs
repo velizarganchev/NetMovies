@@ -15,11 +15,11 @@
 
         public IEnumerable<MovieServiceModel> AllApiMovies();
 
-        int Create(string[] directorNames, string creatorId,string title,
+        int Create(List<string> directorNames, string creatorId,string title,
             int year, string imageUrl, string watchUrl,string country, int duration,
             string descriptions, int genreId, List<string> actors);
 
-        public bool Edit(int id, string[] directorNames, string creatorId,
+        public bool Edit(int id, List<string> directorNames, string creatorId,
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, List<string> actors);
 
@@ -27,7 +27,7 @@
 
         public MovieQueryServiceModel AllMovies(string userId);
 
-        public string[] DirectorNames(MovieFormModel movie);
+        public List<string> DirectorNames(MovieFormModel movie);
 
         public List<string> ActorsList(MovieFormModel movie);
 
