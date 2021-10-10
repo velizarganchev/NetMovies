@@ -114,6 +114,8 @@
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, List<string> actors)
         {
+            directors.RemoveAt(directors.Count - 1);
+
             foreach (var directorNames in directors)
             {
                 var director = new Director
@@ -149,6 +151,9 @@
                 Descriptions = descriptions,
                 GenreId = genreId
             };
+
+            actors.RemoveAt(actors.Count - 1);
+
             foreach (var actor in actors)
             {
                 var currActor = new Actor
@@ -297,7 +302,7 @@
             return new MovieQueryServiceModel { Movies = movies };
         }
 
-        public List<string> DirectorNames(MovieFormModel movie) => movie.Directors.Split(", ").ToList();
+        public List<string> DirectorsList(MovieFormModel movie) => movie.Directors.Split(", ").ToList();
 
         public List<string> ActorsList(MovieFormModel movie) => movie.Actors.Split(", ").ToList();
 

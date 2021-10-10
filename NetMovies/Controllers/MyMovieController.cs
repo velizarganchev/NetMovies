@@ -56,7 +56,7 @@
 
                 return View(movie);
             }
-            var directorNames = movies.DirectorNames(movie);
+            var directorNames = movies.DirectorsList(movie);
             var actorsList = movies.ActorsList(movie);
 
             var movieId = this.movies.Edit(id, directorNames, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,

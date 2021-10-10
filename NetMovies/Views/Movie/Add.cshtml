@@ -12,13 +12,35 @@
                 <span asp-validation-for="Title" class="small text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="DirectorFirstName">Director first name</label>
+                        <input type="text" class="form-control" id="DirectorFirstName" placeholder="First name" >
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="DirectorLastName">Director first name</label>
+                        <input type="text" class="form-control" id="DirectorLastName" placeholder="Last name" >
+                    </div>
+                    <button type="button" class="btn" id="addDirector"><i class="fas fa-plus"></i></button>
+                </div>
                 <label class="text-dark" asp-for="Directors"></label>
-                <input asp-for="Directors" class="form-control" placeholder="Vin Diesel, Justin Lin...">
+                <textarea asp-for="Directors" class="form-control" id="directorTextArea"  required></textarea>
                 <span asp-validation-for="Directors" class="small text-danger"></span>
             </div>
             <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <label for="ActorFirstName">Actor first name</label>
+                        <input type="text" class="form-control" id="ActorFirstName" placeholder="First name" >
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="ActorLastName">Actor first name</label>
+                        <input type="text" class="form-control" id="ActorLastName" placeholder="Last name" >
+                    </div>
+                    <button type="button" class="btn" id="addActor"><i class="fas fa-plus"></i></button>
+                </div>
                 <label class="text-dark" asp-for="Actors"></label>
-                <textarea asp-for="Actors" rows="2" class="form-control" placeholder="Dwayne Johnson,Vin Diesel,Jordana Brewster..."></textarea>
+                <textarea asp-for="Actors" rows="2" class="form-control" id="ActorTextArea"  required></textarea>
                 <span asp-validation-for="Actors" class="small text-danger"></span>
             </div>
             <div class="form-group">
@@ -65,3 +87,31 @@
         </form>
     </div>
 </div>
+<script>
+    let addDirectorButton = document.querySelector('#addDirector');
+
+    let addDirector = addDirectorButton.addEventListener('click', (e) => {
+        let directorFirstName = document.querySelector('#DirectorFirstName');
+        let directorLastName = document.querySelector('#DirectorLastName');
+        let directorTextArea = document.querySelector('#directorTextArea');
+
+        directorTextArea.textContent += `${directorFirstName.value} ${directorLastName.value}, `;
+
+        directorFirstName.value = ``;
+        directorLastName.value = ``;
+    });
+
+    let addActorButton = document.querySelector('#addActor');
+
+    let addActor = addActorButton.addEventListener('click', (e) => {
+
+        let ActorFirstName = document.querySelector('#ActorFirstName');
+        let ActorLastName = document.querySelector('#ActorLastName');
+        let ActorTextArea = document.querySelector('#ActorTextArea');
+
+        ActorTextArea.textContent += `${ActorFirstName.value} ${ActorLastName.value}, `;
+
+        ActorFirstName.value = ``;
+        ActorLastName.value = ``;
+    });
+</script>
