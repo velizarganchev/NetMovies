@@ -56,10 +56,10 @@
 
                 return View(movie);
             }
-            var directorNames = movies.DirectorsList(movie);
+            var directoraList = movies.DirectorsList(movie);
             var actorsList = movies.ActorsList(movie);
 
-            var movieId = this.movies.Edit(id, directorNames, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
+            var movieId = this.movies.Edit(id, directoraList, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
                 movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
 
             return RedirectToAction(nameof(MyAllMovies));

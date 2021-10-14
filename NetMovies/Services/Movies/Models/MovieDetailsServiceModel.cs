@@ -7,8 +7,6 @@ namespace NetMovies.Services.Movies.Models
     {
         public string WatchUrl { get; init; }
 
-        public int DirectorId { get; init; }
-
         public string Directors { get; init; }
 
         public string Actors { get; init; }

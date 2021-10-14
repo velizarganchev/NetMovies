@@ -114,31 +114,6 @@
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, List<string> actors)
         {
-            directors.RemoveAt(directors.Count - 1);
-
-            foreach (var directorNames in directors)
-            {
-                var director = new Director
-                {
-                    FirstName = directorNames.Split(" ")[0],
-                    LastName = directorNames.Split(" ")[1],
-                    FullName = directorNames.Split(" ")[0] + " " + directorNames.Split(" ")[1]
-                };
-                var existDirector = this.data
-                    .Directors
-                    .FirstOrDefault(x => x.FullName == director.FullName);
-
-                if (!this.data.Directors.Contains(existDirector))
-                {
-                    this.data.Directors.Add(director);
-                    this.data.SaveChanges();
-                }
-                else
-                {
-                    director.DirectorId = existDirector.DirectorId;
-                }
-            }
-
             var movieData = new Movie
             {
                 CreatorId = creatorId,
@@ -152,6 +127,32 @@
                 GenreId = genreId
             };
 
+            directors.RemoveAt(directors.Count - 1);
+
+            foreach (var director in directors)
+            {
+                var currdirector = new Director
+                {
+                    FirstName = director.Split(" ")[0],
+                    LastName = director.Split(" ")[1],
+                    FullName = director.Split(" ")[0] + " " + director.Split(" ")[1]
+                };
+                var existDirector = this.data
+                    .Directors
+                    .FirstOrDefault(x => x.FullName == currdirector.FullName);
+
+                if (!this.data.Directors.Contains(existDirector))
+                {
+                    this.data.Directors.Add(currdirector);
+                    this.data.SaveChanges();
+                }
+                else
+                {
+                    currdirector = existDirector;
+                }
+                movieData.MovieDirectors.Add(new MovieDirector { Director = currdirector });
+            }
+
             actors.RemoveAt(actors.Count - 1);
 
             foreach (var actor in actors)
@@ -163,8 +164,7 @@
                     FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
                 };
 
-                var existActor = this.data.Actors.FirstOrDefault(x => x.FirstName == currActor.FirstName
-                && x.LastName == currActor.LastName);
+                var existActor = this.data.Actors.FirstOrDefault(x => x.FullName == currActor.FullName);
 
                 if (!this.data.Actors.Contains(existActor))
                 {
@@ -201,27 +201,17 @@
 
             foreach (var directorNames in directors)
             {
-                var currDirector = new Director
-                {
-                    FirstName = directorNames.Split(" ")[0],
-                    LastName = directorNames.Split(" ")[1],
-                    FullName = directorNames.Split(" ")[0] + " " + directorNames.Split(" ")[1]
-                };
-
+                var fullName = directorNames.Split(" ")[0] + " " + directorNames.Split(" ")[1];
+                var firstName = directorNames.Split(" ")[0];
+                var lastName = directorNames.Split(" ")[1];
 
                 var directorForEdit = this.data.Directors
-                    .FirstOrDefault(d => d.FullName == currDirector.FullName);
+                    .Where(d => d.FirstName == firstName || d.LastName == lastName)
+                    .FirstOrDefault();
 
-                if (directorForEdit == null)
-                {
-                    movieData.MovieDirectors.Add(new MovieDirector { Director = currDirector });
-                }
-                else
-                {
-                    directorForEdit.FirstName = currDirector.FirstName;
-                    directorForEdit.LastName = currDirector.LastName;
-                    directorForEdit.FullName = currDirector.FullName;
-                }
+                directorForEdit.FirstName = firstName;
+                directorForEdit.LastName = lastName;
+                directorForEdit.FullName = fullName;
             }
 
             movieData.Title = title;
@@ -235,24 +225,17 @@
 
             foreach (var actor in actors)
             {
-                var currActor = new Actor
-                {
-                    FirstName = actor.Split(" ")[0],
-                    LastName = actor.Split(" ")[1],
-                    FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
-                };
+                var fullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1];
+                var firstName = actor.Split(" ")[0];
+                var lastName = actor.Split(" ")[1];
 
-                var actorForEdit = this.data.Actors.FirstOrDefault(a => a.FullName == currActor.FullName);
-                if (actorForEdit == null)
-                {
-                    movieData.MovieActors.Add(new MovieActor { Actor = currActor });
-                }
-                else
-                {
-                    actorForEdit.FirstName = currActor.FirstName;
-                    actorForEdit.LastName = currActor.LastName;
-                    actorForEdit.FullName = currActor.FullName;
-                }
+                var actorForEdit = this.data.Actors
+                    .Where(a => a.FirstName == firstName || a.LastName == lastName)
+                    .FirstOrDefault();
+
+                actorForEdit.FirstName = firstName;
+                actorForEdit.LastName = lastName;
+                actorForEdit.FullName = fullName;
             }
             this.data.SaveChanges();
 
@@ -272,8 +255,7 @@
                     ImageUrl = m.ImageUrl,
                     WatchUrl = m.WatchUrl,
                     Country = m.Country,
-                    DirectorId = int.Parse(string.Join(",", m.MovieDirectors.Select(md => md.Director.DirectorId))),
-                    Directors = string.Join(",", m.MovieDirectors.Select(md => md.Director.FullName)),
+                    Directors = string.Join(", ", m.MovieDirectors.Select(md => md.Director.FullName)),
                     Actors = string.Join(", ", m.MovieActors.Select(ma => ma.Actor.FullName)),
                     Duration = m.Duration,
                     Descriptions = m.Descriptions,
