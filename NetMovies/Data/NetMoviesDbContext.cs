@@ -1,8 +1,9 @@
 ﻿namespace NetMovies.Data
 {
-    using NetMovies.Data.Models;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
+    using Models;
 
     public class NetMoviesDbContext : IdentityDbContext
     {
@@ -14,8 +15,8 @@
         public DbSet<Actor> Actors { get; init; }
         public DbSet<MovieActor> MovieActors { get; init; }
         public DbSet<Autor> Autors { get; set; }
-        public DbSet<AutorReview> AutorReviews { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<AutorReview> AutorReviews { get; set; }
         public DbSet<MovieReview> MovieReviews { get; set; }
         public DbSet<Director> Directors { get; init; }
         public DbSet<MovieDirector> MovieDirectors { get; init; }

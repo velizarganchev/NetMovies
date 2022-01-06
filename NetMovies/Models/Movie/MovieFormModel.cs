@@ -1,18 +1,17 @@
-﻿using NetMovies.Data;
-
-namespace NetMovies.Models.Movie
+﻿namespace NetMovies.Models.Movie
 {
-    using NetMovies.Services.Movies.Models;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using static DataConstants;
+
+    using Services.Movies.Models;
+    using static Data.DataConstants;
     public class MovieFormModel
     {
         [Required]
-        [StringLength(MovieTitleMaxLenght,MinimumLength = MovieTitleMinLenght)]
+        [StringLength(MovieTitleMaxLenght, MinimumLength = MovieTitleMinLenght)]
         public string Title { get; init; }
 
-        [Range(MovieYearMinValue,MovieYearMaxValue)]
+        [Range(MovieYearMinValue, MovieYearMaxValue)]
         public int Year { get; init; }
 
         [Display(Name = "Image Url")]
@@ -31,13 +30,13 @@ namespace NetMovies.Models.Movie
 
         [Required]
         //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
-        public string Directors { get; init; } 
+        public string Directors { get; init; }
 
         [Required]
         //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
         public string Actors { get; init; }
 
-        [Range(MovieDurationMinValue,MovieDurationMaxValue)]
+        [Range(MovieDurationMinValue, MovieDurationMaxValue)]
         public int Duration { get; init; }
 
         [Required]

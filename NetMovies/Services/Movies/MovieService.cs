@@ -1,13 +1,14 @@
 ﻿namespace NetMovies.Services.Movies
 {
     using AutoMapper;
+    using System.Linq;
+    using System.Collections.Generic;
+
     using NetMovies.Data;
     using NetMovies.Data.Models;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies.Models;
     using NetMovies.Services.Statistics;
-    using System.Collections.Generic;
-    using System.Linq;
 
     public class MovieService : IMovieService
     {

@@ -1,9 +1,8 @@
-﻿
-namespace NetMovies.Infrastructure
+﻿namespace NetMovies.Infrastructure
 {
     using AutoMapper;
-    using NetMovies.Models.Movie;
-    using NetMovies.Services.Movies.Models;
+    using Models.Movie;
+    using Services.Movies.Models;
 
     public class MyMappingProfile : Profile
     {

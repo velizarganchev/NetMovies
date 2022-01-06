@@ -7,13 +7,10 @@
     public class Review
     {
         public int ReviewId { get; set; }
-        [Required]
-        [MaxLength(DefaultNameMaxLenght)]
-        public string Title { get; set; }
 
         [Required]
         [MaxLength(MovieDescriptionsMaxLenght)]
-        public string Description { get; set; }
+        public string Content { get; set; }
 
         public ICollection<MovieReview> MovieReviews { get; set; } = new HashSet<MovieReview>();
         public ICollection<AutorReview> AutorReviews { get; set; } = new HashSet<AutorReview>();

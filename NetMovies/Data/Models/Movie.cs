@@ -32,6 +32,8 @@
         [MaxLength(MovieDescriptionsMaxLenght)]
         public string Descriptions { get; set; }
 
+        public int Rate { get; set; }
+
         public int GenreId { get; set; }
 
         public Genre Genre { get; set; }

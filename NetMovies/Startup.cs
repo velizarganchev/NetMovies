@@ -7,10 +7,11 @@ namespace NetMovies
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using NetMovies.Data;
-    using NetMovies.Infrastructure;
-    using NetMovies.Services.Movies;
-    using NetMovies.Services.Statistics;
+
+    using Data;
+    using Infrastructure;
+    using Services.Movies;
+    using Services.Statistics;
 
     public class Startup
     {

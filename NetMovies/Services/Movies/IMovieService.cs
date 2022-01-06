@@ -1,8 +1,9 @@
 ﻿namespace NetMovies.Services.Movies
 {
     using System.Collections.Generic;
+
     using NetMovies.Models.Movie;
-    using NetMovies.Services.Movies.Models;
+    using Services.Movies.Models;
  
     public interface IMovieService
     {

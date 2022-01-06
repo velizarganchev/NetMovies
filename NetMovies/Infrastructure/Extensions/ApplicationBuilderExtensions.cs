@@ -1,11 +1,13 @@
 ﻿namespace NetMovies.Infrastructure
 {
+    using System.Linq;
+
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
-    using NetMovies.Data;
-    using NetMovies.Data.Models;
-    using System.Linq;
+
+    using Data;
+    using Data.Models;
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(
