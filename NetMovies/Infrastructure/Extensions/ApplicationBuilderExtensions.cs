@@ -38,7 +38,7 @@
                 new Genre{ GenreName = "Drama"},
                 new Genre{ GenreName = "Fantasy"},
                 new Genre{ GenreName = "Thriller"},
-                new Genre{ GenreName = "Action"},
+                new Genre{ GenreName = "Action"}, 
                 new Genre{ GenreName = "Horror"},
                 new Genre{ GenreName = "Mystery"},
                 new Genre{ GenreName = "Romance"},
