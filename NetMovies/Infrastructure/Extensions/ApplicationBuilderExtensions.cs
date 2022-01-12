@@ -33,20 +33,44 @@
                 return;
             }
 
-            data.Genres.AddRange(new[] 
+            data.Genres.AddRange(new[]
             {
-                new Genre{ GenreName = "Drama"},
-                new Genre{ GenreName = "Fantasy"},
-                new Genre{ GenreName = "Thriller"},
-                new Genre{ GenreName = "Action"}, 
-                new Genre{ GenreName = "Horror"},
-                new Genre{ GenreName = "Mystery"},
-                new Genre{ GenreName = "Romance"},
-                new Genre{ GenreName = "Comedy"},
-                new Genre{ GenreName = "Western"},
-                new Genre{ GenreName = "Animation"}
+                   new Genre { GenreName = "Action / Adventure" },
+                   new Genre { GenreName = "Animals" },
+                   new Genre { GenreName = "Animation"},
+                   new Genre { GenreName = "Comedy" },
+                   new Genre { GenreName = "Cooking" },
+                   new Genre { GenreName = "Dance" },
+                   new Genre { GenreName = "Documentary" },
+                   new Genre { GenreName = "Drama"},
+                   new Genre { GenreName = "Education" },
+                   new Genre { GenreName = "Entertainment" },
+                   new Genre { GenreName = "Family" },
+                   new Genre { GenreName = "Fantasy" },
+                   new Genre { GenreName = "History" },
+                   new Genre { GenreName = "Horror"},
+                   new Genre { GenreName = "Independent" },
+                   new Genre { GenreName = "International" },
+                   new Genre { GenreName = "Kids"},
+                   new Genre { GenreName = "Kids & Family" },
+                   new Genre { GenreName = "Medical" },
+                   new Genre { GenreName = "Military / War" },
+                   new Genre { GenreName = "Music" },
+                   new Genre { GenreName = "Musical" },
+                   new Genre { GenreName = "Mystery / Crime"},
+                   new Genre { GenreName = "Nature" },
+                   new Genre { GenreName = "Paranormal" },
+                   new Genre { GenreName = "Politics" },
+                   new Genre { GenreName = "Racing" },
+                   new Genre { GenreName = "Romance" },
+                   new Genre { GenreName = "Sci - Fi / Horror"},
+                   new Genre { GenreName = "Science"},
+                   new Genre { GenreName = "Science Fiction" },
+                   new Genre { GenreName = "Science / Nature" },
+                   new Genre { GenreName = "Spanish" },
+                   new Genre { GenreName = "Travel" },
+                   new Genre { GenreName = "Western" },
             });
-
             data.SaveChanges();
         }
     }

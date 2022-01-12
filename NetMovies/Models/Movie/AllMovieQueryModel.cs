@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     public class AllMovieQueryModel
     {
-        public const int MoviesPerPage = 3;
+        public const int MoviesPerPage = 4;
 
         public string SearchTerm { get; init; }
 
