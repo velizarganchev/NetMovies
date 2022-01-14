@@ -1,5 +1,6 @@
 ﻿namespace NetMovies.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -7,6 +8,11 @@
     public class Review
     {
         public int ReviewId { get; set; }
+        [Required]
+        [MaxLength(ReviewTitleMaxLength)]
+        public string Title { get; set; }
+
+        public DateTime Date{ get; set; }
 
         [Required]
         [MaxLength(MovieDescriptionsMaxLenght)]

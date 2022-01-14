@@ -19,7 +19,10 @@
 
         public const int MovieDurationMaxValue = 500;
         public const int MovieDurationMinValue = 1;
-       
+
+        public const int ReviewTitleMaxLength = 30;
+        public const int ReviewTitleMinLength = 3;
+
 
     }
 }
