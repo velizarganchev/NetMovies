@@ -4282,8 +4282,8 @@ label {
     color: white;
     align-items: center;
 }
-.addMovieBtn 
-{
+
+.addMovieBtn {
     display: flex;
     justify-content: center;
     align-items: center;

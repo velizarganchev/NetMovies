@@ -10,6 +10,8 @@
 
         public string ImageUrl { get; init; }
 
+        public string WatchUrl { get; set; }
+
         public string Genre { get; set; }
 
         public double Rate { get; set; }

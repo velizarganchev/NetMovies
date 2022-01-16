@@ -16,26 +16,26 @@
                             <img src="~/img/logo.svg" alt="">
                         </a>
 
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="sign__group">
-                            <input asp-for="Input.Email" type="text" class="sign__input" placeholder="Email">
-                            @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+                            <label asp-for="Input.Email"></label>
+                            <input asp-for="Input.Email" class="sign__input" />
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
-
                         <div class="sign__group">
-                            <input asp-for="Input.Password" type="password" class="sign__input" placeholder="Password">
-                            @*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
+                            <label asp-for="Input.Password"></label>
+                            <input asp-for="Input.Password" class="sign__input" />
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
                         </div>
-
                         <div class="sign__group sign__group--checkbox">
-                            <input id="remember" name="remember" asp-for="Input.RememberMe" type="checkbox" checked="checked">
-                            <label for="remember">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+                            <input id="remember" name="remember" type="checkbox" checked="checked">
+                            <label for="remember">Remember Me</label>
                         </div>
-
                         <button class="sign__btn" type="submit">Sign in</button>
 
                         <span class="sign__text">Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Sign up!</a></span>
 
-                        <span class="sign__text"><a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a></span>
+                        <span class="sign__text"><a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a></span>-->
                     </form>
                     <!-- end authorization form -->
                 </div>
@@ -43,6 +43,28 @@
         </div>
     </div>
 </div>
+
+<!--<div class="sign__group">
+    <input asp-for="Input.Email" type="text" class="sign__input" placeholder="Email">-->
+@*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+<!--</div>
+
+<div class="sign__group">
+    <input asp-for="Input.Password" type="password" class="sign__input" placeholder="Password">-->
+@*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
+<!--</div>
+
+<div class="sign__group sign__group--checkbox">
+    <input id="remember" name="remember" asp-for="Input.RememberMe" type="checkbox" checked="checked">
+    <label for="remember">@Html.DisplayNameFor(m => m.Input.RememberMe)</label>
+</div>
+
+<button class="sign__btn" type="submit">Sign in</button>
+
+<span class="sign__text">Don't have an account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Sign up!</a></span>
+
+<span class="sign__text"><a id="forgot-password" asp-page="./ForgotPassword">Forgot password?</a></span>-->
+
 @*<h1>@ViewData["Title"]</h1>
     <div class="row">
         <div class="col-md-4">

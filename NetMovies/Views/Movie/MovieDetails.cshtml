@@ -1,5 +1,4 @@
 ﻿@model MovieDetailsServiceModel
-
 <!-- details -->
 <section class="section details">
     <!-- details background -->
@@ -28,26 +27,30 @@
                         <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-7">
                             <div class="card__content">
                                 <div class="card__wrap">
-                                    <span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>@Model.Rate</span>
 
                                     <ul class="card__list">
-                                        <li>HD</li>
-                                        <li>16+</li>
+                                        <li>@Model.Year</li>
+                                        <li>@Model.Quality</li>
+                                        <li>@Model.AgeLimit+</li>
+                                        <li><button type="button" style="color:hotpink" id="AddToMyList"><i class="fas fa-plus-square fa-3x"></i></button></li>
                                     </ul>
+                                    
                                 </div>
 
                                 <ul class="card__meta">
+                                    <li><span>Director:</span> @Model.Directors</li>
+                                    <li><span>Cast:</span> @Model.Actors</li>
                                     <li>
                                         <span>Genre:</span> <a href="#">Action</a>
                                         <a href="#">@Model.Genre</a>
                                     </li>
-                                    <li><span>Release year:</span> @Model.Year</li>
                                     <li><span>Running time:</span> @Model.Duration min</li>
                                     <li><span>Country:</span> <a href="#">@Model.Country</a> </li>
                                 </ul>
 
                                 <div class="card__description card__description--details">
-                                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+                                    @Model.Description
                                 </div>
                             </div>
                         </div>
@@ -59,24 +62,23 @@
             <!-- player -->
             <div class="col-12 col-xl-6">
                 <video controls id="player">
-                     @*Video files*@ 
+                    @*Video files*@
                     <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">
                     <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">
                     <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">
                     <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1440p.mp4" type="video/mp4" size="1440">
 
-                     @*Caption files*@ 
+                    @*Caption files*@
                     <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
                            default>
                     <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
 
-                     @*Fallback for browsers that don't support the <video> element*@ 
+                    @*Fallback for browsers that don't support the <video> element*@
                     <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
                 </video>
 
             </div>
             <!-- end player -->
-
             <div class="col-12">
                 <div class="details__wrap">
                     <!-- availables -->
@@ -109,43 +111,4 @@
     <!-- end details content -->
 </section>
 <!-- end details -->
-@*<nav id="navDetails">
-        <ol>
-            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-            <li>/Details</li>
-        </ol>
-    </nav>
-    <section class="Single-Movie-Info">
-        <div class="MovieTitle">
-            <h1>@Model.Title</h1>
-        </div>
-        <div class="Movie">
-            <a href="@Model.WatchUrl">
-                <img src="@Model.ImageUrl"
-                     alt="Image" />
-            </a>
-        </div>
-        <div class="DetailsItems" style="align-items: center" >
-            <span>@Model.Year</span>
-            <span>@Model.Country</span>
-        </div>
-        <p>
-            Rogue und Logan besitzen außergewöhnliche Kräfte, die sie noch nicht
-            kontrollieren können. Sie gelangen in das Institut von Professor
-            Charles Xavier, der jugendlichen Mutanten hilft, mit ihren
-            Fähigkeiten umzugehen, und sie lehrt, im Verborgenen den Erhalt der
-            Menschheit zu sichern. Währenddessen entführt Magneto, ein anderer
-            Mutant, einen Senator und plant einen Anschlag. Sein Ziel ist die
-            Herrschaft der Mutanten über die Erde. Logan, Rogue und der
-            Professor versuchen, ihn aufzuhalten.
-        </p>
-        <section class="Comments">
-            <h1>Comments</h1>
-            <textarea class="form-control"
-                      placeholder="write a comment..."
-                      rows="3">
-              </textarea>
-            <button type="button" class="btn btn-info pull-right">Post</button>
-        </section>
-    </section>*@
 

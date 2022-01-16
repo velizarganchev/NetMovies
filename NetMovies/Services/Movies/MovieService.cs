@@ -9,6 +9,7 @@
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies.Models;
     using NetMovies.Services.Statistics;
+    using System;
 
     public class MovieService : IMovieService
     {
@@ -37,7 +38,10 @@
                 Title = m.Title,
                 Year = m.Year,
                 ImageUrl = m.ImageUrl,
+                WatchUrl = m.WatchUrl,
+                AgeLimit = m.AgeLimit,
                 Genre = m.Genre.GenreName,
+                Quality = m.Quality.QualityName,
                 Description = m.Description,
                 Country = m.Country
             })
@@ -78,6 +82,7 @@
                     Title = m.Title,
                     Year = m.Year,
                     ImageUrl = m.ImageUrl,
+                    WatchUrl = m.WatchUrl,
                     Genre = m.Genre.GenreName,
                     Country = m.Country
                 }).ToList();
@@ -132,19 +137,15 @@
                 Rate = 0.0
             };
 
-            //directors.RemoveAt(directors.Count - 1);
-
             foreach (var director in directors)
             {
                 var currdirector = new Director
                 {
-                    FirstName = director.Split(", ")[0],
-                    LastName = director.Split(", ")[1],
-                    FullName = director.Split(", ")[0] + " " + director.Split(", ")[1]
+                    FirstName = director.Split(" ")[0],
+                    LastName = director.Split(" ")[1],
+                    FullName = director.Split(" ")[0] + " " + director.Split(" ")[1]
                 };
-                var existDirector = this.data
-                    .Directors
-                    .FirstOrDefault(x => x.FullName == currdirector.FullName);
+                var existDirector = this.data.Directors.FirstOrDefault(x => x.FullName == currdirector.FullName);
 
                 if (!this.data.Directors.Contains(existDirector))
                 {
@@ -158,15 +159,13 @@
                 movieData.MovieDirectors.Add(new MovieDirector { Director = currdirector });
             }
 
-            //actors.RemoveAt(actors.Count - 1);
-
             foreach (var actor in actors)
             {
                 var currActor = new Actor
                 {
-                    FirstName = actor.Split(", ")[0],
-                    LastName = actor.Split(", ")[1],
-                    FullName = actor.Split(", ")[0] + " " + actor.Split(", ")[1]
+                    FirstName = actor.Split(" ")[0],
+                    LastName = actor.Split(" ")[1],
+                    FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
                 };
 
                 var existActor = this.data.Actors.FirstOrDefault(x => x.FullName == currActor.FullName);
@@ -257,20 +256,22 @@
                 {
                     Title = m.Title,
                     Year = m.Year,
-                    ImageUrl = m.ImageUrl,
+                    ImageUrl = m.ImageUrl, 
                     WatchUrl = m.WatchUrl,
+                    AgeLimit = m.AgeLimit,
                     Country = m.Country,
                     Directors = string.Join(", ", m.MovieDirectors.Select(md => md.Director.FullName)),
                     Actors = string.Join(", ", m.MovieActors.Select(ma => ma.Actor.FullName)),
                     Duration = m.Duration,
-                    Descriptions = m.Description,
+                    Description = m.Description,
                     GenreId = m.GenreId,
+                    Quality = m.Quality.QualityName,
                     CreatorId = m.CreatorId
                 }).FirstOrDefault();
             return movie;
         }
 
-        public MovieQueryServiceModel AllMovies(string userId)
+        public MovieQueryServiceModel MyMovies(string userId)
         {
             var moviesQuery = this.data.Movies.Where(m => m.CreatorId == userId).AsQueryable();
 
@@ -281,8 +282,12 @@
                 {
                     MovieId = m.MovieId,
                     Title = m.Title,
+                    Genre = m.Genre.GenreName,
+                    Quality = m.Quality.QualityName,
+                    Description = m.Description,
                     Year = m.Year,
                     ImageUrl = m.ImageUrl,
+                    WatchUrl = m.WatchUrl,
                     Country = m.Country
                 }).ToList();
 

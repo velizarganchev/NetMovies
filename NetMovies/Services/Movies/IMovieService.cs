@@ -26,7 +26,7 @@
 
         public MovieDetailsServiceModel Details(int id);
 
-        public MovieQueryServiceModel AllMovies(string userId);
+        public MovieQueryServiceModel MyMovies(string userId);
 
         public List<string> DirectorsList(MovieFormModel movie);
 
