@@ -23,7 +23,10 @@
         }
 
         [Authorize]
-        public IActionResult Add() => View(new MovieFormModel{Genres = this.movies.GenreCategories()});
+        public IActionResult Add() => View(new MovieFormModel{
+            Genres = this.movies.GenreCategories(),
+            Qualities = this.movies.Qualities()
+        });
 
         [HttpPost]
         [Authorize]
@@ -32,10 +35,12 @@
             if (!movies.GenreExists(movie.GenreId))
             {
                 this.ModelState.AddModelError(nameof(movie.GenreId), "Genre does not exist.");
-            }
+            }  
+
             if (!ModelState.IsValid)
             {
                 movie.Genres = this.movies.GenreCategories();
+                movie.Qualities = this.movies.Qualities();
 
                 return View(movie);
             }
@@ -43,7 +48,7 @@
             var actorsList = movies.ActorsList(movie);
 
             var movieId = this.movies.Create(directorsList, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
-                movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
+                movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, movie.QualityId, movie.AgeLimit , actorsList);
 
             return RedirectToAction(nameof(All));
         }

@@ -39,6 +39,9 @@
         [Range(MovieDurationMinValue, MovieDurationMaxValue)]
         public int Duration { get; init; }
 
+        [Display(Name = "Age Limit")]
+        public int AgeLimit { get; set; }
+
         [Required]
         [MinLength(MovieDescriptionsMinLenght)]
         public string Descriptions { get; init; }
@@ -48,5 +51,11 @@
         public int GenreId { get; init; }
 
         public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
+
+        [Display(Name = "Quality")]
+        [Required]
+        public int QualityId { get; init; }
+
+        public IEnumerable<MovieQualityServiceModel> Qualities { get; set; }
     }
 }

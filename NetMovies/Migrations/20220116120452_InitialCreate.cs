@@ -105,11 +105,26 @@ namespace NetMovies.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Qualities",
+                columns: table => new
+                {
+                    QualityId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    QualityName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Qualities", x => x.QualityId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
                     ReviewId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false)
                 },
                 constraints: table =>
@@ -235,9 +250,11 @@ namespace NetMovies.Migrations
                     WatchUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
-                    Descriptions = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
-                    Rate = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
+                    Rate = table.Column<double>(type: "float", nullable: true),
+                    AgeLimit = table.Column<int>(type: "int", nullable: false),
                     GenreId = table.Column<int>(type: "int", nullable: false),
+                    QualityId = table.Column<int>(type: "int", nullable: false),
                     CreatorId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -249,6 +266,12 @@ namespace NetMovies.Migrations
                         column: x => x.GenreId,
                         principalTable: "Genres",
                         principalColumn: "GenreId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Movies_Qualities_QualityId",
+                        column: x => x.QualityId,
+                        principalTable: "Qualities",
+                        principalColumn: "QualityId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -329,7 +352,9 @@ namespace NetMovies.Migrations
                 columns: table => new
                 {
                     MovieId = table.Column<int>(type: "int", nullable: false),
-                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                    ReviewId = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -411,6 +436,11 @@ namespace NetMovies.Migrations
                 name: "IX_Movies_GenreId",
                 table: "Movies",
                 column: "GenreId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Movies_QualityId",
+                table: "Movies",
+                column: "QualityId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -465,6 +495,9 @@ namespace NetMovies.Migrations
 
             migrationBuilder.DropTable(
                 name: "Genres");
+
+            migrationBuilder.DropTable(
+                name: "Qualities");
         }
     }
 }

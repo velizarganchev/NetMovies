@@ -38,6 +38,7 @@
                 Year = m.Year,
                 ImageUrl = m.ImageUrl,
                 Genre = m.Genre.GenreName,
+                Description = m.Description,
                 Country = m.Country
             })
             .ToList();
@@ -113,7 +114,7 @@
 
         public int Create(List<string> directors, string creatorId,
             string title, int year, string imageUrl, string watchUrl,
-            string country, int duration, string descriptions, int genreId, List<string> actors)
+            string country, int duration, string descriptions, int genreId, int qualityId, int ageLimit, List<string> actors)
         {
             var movieData = new Movie
             {
@@ -124,19 +125,22 @@
                 WatchUrl = watchUrl,
                 Country = country,
                 Duration = duration,
-                Descriptions = descriptions,
-                GenreId = genreId
+                AgeLimit = ageLimit,
+                Description = descriptions,
+                GenreId = genreId,
+                QualityId = qualityId,
+                Rate = 0.0
             };
 
-            directors.RemoveAt(directors.Count - 1);
+            //directors.RemoveAt(directors.Count - 1);
 
             foreach (var director in directors)
             {
                 var currdirector = new Director
                 {
-                    FirstName = director.Split(" ")[0],
-                    LastName = director.Split(" ")[1],
-                    FullName = director.Split(" ")[0] + " " + director.Split(" ")[1]
+                    FirstName = director.Split(", ")[0],
+                    LastName = director.Split(", ")[1],
+                    FullName = director.Split(", ")[0] + " " + director.Split(", ")[1]
                 };
                 var existDirector = this.data
                     .Directors
@@ -154,15 +158,15 @@
                 movieData.MovieDirectors.Add(new MovieDirector { Director = currdirector });
             }
 
-            actors.RemoveAt(actors.Count - 1);
+            //actors.RemoveAt(actors.Count - 1);
 
             foreach (var actor in actors)
             {
                 var currActor = new Actor
                 {
-                    FirstName = actor.Split(" ")[0],
-                    LastName = actor.Split(" ")[1],
-                    FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1]
+                    FirstName = actor.Split(", ")[0],
+                    LastName = actor.Split(", ")[1],
+                    FullName = actor.Split(", ")[0] + " " + actor.Split(", ")[1]
                 };
 
                 var existActor = this.data.Actors.FirstOrDefault(x => x.FullName == currActor.FullName);
@@ -221,7 +225,7 @@
             movieData.WatchUrl = watchUrl;
             movieData.Country = country;
             movieData.Duration = duration;
-            movieData.Descriptions = descriptions;
+            movieData.Description = descriptions;
             movieData.GenreId = genreId;
 
             foreach (var actor in actors)
@@ -259,7 +263,7 @@
                     Directors = string.Join(", ", m.MovieDirectors.Select(md => md.Director.FullName)),
                     Actors = string.Join(", ", m.MovieActors.Select(ma => ma.Actor.FullName)),
                     Duration = m.Duration,
-                    Descriptions = m.Descriptions,
+                    Descriptions = m.Description,
                     GenreId = m.GenreId,
                     CreatorId = m.CreatorId
                 }).FirstOrDefault();
@@ -295,6 +299,14 @@
             {
                 GenreId = g.GenreId,
                 Name = g.GenreName
+            })
+            .ToList();
+        public IEnumerable<MovieQualityServiceModel> Qualities()
+        =>
+            data.Qualities.Select(q => new MovieQualityServiceModel
+            {
+                QualityId = q.QualityId,
+                Name = q.QualityName
             })
             .ToList();
 

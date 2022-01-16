@@ -71,6 +71,13 @@
                    new Genre { GenreName = "Travel" },
                    new Genre { GenreName = "Western" },
             });
+            data.Qualities.AddRange(new[]
+            {
+                new Quality { QualityName = "HD 1080p" },
+                new Quality { QualityName = "720p" },
+                new Quality { QualityName = "480p" },
+                new Quality { QualityName = "460p" }
+            });
             data.SaveChanges();
         }
     }

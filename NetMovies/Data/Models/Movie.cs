@@ -30,13 +30,19 @@
 
         [Required]
         [MaxLength(MovieDescriptionsMaxLenght)]
-        public string Descriptions { get; set; }
+        public string Description { get; set; }
 
-        public int Rate { get; set; }
+        public double? Rate { get; set; }
+
+        public int AgeLimit { get; set; }
 
         public int GenreId { get; set; }
 
         public Genre Genre { get; set; }
+
+        public int QualityId { get; set; }
+
+        public Quality Quality { get; set; }
 
         public string CreatorId { get; set; }
 

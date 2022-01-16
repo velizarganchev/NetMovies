@@ -4,7 +4,7 @@
 
     using NetMovies.Models.Movie;
     using Services.Movies.Models;
- 
+
     public interface IMovieService
     {
         MovieQueryServiceModel Index();
@@ -16,9 +16,9 @@
 
         public IEnumerable<MovieServiceModel> AllApiMovies();
 
-        int Create(List<string> directorNames, string creatorId,string title,
-            int year, string imageUrl, string watchUrl,string country, int duration,
-            string descriptions, int genreId, List<string> actors);
+        int Create(List<string> directorNames, string creatorId, string title,
+            int year, string imageUrl, string watchUrl, string country, int duration,
+            string descriptions, int genreId, int qualityId, int ageLimit, List<string> actors);
 
         public bool Edit(int id, List<string> directorNames, string creatorId,
             string title, int year, string imageUrl, string watchUrl,
@@ -33,6 +33,8 @@
         public List<string> ActorsList(MovieFormModel movie);
 
         IEnumerable<MovieGenreServiceModel> GenreCategories();
+
+        public IEnumerable<MovieQualityServiceModel> Qualities();
 
         bool GenreExists(int genreId);
 

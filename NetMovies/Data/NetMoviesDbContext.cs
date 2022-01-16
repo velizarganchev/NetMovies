@@ -21,6 +21,7 @@
         public DbSet<Director> Directors { get; init; }
         public DbSet<MovieDirector> MovieDirectors { get; init; }
         public DbSet<Genre> Genres { get; init; }
+        public DbSet<Quality> Qualities { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -90,6 +91,11 @@
                 .HasForeignKey(g => g.GenreId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Movie>()
+                .HasOne(q => q.Quality)
+                .WithMany(m => m.Movies)
+                .HasForeignKey(q => q.QualityId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }
