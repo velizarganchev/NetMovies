@@ -88,9 +88,13 @@
                 }).ToList();
 
             var totalStatistics = this.statistics.Total();
+            var genres = GenreCategories();
+            var qualities = Qualities();
 
             return new MovieQueryServiceModel
             {
+                Genres = genres,
+                Qualities = qualities,
                 TotalMovies = totalStatistics.TotalMovies,
                 Movies = movies
             };

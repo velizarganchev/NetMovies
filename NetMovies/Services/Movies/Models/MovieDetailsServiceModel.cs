@@ -5,8 +5,6 @@ namespace NetMovies.Services.Movies.Models
 {
     public class MovieDetailsServiceModel : MovieServiceModel
     {
-        public string WatchUrl { get; init; }
-
         public string Directors { get; init; }
 
         public string Actors { get; init; }

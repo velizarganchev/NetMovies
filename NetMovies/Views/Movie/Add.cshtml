@@ -28,13 +28,13 @@
 <section class="section">
     <div class="container">
         <div class="row">
-            <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8 ">
+            <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
                 <form method="post" class="sign__form">
 
                     <a href="index.html" class="sign__logo">
                         <img src="~/img/logo.svg" alt="">
                     </a>
-
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Title">Title</label>
                         <input asp-for="Title" class="sign__input" placeholder="Fast & Furious 9,Transformers – Die Rache...">

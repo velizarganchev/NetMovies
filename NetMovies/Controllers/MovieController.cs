@@ -16,6 +16,8 @@
         {
             var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
 
+            query.Genres = movies.Genres;
+            query.Qualities = movies.Qualities;
             query.TotalMovies = movies.TotalMovies;
             query.Movies = movies.Movies;
 

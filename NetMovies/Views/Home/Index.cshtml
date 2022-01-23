@@ -8,9 +8,8 @@
     var movies = Model.Movies.ToList();
     var carouselMovies = movies.Take(6).ToList();
     var newMovies = movies.Take(6).ToList();
+    var animatedMovies = movies.Where(m => m.Genre.Contains("Animation")).ToList();
     var actionmovies = movies.Take(12).ToList();
-    var animatedMovies = movies.Take(12).ToList();
-    //var animatedMovies = movies.Where(m => m.Genre.Contains("Animation")).ToList();
 
 
 }
@@ -29,7 +28,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="home__title"><b>NEW ITEMS</b> OF THIS SEASON</h1>
+                <h1 class="home__title"><b>NEW MOVIES</b></h1>
 
                 <button class="home__nav home__nav--prev" type="button">
                     <i class="fas fa-arrow-left"></i>
@@ -107,14 +106,14 @@
                                aria-selected="false">MOVIES</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               data-toggle="tab"
-                               href="#tab-3"
-                               role="tab"
-                               aria-controls="tab-3"
-                               aria-selected="false">TV SERIES</a>
-                        </li>
+                        @*<li class="nav-item">
+                                <a class="nav-link"
+                                   data-toggle="tab"
+                                   href="#tab-3"
+                                   role="tab"
+                                   aria-controls="tab-3"
+                                   aria-selected="false">TV SERIES</a>
+                            </li>*@
 
                         <li class="nav-item">
                             <a class="nav-link"
@@ -161,16 +160,15 @@
                                        aria-selected="false">MOVIES</a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a class="nav-link"
-                                       id="3-tab"
-                                       data-toggle="tab"
-                                       href="#tab-3"
-                                       role="tab"
-                                       aria-controls="tab-3"
-                                       aria-selected="false">TV SERIES</a>
-                                </li>
-
+                                @*<li class="nav-item">
+                                        <a class="nav-link"
+                                           id="3-tab"
+                                           data-toggle="tab"
+                                           href="#tab-3"
+                                           role="tab"
+                                           aria-controls="tab-3"
+                                           aria-selected="false">TV SERIES</a>
+                                    </li>*@
                                 <li class="nav-item">
                                     <a class="nav-link"
                                        id="4-tab"
@@ -225,7 +223,7 @@
                                                 <span class="card__rate"><i class="icon ion-ios-star"></i>@movie.Rate</span>
 
                                                 <ul class="card__list">
-                                                    <li>@movie.Quality</li>     
+                                                    <li>@movie.Quality</li>
                                                     <li>@movie.AgeLimit+</li>
                                                 </ul>
                                             </div>
@@ -251,7 +249,7 @@
                  aria-labelledby="2-tab">
                 <div class="row">
                     <!-- card -->
-                    @foreach (var movie in actionmovies)
+                    @foreach (var movie in movies)
                     {
                         <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
                             <div class="card">
@@ -536,6 +534,10 @@
                  role="tabpanel"
                  aria-labelledby="4-tab">
                 <div class="row">
+                    @if (animatedMovies.Count() == 0)
+                    {
+                        <h1 style="color:azure">No Movies in data base</h1>
+                    }
                     <!-- card -->
                     @foreach (var movie in animatedMovies)
                     {
@@ -567,117 +569,3 @@
     </div>
 </section>
 <!-- end content -->
-@*@if (!movies.Any())
-    {
-        <div class="jumbotron">
-            <h1 class="display-4">Welcome to the world of movies</h1>
-            <p class="lead">There are no movies in the system currently available!</p>
-            <hr class="my-4">
-            <p class="lead">
-                <a asp-controller="Movie" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Movie</a>
-            </p>
-        </div>
-    }
-
-    @if (movies.Any())
-    {
-        <div class="mb-5"></div>
-
-        <section>
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    @for (int i = 0; i < carouselMovies.Count; i++)
-                    {
-                        var movie = movies[i];
-
-                        @if (movie != null)
-                        {
-                            <div class="carousel-item  @(i == 0 ? "active" : string.Empty)">
-                                <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
-                                    <img class="d-block w-100" src="@movie.ImageUrl" alt="@movie.Title @movie.Country">
-                                    <div class="carousel-caption d-none d-md-block">
-                                    </div>
-                                </a>
-                            </div>
-                        }
-                    }
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </section>
-
-        <div class="mb-5"></div>
-
-        <section>
-            <h3 class="text-dark">New to NetMovies</h3>
-            <div class="row">
-                @foreach (var movie in newMovies)
-                {
-                    <div class="col-md-3">
-                        <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
-                            <div class="card mb-4" style="width: 16rem;">
-                                <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Country (@movie.Year)">
-                                <div class="card-body">
-                                    <p class="card-title text-center">@movie.Title</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <div class="mb-5"></div>
-
-        <section>
-            <h3 class="text-dark">Action Movies</h3>
-            <div class="row">
-                @foreach (var movie in actionmovies)
-                {
-                    <div class="col-md-3">
-                        <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
-                            <div class="card mb-4" style="width: 16rem;">
-                                <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Country (@movie.Year)">
-                                <div class="card-body">
-                                    <p class="card-title text-center">@movie.Title</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                }
-            </div>
-        </section>
-
-        <div class="mb-5"></div>
-    @if (animatedMovies.Any())
-    {
-        <section>
-            <h3 class="text-dark">Animated Movies</h3>
-            <div class="row">
-                @foreach (var movie in animatedMovies)
-                {
-                    <div class="col-md-3">
-                        <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="hvr-shutter-out-horizontal">
-                            <div class="card mb-4" style="width: 16rem;">
-                                <img class="card-img-top" src="@movie.ImageUrl" alt="@movie.Title @movie.Country (@movie.Year)">
-                                <div class="card-body">
-                                    <p class="card-title text-center">@movie.Title</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                }
-            </div>
-        </section>*@
-}
-
-}
-
-
