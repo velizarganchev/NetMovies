@@ -80,7 +80,10 @@
                 {
                     MovieId = m.MovieId,
                     Title = m.Title,
+                    Quality = m.Quality.QualityName,
+                    Description = m.Description,
                     Year = m.Year,
+                    AgeLimit = m.AgeLimit,
                     ImageUrl = m.ImageUrl,
                     WatchUrl = m.WatchUrl,
                     Genre = m.Genre.GenreName,
@@ -260,7 +263,7 @@
                 {
                     Title = m.Title,
                     Year = m.Year,
-                    ImageUrl = m.ImageUrl, 
+                    ImageUrl = m.ImageUrl,
                     WatchUrl = m.WatchUrl,
                     AgeLimit = m.AgeLimit,
                     Country = m.Country,
@@ -290,12 +293,17 @@
                     Quality = m.Quality.QualityName,
                     Description = m.Description,
                     Year = m.Year,
+                    AgeLimit = m.AgeLimit,
                     ImageUrl = m.ImageUrl,
                     WatchUrl = m.WatchUrl,
                     Country = m.Country
                 }).ToList();
 
-            return new MovieQueryServiceModel { Movies = movies };
+            return new MovieQueryServiceModel
+            {
+                Movies = movies,
+                TotalMovies = movies.Count()
+            };
         }
 
         public List<string> DirectorsList(MovieFormModel movie) => movie.Directors.Split(", ").ToList();

@@ -26,7 +26,6 @@
 <!-- end page title -->
 <!-- faq -->
 <section class="section">
-    <div class="container">
         <div class="row">
             <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
                 <form method="post" class="sign__form">
@@ -37,72 +36,72 @@
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Title">Title</label>
-                        <input asp-for="Title" class="sign__input" placeholder="Fast & Furious 9,Transformers – Die Rache...">
+                        <input asp-for="Title" class="addMovieInput" placeholder="Fast & Furious 9,Transformers – Die Rache...">
                         <span asp-validation-for="Title" class="small text-danger"></span>
                     </div>
 
                     <div class="sign__group">
                         <label class="fontsColor" for="DirectorFirstName">Director Name</label>
-                        <input type="text" class="sign__input" id="DirectorFirstAndLastName" placeholder="First and last name">
+                        <input type="text" class="addMovieInput" id="DirectorFirstAndLastName" placeholder="First and last name">
                     </div>
 
                     <button type="button" class="addMovieBtn" id="addDirector"><i class="fas fa-plus"></i></button>
 
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Directors"></label>
-                        <textarea asp-for="Directors" class="sign__input" rows="3" id="directorTextArea" required></textarea>
+                        <textarea asp-for="Directors" class="addMovieInput" rows="3" id="directorTextArea" required></textarea>
                         <span asp-validation-for="Directors" class="small text-danger"></span>
                     </div>
 
 
                     <div class="sign__group">
                         <label class="fontsColor" for="ActorFirstName">Actor name</label>
-                        <input type="text" class="sign__input" id="ActorFirstAndLastName" placeholder="First and last name">
+                        <input type="text" class="addMovieInput" id="ActorFirstAndLastName" placeholder="First and last name">
                     </div>
 
                     <button type="button" class="addMovieBtn" id="addActor"><i class="fas fa-plus"></i></button>
 
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Actors"></label>
-                        <textarea asp-for="Actors" rows="3" class="sign__input" id="ActorTextArea" required></textarea>
+                        <textarea asp-for="Actors" rows="3" class="addMovieInput" id="ActorTextArea" required></textarea>
                         <span asp-validation-for="Actors" class="small text-danger"></span>
                     </div>
 
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Year"></label>
-                        <input asp-for="Year" class="sign__input" placeholder="@DateTime.UtcNow.Year">
+                        <input asp-for="Year" class="addMovieInput" placeholder="@DateTime.UtcNow.Year">
                         <span asp-validation-for="Year" class="small text-danger"></span>
                     </div>
 
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="ImageUrl"></label>
-                        <input asp-for="ImageUrl" class="sign__input" placeholder="www.www/...">
+                        <input asp-for="ImageUrl" class="addMovieInput" placeholder="www.www/...">
                         <span asp-validation-for="ImageUrl" class="small text-danger"></span>
                     </div>
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="WatchUrl"></label>
-                        <input asp-for="WatchUrl" class="sign__input" placeholder="www.www/...">
+                        <input asp-for="WatchUrl" class="addMovieInput" placeholder="www.www/...">
                         <span asp-validation-for="WatchUrl" class="small text-danger"></span>
                     </div>
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="AgeLimit"></label>
-                        <input asp-for="AgeLimit" class="sign__input" placeholder="18">
+                        <input asp-for="AgeLimit" class="addMovieInput" placeholder="18">
                         <span asp-validation-for="AgeLimit" class="small text-danger"></span>
                     </div>
 
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Country"></label>
-                        <input asp-for="Country" class="sign__input" placeholder="Bulgaria,USA,Germany...">
+                        <input asp-for="Country" class="addMovieInput" placeholder="Bulgaria,USA,Germany...">
                         <span asp-validation-for="Country" class="small text-danger"></span>
                     </div>
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Duration"></label>
-                        <input asp-for="Duration" class="sign__input" placeholder="180">
+                        <input asp-for="Duration" class="addMovieInput" placeholder="180">
                         <span asp-validation-for="Duration" class="small text-danger"></span>
                     </div>
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="GenreId"></label>
-                        <select asp-for="GenreId" class="sign__input">
+                        <select asp-for="GenreId" class="addMovieInput">
                             @foreach (var genre in Model.Genres)
                             {
                                 <option value="@genre.GenreId">@genre.Name</option>
@@ -112,8 +111,8 @@
                     </div>
 
                     <div class="sign__group">
-                        <label class="fontsColor" asp-for="GenreId"></label>
-                        <select asp-for="QualityId" class="sign__input">
+                        <label class="fontsColor" asp-for="QualityId"></label>
+                        <select asp-for="QualityId" class="addMovieInput">
                             @foreach (var quality in Model.Qualities)
                             {
                                 <option value="@quality.QualityId">@quality.Name</option>
@@ -124,14 +123,13 @@
 
                     <div class="sign__group">
                         <label class="fontsColor" asp-for="Descriptions"></label>
-                        <textarea asp-for="Descriptions" rows="3" class="sign__input" placeholder="Descriptions...."></textarea>
+                        <textarea asp-for="Descriptions" rows="5" class="addMovieInput" placeholder="Descriptions...."></textarea>
                         <span asp-validation-for="Descriptions" class="small text-danger"></span>
                     </div>
                     <input class="sign__btn" type="submit" value="Save" />
                 </form>
             </div>
         </div>
-    </div>
 </section>
 
 <script>

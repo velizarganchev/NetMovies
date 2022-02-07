@@ -34,6 +34,7 @@ Primary use:	FlixGo Template
 24. Plyr customization
 25. PhotoSwipe customization
 26. mCustomScrollbar customization
+27. Add Movie
 ----------------------------------------*/
 /*==============================
 	Common styles
@@ -3727,7 +3728,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     position: relative;
     color: #fff;
     font-size: 15px;
-    width: 250px;
+    width: 300px;
     color: #fff;
     -webkit-border-radius: 0;
     border-radius: 0;
@@ -3881,7 +3882,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 @media (min-width: 360px) {
     .sign__input {
-        width: 280px;
+        width: 500px;
     }
 }
 
@@ -4309,4 +4310,38 @@ label {
 .sign__btn:hover {
     opacity: 1;
     color: #fff;
+}
+
+/*Add Movie*/
+
+.addMovieInput {
+    background-color: #2b2b31;
+    border: none;
+    height: 50px;
+    position: relative;
+    color: #fff;
+    font-size: 15px;
+    width: 520px;
+    color: #fff;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    padding: 0 20px;
+    letter-spacing: 0.2px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.register__input {
+    background-color: #2b2b31;
+    border: none;
+    height: 50px;
+    position: relative;
+    color: #fff;
+    font-size: 15px;
+    width: 500px;
+    color: #fff;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    padding: 0 20px;
+    letter-spacing: 0.2px;
+    font-family: 'Open Sans', sans-serif;
 }

@@ -11,24 +11,24 @@
                 <div class="sign__content">
                     <!-- registration form -->
                     <form class="sign__form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                        <a href="index.html" class="sign__logo">
-                            <img src="~/img/logo.svg" alt="">
+                        <a class="sign__logo" asp-controller="Home" asp-action="Index">
+                            <img src="~/img/logo.svg" alt="Logo">
                         </a>
 
-                        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                        <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="sign__group">
                             <input asp-for="Input.Email" type="text" class="sign__input" placeholder="Email">
-                            @*<span asp-validation-for="Input.Email" class="text-danger"></span>*@
+                            <div><span asp-validation-for="Input.Email" class="text-danger" style="color:red"></span></div>
                         </div>
 
                         <div class="sign__group">
                             <input asp-for="Input.Password" type="password" class="sign__input" placeholder="Password">
-                            @*<span asp-validation-for="Input.Password" class="text-danger"></span>*@
+                            <div><span asp-validation-for="Input.Password" class="text-danger" style="color:red"></span></div>
                         </div>
 
                         <div class="sign__group">
                             <input asp-for="Input.ConfirmPassword" type="password" class="sign__input" placeholder="Confirm Password">
-                            @*<span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>*@
+                            <div><span asp-validation-for="Input.ConfirmPassword" class="text-danger" style="color:red"></span></div>
                         </div>
 
                         @*<div class="sign__group sign__group--checkbox">
