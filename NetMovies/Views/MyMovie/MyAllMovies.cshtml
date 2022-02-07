@@ -57,12 +57,21 @@
                                             <li>@movie.Quality</li>
                                             <li>@movie.AgeLimit</li>
                                         </ul>
+
                                     </div>
 
                                     <div class="card__description">
                                         <p>
                                             @movie.Description
                                         </p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div>
+                                        <a asp-controller="MyMovie" asp-action="Edit" asp-route-id="@movie.MovieId" class="btn btn-warning" style="color:yellow">Edit</a>
+                                    </div>
+                                    <div>
+                                        <a asp-controller="MyMovie" asp-action="Delete" asp-route-id="@movie.MovieId" class="btn btn-danger" style="color:red">Delete</a>
                                     </div>
                                 </div>
                             </div>
