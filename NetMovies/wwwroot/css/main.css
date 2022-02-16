@@ -440,7 +440,7 @@ ul {
     z-index: 1;
     -webkit-box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
     box-shadow: 0 5px 25px 0 rgba(0,0,0,0.3);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(255,255,255,0.05); 
 }
 
 .header__search--active {
@@ -3752,7 +3752,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
         position: absolute;
         left: -9999px;
     }
-
+     
         .sign__group--checkbox input:not(:checked) + label,
         .sign__group--checkbox input:checked + label {
             font-size: 14px;

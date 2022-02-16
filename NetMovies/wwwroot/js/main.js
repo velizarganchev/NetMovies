@@ -17,8 +17,8 @@ $(document).ready(function () {
 
 	/*==============================
 	Search
-	==============================*/
-	$('.header__search-btn').on('click', function() {
+	==============================*/ 
+	$('.header__search-btn').on('click', function() { 
 		$(this).toggleClass('active');
 		$('.header__search').toggleClass('header__search--active');
 

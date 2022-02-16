@@ -124,7 +124,7 @@
             return movies;
         }
 
-        public int Create(List<string> directors, string creatorId,
+        public int Create(List<string> directors, string creatorId, 
             string title, int year, string imageUrl, string watchUrl,
             string country, int duration, string descriptions, int genreId, int qualityId, int ageLimit, List<string> actors)
         {
@@ -302,7 +302,7 @@
             return new MovieQueryServiceModel
             {
                 Movies = movies,
-                TotalMovies = movies.Count()
+                TotalMovies = movies.Count
             };
         }
 

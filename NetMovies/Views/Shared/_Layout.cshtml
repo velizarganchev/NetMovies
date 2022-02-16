@@ -103,9 +103,6 @@
                             <!-- end header nav -->
                             <!-- header auth -->
                             <div class="header__auth">
-                                <button class="header__search-btn" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
                                 @if (!SignInManager.IsSignedIn(User))
                                 {
                                     <a asp-area="Identity" asp-page="/Account/Login" class="header__sign-in">
@@ -126,58 +123,9 @@
                 </div>
             </div>
         </div>
-        <!-- header search -->
-        <form action="#" class="header__search">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="header__search-content">
-                            <input type="text"
-                                   placeholder="Search for a movie, TV Series that you are looking for" />
-
-                            <button type="button">search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <!-- end header search -->
     </header>
-    @*<header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm  border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NetMovies</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Add">Add Movie</a>
-                                </li>
-                            }
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Search">Search Movie</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="WatchList" asp-action="MovieList">Watch List</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MyMovie" asp-action="MyAllMovies">My Movies</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="All">Movies</a>
-                            </li>
-                        </ul>
-                        <partial name="_LoginPartial" />
-                    </div>
-                </div>
-            </nav>
-        </header>*@
     <div>
+
         <main>
             @RenderBody()
         </main>
@@ -257,7 +205,7 @@
                             <li><a asp-area="" asp-controller="WatchList" asp-action="MovieList">Watch List</a></li>
                             <li>
                                 <p style="color: #FF5866">
-                                    © 2020 Cinema World. All rights reserved | Design by   
+                                    © 2020 Cinema World. All rights reserved | Design by
                                     <a href="https://www.templateshub.net" style="color:deepskyblue">Templates Hub</a>
                                 </p>
                             </li>

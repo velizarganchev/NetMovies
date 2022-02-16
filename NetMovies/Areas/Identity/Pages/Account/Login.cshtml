@@ -31,11 +31,21 @@
                             <div>
                                 <span asp-validation-for="Input.Password" class="text-danger" style="color: red"></span>
                             </div>
-                            
+
                         </div>
-                        <div class="sign__group sign__group--checkbox">
-                            <input id="remember" name="remember" type="checkbox" checked="checked">
-                            <label for="remember">Remember Me</label>
+                        @*<div class="sign__group">
+                                <div class="sign__group sign__group--checkbox">
+                                    <label asp-for="Input.RememberMe">
+                                        <input asp-for="Input.RememberMe" type="checkbox" />
+                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                    </label>
+                                </div>
+                            </div>*@
+                        <div class="sign__group">
+                            <div class="sign__group sign__group--checkbox">
+                                <input id="remember" name="remember" type="checkbox" checked="checked">
+                                <label for="remember">Remember Me</label>
+                            </div>
                         </div>
                         <button class="sign__btn" type="submit">Sign in</button>
 

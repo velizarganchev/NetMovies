@@ -14,6 +14,7 @@
 
         public IActionResult All([FromQuery] AllMovieQueryModel query)
         {
+
             var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
 
             query.Genres = movies.Genres;
@@ -25,7 +26,8 @@
         }
 
         [Authorize]
-        public IActionResult Add() => View(new MovieFormModel{
+        public IActionResult Add() => View(new MovieFormModel
+        {
             Genres = this.movies.GenreCategories(),
             Qualities = this.movies.Qualities()
         });
@@ -37,7 +39,7 @@
             if (!movies.GenreExists(movie.GenreId))
             {
                 this.ModelState.AddModelError(nameof(movie.GenreId), "Genre does not exist.");
-            }  
+            }
 
             if (!ModelState.IsValid)
             {
@@ -49,8 +51,10 @@
             var directorsList = movies.DirectorsList(movie);
             var actorsList = movies.ActorsList(movie);
 
+
+
             var movieId = this.movies.Create(directorsList, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
-                movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, movie.QualityId, movie.AgeLimit , actorsList);
+                movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, movie.QualityId, movie.AgeLimit, actorsList);
 
             return RedirectToAction(nameof(All));
         }
