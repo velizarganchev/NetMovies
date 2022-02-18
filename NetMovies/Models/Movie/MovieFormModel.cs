@@ -9,52 +9,50 @@
     {
         [Required]
         [StringLength(MovieTitleMaxLenght, MinimumLength = MovieTitleMinLenght)]
-        public string Title { get; init; }
+        public string Title { get; set; }
 
         [Range(MovieYearMinValue, MovieYearMaxValue)]
-        public int Year { get; init; }
+        public int Year { get; set; }
 
         [Display(Name = "Image Url")]
         [Required]
         [Url]
-        public string ImageUrl { get; init; }
+        public string ImageUrl { get; set; }
 
         [Display(Name = "Watch Url")]
         [Required]
         [Url]
-        public string WatchUrl { get; init; }
+        public string WatchUrl { get; set; }
 
         [Required]
         [StringLength(MovieCountryMaxLenght, MinimumLength = MovieCountryMinLenght)]
-        public string Country { get; init; }
+        public string Country { get; set; }
 
         [Required]
-        //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
-        public string Directors { get; init; }
+        public string Directors { get; set; }
 
         [Required]
-        //[RegularExpression(@"^((?:[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+, )*)[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+$")]
-        public string Actors { get; init; }
+        public string Actors { get; set; }
 
         [Range(MovieDurationMinValue, MovieDurationMaxValue)]
-        public int Duration { get; init; }
+        public int Duration { get; set; }
 
         [Display(Name = "Age Limit")]
         public int AgeLimit { get; set; }
 
         [Required]
         [MinLength(MovieDescriptionsMinLenght)]
-        public string Descriptions { get; init; }
+        public string Descriptions { get; set; }
 
         [Display(Name = "Genre")]
         [Required]
-        public int GenreId { get; init; }
+        public int GenreId { get; set; }
 
         public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
 
         [Display(Name = "Quality")]
         [Required]
-        public int QualityId { get; init; }
+        public int QualityId { get; set; }
 
         public IEnumerable<MovieQualityServiceModel> Qualities { get; set; }
     }

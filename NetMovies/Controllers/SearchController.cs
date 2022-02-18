@@ -12,7 +12,7 @@
             this.movies = movies;
         }
 
-        public IActionResult Search([FromQuery] AllMovieQueryModel query)
+        public IActionResult Search(AllMovieQueryModel query)
         {
             var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
 

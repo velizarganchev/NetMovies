@@ -1,7 +1,8 @@
 ﻿namespace NetMovies.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+
     using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
@@ -12,7 +13,7 @@
 
         public MovieController(IMovieService movies) => this.movies = movies;
 
-        public IActionResult All([FromQuery] AllMovieQueryModel query)
+        public IActionResult All(AllMovieQueryModel query)
         {
 
             var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
@@ -53,18 +54,13 @@
 
 
 
-            var movieId = this.movies.Create(directorsList, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
-                movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, movie.QualityId, movie.AgeLimit, actorsList);
+            var movieId = this.movies.Create(directorsList, this.User.Id(), movie, actorsList);
 
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult MovieDetails(int id)
-        {
-            var movie = this.movies.Details(id);
-
-            return View(movie);
-        }
-
+        public IActionResult MovieDetails(int id) => View(this.movies.Details(id));
     }
+
 }
+

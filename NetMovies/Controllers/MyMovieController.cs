@@ -13,7 +13,7 @@
         public MyMovieController(IMovieService movies) => this.movies = movies;
 
         [Authorize]
-        public IActionResult MyAllMovies([FromQuery] AllMovieQueryModel query)
+        public IActionResult MyAllMovies(AllMovieQueryModel query)
         {
             var movies = this.movies.MyMovies(this.User.Id());
             query.Movies = movies.Movies;
@@ -37,7 +37,7 @@
                 Directors = movie.Directors,
                 Actors = movie.Actors,
                 Duration = movie.Duration,
-                Descriptions = movie.Descriptions,
+                Descriptions = movie.Description,
                 GenreId = movie.GenreId,
                 Genres = this.movies.GenreCategories()
             });
@@ -60,14 +60,13 @@
             var directoraList = movies.DirectorsList(movie);
             var actorsList = movies.ActorsList(movie);
 
-            var movieId = this.movies.Edit(id, directoraList, this.User.Id(), movie.Title, movie.Year, movie.ImageUrl,
-                movie.WatchUrl, movie.Country, movie.Duration, movie.Descriptions, movie.GenreId, actorsList);
+            var movieId = this.movies.Edit(id, directoraList, this.User.Id(), movie, actorsList);
 
             return RedirectToAction(nameof(MyAllMovies));
         }
 
 
-        public IActionResult Delete(int id) 
+        public IActionResult Delete(int id)
         {
             var movieForDeletet = this.movies.Delete(id);
 

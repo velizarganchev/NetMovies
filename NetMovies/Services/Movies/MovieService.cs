@@ -124,23 +124,21 @@
             return movies;
         }
 
-        public int Create(List<string> directors, string creatorId, 
-            string title, int year, string imageUrl, string watchUrl,
-            string country, int duration, string descriptions, int genreId, int qualityId, int ageLimit, List<string> actors)
+        public int Create(List<string> directors, string creatorId, MovieFormModel movie, List<string> actors)
         {
             var movieData = new Movie
             {
                 CreatorId = creatorId,
-                Title = title,
-                Year = year,
-                ImageUrl = imageUrl,
-                WatchUrl = watchUrl,
-                Country = country,
-                Duration = duration,
-                AgeLimit = ageLimit,
-                Description = descriptions,
-                GenreId = genreId,
-                QualityId = qualityId,
+                Title = movie.Title,
+                Year = movie.Year,
+                ImageUrl = movie.ImageUrl,
+                WatchUrl = movie.WatchUrl,
+                Country = movie.Country,
+                Duration = movie.Duration,
+                AgeLimit = movie.AgeLimit,
+                Description = movie.Descriptions,
+                GenreId = movie.GenreId,
+                QualityId = movie.QualityId,
                 Rate = 0.0
             };
 
@@ -199,9 +197,7 @@
             return movieData.MovieId;
         }
 
-        public bool Edit(int id, List<string> directors, string creatorId,
-            string title, int year, string imageUrl, string watchUrl,
-            string country, int duration, string descriptions, int genreId, List<string> actors)
+        public bool Edit(int id, List<string> directors, string creatorId, MovieFormModel movie, List<string> actors)
         {
             var movieData = this.data.Movies.Find(id);
 
@@ -225,14 +221,14 @@
                 directorForEdit.FullName = fullName;
             }
 
-            movieData.Title = title;
-            movieData.Year = year;
-            movieData.ImageUrl = imageUrl;
-            movieData.WatchUrl = watchUrl;
-            movieData.Country = country;
-            movieData.Duration = duration;
-            movieData.Description = descriptions;
-            movieData.GenreId = genreId;
+            movieData.Title = movie.Title;
+            movieData.Year = movie.Year;
+            movieData.ImageUrl = movie.ImageUrl;
+            movieData.WatchUrl = movie.WatchUrl;
+            movieData.Country = movie.Country;
+            movieData.Duration = movie.Duration;
+            movieData.Description = movie.Descriptions;
+            movieData.GenreId = movie.GenreId;
 
             foreach (var actor in actors)
             {
@@ -275,6 +271,7 @@
                     Quality = m.Quality.QualityName,
                     CreatorId = m.CreatorId
                 }).FirstOrDefault();
+
             return movie;
         }
 
