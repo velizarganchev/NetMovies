@@ -8,7 +8,7 @@
     public class MovieFormModel
     {
         [Required]
-        [StringLength(100, MinimumLength = 3)]
+        [StringLength(100, MinimumLength = 3 , ErrorMessage = "The field Title must be between 3 and  100 symbols.")]
         public string Title { get; set; }
 
         [Range(1900, 2050)]
@@ -25,7 +25,7 @@
         public string WatchUrl { get; set; }
 
         [Required]
-        [StringLength(50, MinimumLength = 2)]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "The field Country must be between 2 and  50 symbols.")]
         public string Country { get; set; }
 
         [Required]
@@ -47,14 +47,14 @@
 
         [Display(Name = "Genre")]
         [Required]
-        [Range(1, 250)]
+        [Range(1, 50)]
         public int GenreId { get; set; }
 
         public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
 
         [Display(Name = "Quality")]
         [Required]
-        [Range(1, 10)]
+        [Range(1, 6)]
         public int QualityId { get; set; }
 
         public IEnumerable<MovieQualityServiceModel> Qualities { get; set; }
