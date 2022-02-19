@@ -8,10 +8,10 @@
     public class MovieFormModel
     {
         [Required]
-        [StringLength(MovieTitleMaxLenght, MinimumLength = MovieTitleMinLenght)]
+        [StringLength(100, MinimumLength = 3)]
         public string Title { get; set; }
 
-        [Range(MovieYearMinValue, MovieYearMaxValue)]
+        [Range(1900, 2050)]
         public int Year { get; set; }
 
         [Display(Name = "Image Url")]
@@ -25,7 +25,7 @@
         public string WatchUrl { get; set; }
 
         [Required]
-        [StringLength(MovieCountryMaxLenght, MinimumLength = MovieCountryMinLenght)]
+        [StringLength(50, MinimumLength = 2)]
         public string Country { get; set; }
 
         [Required]
@@ -34,24 +34,27 @@
         [Required]
         public string Actors { get; set; }
 
-        [Range(MovieDurationMinValue, MovieDurationMaxValue)]
+        [Range(1, 300)]
         public int Duration { get; set; }
 
         [Display(Name = "Age Limit")]
+        [Range(1, 100)]
         public int AgeLimit { get; set; }
 
         [Required]
-        [MinLength(MovieDescriptionsMinLenght)]
+        [Range(10, 3000)]
         public string Descriptions { get; set; }
 
         [Display(Name = "Genre")]
         [Required]
+        [Range(1, 250)]
         public int GenreId { get; set; }
 
         public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
 
         [Display(Name = "Quality")]
         [Required]
+        [Range(1, 10)]
         public int QualityId { get; set; }
 
         public IEnumerable<MovieQualityServiceModel> Qualities { get; set; }
