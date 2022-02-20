@@ -51,7 +51,7 @@
                 <select asp-for="GenreId" class="addMovieInput">
                     @foreach (var genre in Model.Genres)
                     {
-        <option value="@genre.GenreId">@genre.Name</option>}
+        <option value="@genre.GenreId">@genre.GenreName</option>}
                 </select>
                 <span asp-validation-for="GenreId" class="small text-danger"></span>
             </div>

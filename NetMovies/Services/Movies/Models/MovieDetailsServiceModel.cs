@@ -11,13 +11,10 @@ namespace NetMovies.Services.Movies.Models
 
         public int Duration { get; init; }
 
-        public string Descriptions { get; init; }
-
         public int GenreId { get; init; }
 
         public int QualityId { get; set; }
 
         public string CreatorId { get; set; }
-
     }
 }

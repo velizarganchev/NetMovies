@@ -1,30 +1,33 @@
 ﻿namespace NetMovies.Services.Movies
 {
-    using AutoMapper;
+    using System;
     using System.Linq;
     using System.Collections.Generic;
+
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     using NetMovies.Data;
     using NetMovies.Data.Models;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies.Models;
     using NetMovies.Services.Statistics;
-    using System;
 
     public class MovieService : IMovieService
     {
         private readonly NetMoviesDbContext data;
         private readonly IStatisticService statistics;
-        private readonly IMapper mapper;
+        private readonly IConfigurationProvider mapper;
         public MovieService(
             NetMoviesDbContext data,
-            IStatisticService statistics,
-            IMapper mapper)
+            IStatisticService statistics, IMapper mapper)
         {
             this.data = data;
             this.statistics = statistics;
-            this.mapper = mapper;
+            this.mapper = mapper.ConfigurationProvider;
         }
+
+
 
         public MovieQueryServiceModel Index()
         {
@@ -32,19 +35,7 @@
             .Movies
             .OrderByDescending(m => m.MovieId)
             .Where(m => m.IsDeleted == false)
-            .Select(m => new MovieServiceModel
-            {
-                MovieId = m.MovieId,
-                Title = m.Title,
-                Year = m.Year,
-                ImageUrl = m.ImageUrl,
-                WatchUrl = m.WatchUrl,
-                AgeLimit = m.AgeLimit,
-                Genre = m.Genre.GenreName,
-                Quality = m.Quality.QualityName,
-                Description = m.Description,
-                Country = m.Country
-            })
+            .ProjectTo<MovieServiceModel>(this.mapper)
             .ToList();
 
             var totalStatistics = this.statistics.Total();
@@ -76,19 +67,8 @@
                 .Take(moviesPerPage)
                 .OrderByDescending(m => m.MovieId)
                 .Where(m => m.IsDeleted == false)
-                .Select(m => new MovieServiceModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Quality = m.Quality.QualityName,
-                    Description = m.Description,
-                    Year = m.Year,
-                    AgeLimit = m.AgeLimit,
-                    ImageUrl = m.ImageUrl,
-                    WatchUrl = m.WatchUrl,
-                    Genre = m.Genre.GenreName,
-                    Country = m.Country
-                }).ToList();
+                .ProjectTo<MovieServiceModel>(this.mapper)
+                .ToList();
 
             var totalStatistics = this.statistics.Total();
             var genres = GenreCategories();
@@ -109,15 +89,8 @@
 
             var movies = movisQuery.OrderBy(m => m.MovieId)
                 .Where(m => m.IsDeleted == false)
-                .Select(m => new MovieServiceModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Year = m.Year,
-                    ImageUrl = m.ImageUrl,
-                    Genre = m.Genre.GenreName,
-                    Country = m.Country
-                }).ToList();
+                .ProjectTo<MovieServiceModel>(this.mapper)
+                .ToList();
 
             var totalStatistics = this.statistics.Total();
 
@@ -267,6 +240,7 @@
                     Actors = string.Join(", ", m.MovieActors.Select(ma => ma.Actor.FullName)),
                     Duration = m.Duration,
                     Description = m.Description,
+                    Genre = m.Genre.GenreName,
                     GenreId = m.GenreId,
                     Quality = m.Quality.QualityName,
                     CreatorId = m.CreatorId
@@ -282,19 +256,8 @@
             var movies = moviesQuery
                 .OrderByDescending(m => m.MovieId)
                 .Where(m => m.IsDeleted == false)
-                .Select(m => new MovieServiceModel
-                {
-                    MovieId = m.MovieId,
-                    Title = m.Title,
-                    Genre = m.Genre.GenreName,
-                    Quality = m.Quality.QualityName,
-                    Description = m.Description,
-                    Year = m.Year,
-                    AgeLimit = m.AgeLimit,
-                    ImageUrl = m.ImageUrl,
-                    WatchUrl = m.WatchUrl,
-                    Country = m.Country
-                }).ToList();
+                .ProjectTo<MovieServiceModel>(this.mapper)
+                .ToList();
 
             return new MovieQueryServiceModel
             {
@@ -308,13 +271,7 @@
         public List<string> ActorsList(MovieFormModel movie) => movie.Actors.Split(", ").ToList();
 
         public IEnumerable<MovieGenreServiceModel> GenreCategories()
-        =>
-            data.Genres.Select(g => new MovieGenreServiceModel
-            {
-                GenreId = g.GenreId,
-                Name = g.GenreName
-            })
-            .ToList();
+        => data.Genres.ProjectTo<MovieGenreServiceModel>(this.mapper).ToList();
         public IEnumerable<MovieQualityServiceModel> Qualities()
         =>
             data.Qualities.Select(q => new MovieQualityServiceModel

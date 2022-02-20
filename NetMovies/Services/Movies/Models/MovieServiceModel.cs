@@ -23,6 +23,6 @@
         public string Description { get; set; }
 
         public string Country { get; init; }
+
     }
-    // Замества MovieListingViewModel, да го променя на всякъде
 }

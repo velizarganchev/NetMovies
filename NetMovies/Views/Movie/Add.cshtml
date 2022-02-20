@@ -38,18 +38,22 @@
                     <label class="fontsColor" asp-for="Title">Title</label>
                     <input asp-for="Title" class="addMovieInput" placeholder="Fast & Furious 9,Transformers – Die Rache...">
                     <div>
-                    <span asp-validation-for="Title" class="small text-danger" style="color:red" ></span>
+                        <span asp-validation-for="Title" class="small text-danger" style="color:red"></span>
                     </div>
 
                 </div>
 
+                
+
                 <div class="sign__group">
-                    <label class="fontsColor" for="DirectorFirstName">Director Name</label>
-                    <input type="text" class="addMovieInput" id="DirectorFirstAndLastName" placeholder="First and last name">
-                    
+                    <button type="button" class="addMovieBtn" id="addDirector"><i class="fas fa-plus"></i></button>
+                    <label class="fontsColor" for="DirectorFirstName">Director First Name</label>
+                    <input type="text" class="addMovieInput" id="DirectorFirstName" placeholder="First name">
+
+                    <label class="fontsColor" asp="DirectorLastName">Director Last Name</label>
+                    <input type="text" class="addMovieInput" id="DirectorLastName" placeholder="Last name">
                 </div>
 
-                <button type="button" class="addMovieBtn" id="addDirector"><i class="fas fa-plus"></i></button>
 
                 <div class="sign__group">
                     <label class="fontsColor" asp-for="Directors"></label>
@@ -108,7 +112,7 @@
                     <select asp-for="GenreId" class="addMovieInput">
                         @foreach (var genre in Model.Genres)
                         {
-                            <option value="@genre.GenreId">@genre.Name</option>
+                            <option value="@genre.GenreId">@genre.GenreName</option>
                         }
                     </select>
                     <div><span asp-validation-for="GenreId" class="small text-danger" style="color:red"></span></div>

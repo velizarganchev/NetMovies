@@ -4,6 +4,6 @@
     {
         public int GenreId { get; init; }
 
-        public string Name { get; init; }
+        public string GenreName { get; init; }
     }
 }
