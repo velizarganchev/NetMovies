@@ -30,7 +30,7 @@
         public IActionResult Add() => View(new MovieFormModel
         {
             Genres = this.movies.GenreCategories(),
-            Qualities = this.movies.Qualities()
+            Qualities = this.movies.Qualities() 
         });
 
         [HttpPost]

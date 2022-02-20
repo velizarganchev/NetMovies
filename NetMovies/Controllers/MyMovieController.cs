@@ -37,10 +37,13 @@
                 Directors = movie.Directors,
                 Actors = movie.Actors,
                 Duration = movie.Duration,
+                QualityId = movie.QualityId,
+                Qualities = this.movies.Qualities(),
+                AgeLimit = movie.AgeLimit,
                 Descriptions = movie.Description,
                 GenreId = movie.GenreId,
                 Genres = this.movies.GenreCategories()
-            });
+            }); ;
         }
 
         [Authorize]
@@ -54,6 +57,7 @@
             if (!ModelState.IsValid)
             {
                 movie.Genres = this.movies.GenreCategories();
+                movie.Qualities = this.movies.Qualities();
 
                 return View(movie);
             }

@@ -1,66 +1,99 @@
 ﻿@model MovieFormModel
 
 @{ ViewData["Title"] = "Edit Movie"; }
-<div class="row">
-    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
-        <h2 class="heading-margin text-center">Edit Movie</h2>
 
-        <form method="post" class="sign__form">
-            <div class="form-group">
-                <label asp-for="Title"></label>
-                <input asp-for="Title" class="addMovieInput" placeholder="Fast & Furious 9,Transformers – Die Rache...">
-                <span asp-validation-for="Title" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Directors"></label>
-                <input asp-for="Directors" class="addMovieInput" placeholder="Vin Diesel, Justin Lin...">
-                <span asp-validation-for="Directors" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Actors"></label>
-                <textarea asp-for="Actors" rows="2" class="addMovieInput" placeholder="Dwayne Johnson,Vin Diesel,Jordana Brewster..."></textarea>
-                <span asp-validation-for="Actors" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Year"></label>
-                <input asp-for="Year" class="addMovieInput" placeholder="@DateTime.UtcNow.Year">
-                <span asp-validation-for="Year" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageUrl"></label>
-                <input asp-for="ImageUrl" class="addMovieInput" placeholder="www.www/...">
-                <span asp-validation-for="ImageUrl" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WatchUrl"></label>
-                <input asp-for="WatchUrl" class="addMovieInput" placeholder="www.www/...">
-                <span asp-validation-for="WatchUrl" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Country"></label>
-                <input asp-for="Country" class="addMovieInput" placeholder="Bulgaria,USA,Germany...">
-                <span asp-validation-for="Country" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Duration"></label>
-                <input asp-for="Duration" class="addMovieInput" placeholder="180">
-                <span asp-validation-for="Duration" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GenreId"></label>
-                <select asp-for="GenreId" class="addMovieInput">
-                    @foreach (var genre in Model.Genres)
-                    {
-        <option value="@genre.GenreId">@genre.GenreName</option>}
-                </select>
-                <span asp-validation-for="GenreId" class="small text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descriptions"></label>
-                <textarea asp-for="Descriptions" rows="3" class="addMovieInput" placeholder="Descriptions...."></textarea>
-                <span asp-validation-for="Descriptions" class="small text-danger"></span>
-            </div>
-            <input class="sign__btn" type="submit" value="Save" /> 
-        </form>
+<section class="section">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-2 col-xl-8">
+            <h2 class="heading-margin text-center">Edit Movie</h2>
+
+            <form method="post" class="sign__form">
+                <div class="form-group">
+                    <label asp-for="Title"></label>
+                    <input asp-for="Title" class="addMovieInput" placeholder="Fast & Furious 9,Transformers – Die Rache...">
+                    <div><span asp-validation-for="Title" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Directors"></label>
+                    <input asp-for="Directors" class="addMovieInput" placeholder="Vin Diesel, Justin Lin...">
+                    <span asp-validation-for="Directors" class="small text-danger" style="color:red"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Actors"></label>
+                    <textarea asp-for="Actors" rows="2" class="addMovieInput" placeholder="Dwayne Johnson,Vin Diesel,Jordana Brewster..."></textarea>
+                    <span asp-validation-for="Actors" class="small text-danger" style="color:red"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Year"></label>
+                    <input asp-for="Year" class="addMovieInput" placeholder="@DateTime.UtcNow.Year">
+                    <div><span asp-validation-for="Year" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ImageUrl"></label>
+                    <input asp-for="ImageUrl" class="addMovieInput" placeholder="www.www/...">
+                    <div><span asp-validation-for="ImageUrl" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="WatchUrl"></label>
+                    <input asp-for="WatchUrl" class="addMovieInput" placeholder="www.www/...">
+                    <div><span asp-validation-for="WatchUrl" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="sign__group">
+                    <label class="fontsColor" asp-for="AgeLimit"></label>
+                    <input asp-for="AgeLimit" class="addMovieInput" placeholder="18">
+                    <div><span asp-validation-for="AgeLimit" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Country"></label>
+                    <input asp-for="Country" class="addMovieInput" placeholder="Bulgaria,USA,Germany...">
+                    <div><span asp-validation-for="Country" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Duration"></label>
+                    <input asp-for="Duration" class="addMovieInput" placeholder="180">
+                    <div><span asp-validation-for="Duration" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="GenreId"></label>
+                    <select asp-for="GenreId" class="addMovieInput">
+                        @foreach (var genre in Model.Genres)
+                        {
+                            <option value="@genre.GenreId">@genre.GenreName</option>
+                        }
+                    </select>
+                    <div><span asp-validation-for="GenreId" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="sign__group">
+                    <label class="fontsColor" asp-for="QualityId"></label>
+                    <select asp-for="QualityId" class="addMovieInput">
+                        @foreach (var quality in Model.Qualities)
+                        {
+                            <option value="@quality.QualityId">@quality.Name</option>
+                        }
+                    </select>
+                    <div><span asp-validation-for="QualityId" class="small text-danger" style="color:red"></span></div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Descriptions"></label>
+                    <textarea asp-for="Descriptions" rows="3" class="addMovieInput" placeholder="Descriptions...."></textarea>
+                    <div><span asp-validation-for="Descriptions" class="small text-danger" style="color:red"></span></div>
+                </div>
+                <input class="sign__btn" type="submit" value="Save" />
+            </form>
+        </div>
     </div>
-</div>
+</section>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

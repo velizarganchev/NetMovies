@@ -8,7 +8,7 @@
     public class MovieFormModel
     {
         [Required]
-        [StringLength(100, MinimumLength = 3 , ErrorMessage = "The field Title must be between 3 and  100 symbols.")]
+        [StringLength(150, MinimumLength = 3 , ErrorMessage = "The field Title must be between 3 and  100 symbols.")]
         public string Title { get; set; }
 
         [Range(1900, 2050)]
@@ -42,7 +42,7 @@
         public int AgeLimit { get; set; }
 
         [Required]
-        [Range(10, 3000)]
+        [StringLength(1000, MinimumLength = 3, ErrorMessage = "The field Descriptions must be between 3 and  1000 symbols.")]
         public string Descriptions { get; set; }
 
         [Display(Name = "Genre")]

@@ -90,13 +90,6 @@
                 .ProjectTo<MovieServiceModel>(this.mapper)
                 .ToList();
 
-            //var movies = movisQuery.OrderBy(m => m.MovieId)
-            //    .Where(m => m.IsDeleted == false)
-            //    .ProjectTo<MovieServiceModel>(this.mapper)
-            //    .ToList();
-
-            //var totalStatistics = this.statistics.Total();
-
             return movies;
         }
 
@@ -107,12 +100,6 @@
                 .Where(m => m.IsDeleted == false)
                 .ProjectTo<MovieServiceModel>(this.mapper)
                 .ToList();
-
-            //var movies = moviesQuery
-            //    .OrderByDescending(m => m.MovieId)
-            //    .Where(m => m.IsDeleted == false)
-            //    .ProjectTo<MovieServiceModel>(this.mapper)
-            //    .ToList();
 
             return movies;
         }
@@ -200,17 +187,19 @@
 
             foreach (var directorNames in directors)
             {
-                var fullName = directorNames.Split(" ")[0] + " " + directorNames.Split(" ")[1];
-                var firstName = directorNames.Split(" ")[0];
-                var lastName = directorNames.Split(" ")[1];
+                var currDirector = new Director
+                {
+                    FirstName = directorNames.Split(" ")[0],
+                    LastName = directorNames.Split(" ")[1],
+                    FullName = directorNames.Split(" ")[0] + " " + directorNames.Split(" ")[1],
+                };
 
-                var directorForEdit = this.data.Directors
-                    .Where(d => d.FirstName == firstName || d.LastName == lastName)
-                    .FirstOrDefault();
+                var existDirector = this.data.Directors.FirstOrDefault(x => x.FullName == currDirector.FullName);
 
-                directorForEdit.FirstName = firstName;
-                directorForEdit.LastName = lastName;
-                directorForEdit.FullName = fullName;
+                if (existDirector == null)
+                {
+                    movieData.MovieDirectors.Add(new MovieDirector { Director = currDirector });
+                }
             }
 
             movieData.Title = movie.Title;
@@ -219,25 +208,29 @@
             movieData.WatchUrl = movie.WatchUrl;
             movieData.Country = movie.Country;
             movieData.Duration = movie.Duration;
+            movieData.AgeLimit = movie.AgeLimit; 
             movieData.Description = movie.Descriptions;
             movieData.GenreId = movie.GenreId;
+            movieData.QualityId = movie.QualityId;
+            movieData.Rate = 0.0;
 
             foreach (var actor in actors)
             {
-                var fullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1];
-                var firstName = actor.Split(" ")[0];
-                var lastName = actor.Split(" ")[1];
+                var currActor = new Actor
+                {
+                    FirstName = actor.Split(" ")[0],
+                    LastName = actor.Split(" ")[1],
+                    FullName = actor.Split(" ")[0] + " " + actor.Split(" ")[1],
+                };
 
-                var actorForEdit = this.data.Actors
-                    .Where(a => a.FirstName == firstName || a.LastName == lastName)
-                    .FirstOrDefault();
+                var existActor = this.data.Actors.FirstOrDefault(x => x.FullName == currActor.FullName);
 
-                actorForEdit.FirstName = firstName;
-                actorForEdit.LastName = lastName;
-                actorForEdit.FullName = fullName;
+                if (existActor == null)
+                {
+                    movieData.MovieActors.Add(new MovieActor { Actor = currActor });
+                }
             }
             this.data.SaveChanges();
-
             return true;
         }
 
@@ -262,6 +255,7 @@
                     Genre = m.Genre.GenreName,
                     GenreId = m.GenreId,
                     Quality = m.Quality.QualityName,
+                    QualityId = m.QualityId,
                     CreatorId = m.CreatorId
                 }).FirstOrDefault();
 
