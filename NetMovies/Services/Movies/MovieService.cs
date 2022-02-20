@@ -85,18 +85,37 @@
 
         public IEnumerable<MovieServiceModel> AllApiMovies()
         {
-            var movisQuery = this.data.Movies.AsQueryable();
-
-            var movies = movisQuery.OrderBy(m => m.MovieId)
+            var movies = this.data.Movies.OrderBy(m => m.MovieId)
                 .Where(m => m.IsDeleted == false)
                 .ProjectTo<MovieServiceModel>(this.mapper)
                 .ToList();
 
-            var totalStatistics = this.statistics.Total();
+            //var movies = movisQuery.OrderBy(m => m.MovieId)
+            //    .Where(m => m.IsDeleted == false)
+            //    .ProjectTo<MovieServiceModel>(this.mapper)
+            //    .ToList();
+
+            //var totalStatistics = this.statistics.Total();
 
             return movies;
         }
 
+        public IEnumerable<MovieServiceModel> MyApiMovies(string userId)
+        {
+            var movies = this.data.Movies.Where(m => m.CreatorId == userId)
+                .OrderByDescending(m => m.MovieId)
+                .Where(m => m.IsDeleted == false)
+                .ProjectTo<MovieServiceModel>(this.mapper)
+                .ToList();
+
+            //var movies = moviesQuery
+            //    .OrderByDescending(m => m.MovieId)
+            //    .Where(m => m.IsDeleted == false)
+            //    .ProjectTo<MovieServiceModel>(this.mapper)
+            //    .ToList();
+
+            return movies;
+        }
         public int Create(List<string> directors, string creatorId, MovieFormModel movie, List<string> actors)
         {
             var movieData = new Movie

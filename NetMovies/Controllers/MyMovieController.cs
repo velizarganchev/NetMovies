@@ -15,7 +15,7 @@
         [Authorize]
         public IActionResult MyAllMovies(AllMovieQueryModel query)
         {
-            var movies = this.movies.MyMovies(this.User.Id());
+            var movies = this.movies.MyMovies(this.User.Id()); 
             query.Movies = movies.Movies;
             query.TotalMovies = movies.TotalMovies;
 

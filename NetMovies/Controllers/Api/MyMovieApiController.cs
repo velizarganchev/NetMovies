@@ -1,26 +1,24 @@
 ﻿namespace NetMovies.Controllers.Api
 {
     using Microsoft.AspNetCore.Mvc;
-    using NetMovies.Models.Movie;
+    using NetMovies.Infrastructure.Extensions;
     using NetMovies.Services.Movies;
     using NetMovies.Services.Movies.Models;
     using System.Collections.Generic;
 
     [ApiController]
-    [Route("api/movies")]
-    public class MovieApiController : ControllerBase
+    [Route("api/mymovies")]
+    public class MyMovieApiController : ControllerBase
     {
         private readonly IMovieService movies;
-
-        public MovieApiController(IMovieService movies)
+        public MyMovieApiController(IMovieService movies)
         {
             this.movies = movies;
         }
 
-        [HttpGet]
-        public IEnumerable<MovieServiceModel> AllMovies()
-        {
-            return this.movies.AllApiMovies();
+        public IEnumerable<MovieServiceModel> MyMovies()
+        {          
+            return this.movies.MyApiMovies(this.User.Id());
         }
     }
 }

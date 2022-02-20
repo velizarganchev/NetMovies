@@ -16,6 +16,8 @@
 
         public IEnumerable<MovieServiceModel> AllApiMovies();
 
+        public IEnumerable<MovieServiceModel> MyApiMovies(string userId);
+
         int Create(List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
 
         public bool Edit(int id, List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
