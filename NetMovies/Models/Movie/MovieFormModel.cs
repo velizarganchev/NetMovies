@@ -28,10 +28,12 @@
         [StringLength(50, MinimumLength = 2, ErrorMessage = "The field Country must be between 2 and  50 symbols.")]
         public string Country { get; set; }
 
-        [Required]
+        //[Required]
+        //[StringLength(20, MinimumLength = 2, ErrorMessage = "The field Director must be between 2 and  20 symbols.")]
         public string Directors { get; set; }
 
-        [Required]
+        //[Required]
+        //[StringLength(20, MinimumLength = 2, ErrorMessage = "The field Actor must be between 2 and  20 symbols.")]
         public string Actors { get; set; }
 
         [Range(1, 300)]
