@@ -9,7 +9,7 @@
 
         public int TotalMovies { get; set; }
 
-        public int CurrentPage { get; set; } = 1;
+        public int CurrentPage { get; set; }
         public IEnumerable<MovieGenreServiceModel> Genres { get; set; }
 
         public IEnumerable<MovieQualityServiceModel> Qualities { get; set; }

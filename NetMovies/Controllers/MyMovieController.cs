@@ -13,9 +13,10 @@
         public MyMovieController(IMovieService movies) => this.movies = movies;
 
         [Authorize]
-        public IActionResult MyAllMovies(AllMovieQueryModel query)
+        public IActionResult MyAllMovies(AllMovieQueryModel query, int id = 1)
         {
-            var movies = this.movies.MyMovies(this.User.Id()); 
+            var movies = this.movies.MyMovies(this.User.Id(), query.CurrentPage = id, query.MoviesPerPage);
+
             query.Movies = movies.Movies;
             query.TotalMovies = movies.TotalMovies;
 
@@ -25,7 +26,7 @@
         [Authorize]
         public IActionResult Edit(int id)
         {
-            var movie = movies.Details(id);
+            var movie = this.movies.Details(id);
 
             return View(new MovieFormModel
             {

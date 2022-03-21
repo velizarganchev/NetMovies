@@ -6,11 +6,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700"
           rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet" />
+
     <!-- CSS -->
     <link rel="stylesheet" href="~/css/bootstrap-reboot.min.css" />
     <link rel="stylesheet" href="~/css/bootstrap-grid.min.css" />
@@ -75,12 +77,14 @@
                                         <li><a asp-area="" asp-controller="WatchList" asp-action="MovieList">My List</a></li>
                                     </ul>
                                 </li>
-                                <!-- end dropdown -->
+                                
+                                @if (SignInManager.IsSignedIn(User))
+                                { 
+                                    <li class="header__nav-item">
+                                        <a asp-controller="Home" asp-action="Pricing" class="header__nav-link">Pricing Plan</a>
+                                    </li>
+                                }
 
-                                <li class="header__nav-item">
-                                    <a asp-controller="Home" asp-action="Pricing" class="header__nav-link">Pricing Plan</a>
-                                </li>
-                                <!-- dropdown -->
                                 <li class="dropdown header__nav-item">
                                     <a class="dropdown-toggle header__nav-link header__nav-link--more"
                                        href="#"

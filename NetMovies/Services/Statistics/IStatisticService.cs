@@ -2,6 +2,7 @@
 {
     public interface IStatisticService
     {
-        StatisticServiceModel Total();
+        StatisticServiceModel Total(); 
+        StatisticServiceModel MyTotal(string userId);
     }
 }

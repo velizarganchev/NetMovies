@@ -21,6 +21,6 @@
         [Required]
         public string FullName { get; set; }
 
-        public ICollection<MovieActor> MovieActors { get; set; } = new HashSet<MovieActor>();
+        public ICollection<Movie> MovieActors { get; set; } = new HashSet<Movie>();
     }
 }

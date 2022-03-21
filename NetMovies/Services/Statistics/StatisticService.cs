@@ -22,5 +22,15 @@
                 TotalMovies = totalMovies,
             };
         }
+        public StatisticServiceModel MyTotal(string userId)
+        {
+            var myTotalMovies = this.data.Movies.Where(m => m.CreatorId == userId).Count();
+
+
+            return new StatisticServiceModel
+            {
+                MyTotalMovies = myTotalMovies,
+            };
+        }
     }
 }

@@ -42,47 +42,21 @@
                 </div>
 
                 <div class="sign__group">
-                    <label class="fontsColor" for="DirectorNames">Director Names</label>
-                    <input type="text" class="addMovieInput" id="DirectorNames" placeholder="First and Last Name">
-
-                    <button type="button" class="addMovieBtn" id="addDirector"><i class="fas fa-plus"></i></button>
-                </div>
-
-                <div class="sign__group">
                     <label class="fontsColor" asp-for="Directors"></label>
-                    <textarea asp-for="Directors" class="addMovieInput" rows="3" id="directorTextArea" required disabled></textarea>
-                    <span asp-validation-for="Directors" class="small text-danger"></span>
-                </div>
-
-                <div class="sign__group">
-                    <label class="fontsColor" for="ActorNames">Actor Names</label>
-                    <input type="text" class="addMovieInput" id="ActorNames" placeholder="First and last name">
-
-                    <button type="button" class="addMovieBtn" id="addActor"><i class="fas fa-plus"></i></button>
+                    <textarea asp-for="Directors" class="addMovieInput" rows="3" placeholder="Vin Disel, Will Smith,...." required></textarea>
+                    <div>
+                        <span asp-validation-for="Directors" class="small text-danger" style="color:red"></span>
+                    </div>
                 </div>
 
                 <div class="sign__group">
                     <label class="fontsColor" asp-for="Actors"></label>
-                    <textarea asp-for="Actors" rows="3" class="addMovieInput" id="ActorTextArea" required disabled></textarea>
-                    <span asp-validation-for="Actors" class="small text-danger"></span>
+                    <textarea asp-for="Actors" rows="3" class="addMovieInput" placeholder="Vin Disel, Will Smith,...." required></textarea>
+                    <div>
+                        <span asp-validation-for="Actors" class="small text-danger" style="color:red"></span>
+                    </div>
                 </div>
 
-                @*<div class="field_wrapper_director">
-                        <div>
-                            <label class="fontsColor" asp-for="Directors">Directors</label>
-                            <input class="addDirectorInput" asp-for="Directors" />
-                            <a href="javascript:void(0);" class="add_button_director" title="Add field">Add Director</a>
-                        </div>
-                        <div><span asp-validation-for="Directors" class="small text-danger" style="color:red"></span></div>
-                    </div>
-                    <div class="field_wrapper_actor">
-                        <div>
-                            <label class="fontsColor" asp-for="Actors">Actors</label>
-                            <input class="addDirectorInput" asp-for="Actors" />
-                            <a href="javascript:void(0);" class="add_button_actor" title="Add field">Add Actor</a>
-                        </div>
-                        <div><span asp-validation-for="Actors" class="small text-danger" style="color:red"></span></div>
-                    </div>*@
                 <div class="sign__group">
                     <label class="fontsColor" asp-for="Year"></label>
                     <input asp-for="Year" class="addMovieInput" placeholder="@DateTime.UtcNow.Year">
@@ -91,12 +65,12 @@
 
                 <div class="sign__group">
                     <label class="fontsColor" asp-for="ImageUrl"></label>
-                    <input asp-for="ImageUrl" class="addMovieInput" placeholder="www.www/...">
+                    <input asp-for="ImageUrl" class="addMovieInput" placeholder="www.image..">
                     <div><span asp-validation-for="ImageUrl" class="small text-danger" style="color:red"></span></div>
                 </div>
                 <div class="sign__group">
                     <label class="fontsColor" asp-for="WatchUrl"></label>
-                    <input asp-for="WatchUrl" class="addMovieInput" placeholder="www.www/...">
+                    <input asp-for="WatchUrl" class="addMovieInput" placeholder="www.video...">
                     <div><span asp-validation-for="WatchUrl" class="small text-danger" style="color:red"></span></div>
                 </div>
                 <div class="sign__group">
@@ -150,80 +124,6 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
-<script>
-    let addDirectorButton = document.querySelector('#addDirector');
-    let addActorButton = document.querySelector('#addActor');
-    const directorFullNames = [];
-    const actorFullNames = [];
-
-    let addDirector = addDirectorButton.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        let directorImput = document.querySelector('#DirectorNames');
-        let directorTextArea = document.querySelector('#directorTextArea');
-
-        directorFullNames.push(directorImput.value);
-        let text = directorFullNames.join(" , ");
-        directorTextArea.innerHTML = text;
-        directorImput.value = ``;
-    });
-
-    let addActor = addActorButton.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        let actorImput = document.querySelector('#ActorNames');
-        let actorTextArea = document.querySelector('#ActorTextArea');
-
-        actorFullNames.push(actorImput.value);
-        let text = actorFullNames.join(" , ");
-        actorTextArea.innerHTML = text;
-        actorImput.value = ``;
-    });
-</script>
-
-@*<script type="text/javascript">
-        $(document).ready(function () {
-            var maxField = 10;
-            var addButtonDirector = $('.add_button_director');
-            var wrapperDirector = $('.field_wrapper_director');
-            var fieldHTML = '<div><br /><input class="addDirectorInput" asp-for="Directors"/><a href="javascript:void(0);" class="remove_button">Remove</a></div><div><span asp-validation-for="Directors" class="small text-danger" style="color:red"></span></div>';
-            var x = 1;
-
-            $(addButtonDirector).click(function () {
-                if (x < maxField) {
-                    x++;
-                    $(wrapperDirector).append(fieldHTML);
-                }
-            });
-
-            $(wrapperDirector).on('click', '.remove_button', function (e) {
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-            });
-        });
-        $(document).ready(function () {
-            var maxField = 10;
-            var addButtonActor = $('.add_button_actor');
-            var wrapperActor = $('.field_wrapper_actor');
-            var fieldHTML = '<div><br /><input class="addDirectorInput" asp-for="Actors"/><a href="javascript:void(0);" class="remove_button">Remove</a></div><div><span asp-validation-for="Actors" class="small text-danger" style="color:red"></span></div>';
-            var x = 1;
-
-            $(addButtonActor).click(function () {
-                if (x < maxField) {
-                    x++;
-                    $(wrapperActor).append(fieldHTML);
-                }
-            });
-
-            $(wrapperActor).on('click', '.remove_button', function (e) {
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-            });
-        });
-    </script>*@
 
 
 

@@ -22,9 +22,8 @@
         [Required]
         public string WatchUrl { get; set; }
 
-        [Required]
-        [MaxLength(MovieCountryMaxLenght)]
-        public string Country { get; set; }
+        public int CountryId { get; set; }
+        public Country Country { get; set; }
 
         public int Duration { get; set; }
 
@@ -48,10 +47,9 @@
 
         public bool IsDeleted { get; set; }
 
-        public ICollection<MovieActor> MovieActors { get; set; } = new HashSet<MovieActor>();
+        public ICollection<Director> MovieDirectors { get; set; } = new HashSet<Director>();
 
-        public ICollection<MovieDirector> MovieDirectors { get; set; } = new HashSet<MovieDirector>();
+        public ICollection<Actor> MovieActors { get; set; } = new HashSet<Actor>();
 
-        public ICollection<MovieReview> MovieReviews { get; set; } = new HashSet<MovieReview>();
     }
 }

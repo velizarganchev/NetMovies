@@ -22,6 +22,6 @@
         [MaxLength(DefaultNameMaxLenght)]
         public string FullName { get; set; }
 
-        public ICollection<MovieDirector> MovieDirectors { get; set; } = new HashSet<MovieDirector>();
+        public ICollection<Movie> MovieDirectors { get; set; } = new HashSet<Movie>();
     }
 }

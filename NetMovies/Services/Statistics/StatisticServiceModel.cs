@@ -3,5 +3,6 @@
     public class StatisticServiceModel
     {
         public int TotalMovies { get; set; }
+        public int MyTotalMovies { get; set; }
     }
 }

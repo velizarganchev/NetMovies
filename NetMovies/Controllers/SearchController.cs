@@ -14,7 +14,8 @@
 
         public IActionResult Search(AllMovieQueryModel query)
         {
-            var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
+            const int moviesPerPage = 2;
+            var movies = this.movies.All(query.CurrentPage, moviesPerPage, query.SearchTerm);
 
             query.TotalMovies = movies.TotalMovies;
             query.Movies = movies.Movies;

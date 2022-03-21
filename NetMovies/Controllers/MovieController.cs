@@ -13,10 +13,9 @@
 
         public MovieController(IMovieService movies) => this.movies = movies;
 
-        public IActionResult All(AllMovieQueryModel query)
+        public IActionResult All(AllMovieQueryModel query, int id = 1)
         {
-
-            var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
+            var movies = this.movies.All(query.CurrentPage = id, query.MoviesPerPage, query.SearchTerm);
 
             query.Genres = movies.Genres;
             query.Qualities = movies.Qualities;
@@ -51,8 +50,6 @@
             }
             var directorsList = movies.DirectorsList(movie);
             var actorsList = movies.ActorsList(movie);
-
-
 
             var movieId = this.movies.Create(directorsList, this.User.Id(), movie, actorsList);
 

@@ -19,13 +19,14 @@
 
         public IActionResult Index(AllMovieQueryModel query)
         {
+            const int moviesPerPage = 4;
             if (query.SearchTerm != null)
             {
-                var movies = this.movies.All(query.CurrentPage, AllMovieQueryModel.MoviesPerPage, query.SearchTerm);
+                var movies = this.movies.All(query.CurrentPage, moviesPerPage, query.SearchTerm);
 
                 query.Genres = movies.Genres;
                 query.Qualities = movies.Qualities;
-                query.TotalMovies = movies.TotalMovies;
+                query.TotalMovies = movies.TotalMovies; 
                 query.Movies = movies.Movies;
             }
             else

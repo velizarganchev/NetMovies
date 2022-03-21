@@ -34,6 +34,11 @@
                                         <li>@Model.Year</li>
                                         <li>@Model.Quality</li>
                                         <li>@Model.AgeLimit+</li>
+                                        <li>
+                                            <a onclick="arata_ascunde(this);" id="show_hide_bt">
+                                                <i class="fas fa-plus-circle"></i> Add to my list
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
 
@@ -111,13 +116,30 @@
 <!-- end details -->
 <script>
 
-    let addToMyListButton = document.querySelector('#addToMyList');
+    function arata_ascunde(button) {
+        var x = $('#showhide');
+        $(button).find('i').remove();
+        if ($(button).text().trim() == 'Add to my list') {
+            $(button).html($('<i/>', { class: 'fas fa-minus-circle' })).append(' Remove from my list');
+            x.fadeIn();
+        }
+        else {
+            $(button).html($('<i/>', { class: 'fas fa-plus-circle' })).append(' Add to my list');
+            x.fadeOut();
+        }
+    }
 
-    let addToMyList = addToMyListButton.addEventListener('click', (e) => {
-        e.preventDefault();
+    //function myFunction(x) {
+    //    x.classList.toggle("fa-thumbs-down");
+    //}
 
-        console.log('click');
+    //let addToMyListButton = document.querySelector('#addToMyList');
 
-    });
+    //let addToMyList = addToMyListButton.addEventListener('click', (e) => {
+    //    e.preventDefault();
+
+    //    console.log('click');
+
+    //});
 
 </script>
