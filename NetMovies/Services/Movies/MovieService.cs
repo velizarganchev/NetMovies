@@ -21,7 +21,8 @@
         private readonly IConfigurationProvider mapper;
         public MovieService(
             NetMoviesDbContext data,
-            IStatisticService statistics, IMapper mapper)
+            IStatisticService statistics,
+            IMapper mapper)
         {
             this.data = data;
             this.statistics = statistics;
@@ -353,5 +354,15 @@
             return false;
         }
 
+        public bool AddMovieInMyList(int movieId, AppUsers user)
+        {
+            var addToMLlist = this.data.Movies
+                .Where(x => x.MovieId == movieId)
+                .Include(x => x.Users)
+                .Where(x => x.Users.Any(x => x.Id == user.Id))
+                .FirstOrDefault();
+
+            return false;
+        }
     }
 }

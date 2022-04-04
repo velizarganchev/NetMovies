@@ -12,6 +12,9 @@ namespace NetMovies
     using Infrastructure;
     using Services.Movies;
     using Services.Statistics;
+    using Microsoft.AspNetCore.Mvc;
+    using NetMovies.Data.Models;
+    using NetMovies.Services.Votes;
 
     public class Startup
     {
@@ -29,7 +32,7 @@ namespace NetMovies
                 .AddDatabaseDeveloperPageExceptionFilter();
 
             services
-                .AddDefaultIdentity<IdentityUser>(options =>
+                .AddDefaultIdentity<AppUsers>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequireLowercase = false;
@@ -45,6 +48,7 @@ namespace NetMovies
 
             services.AddTransient<IStatisticService,StatisticService>();
             services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IVotesService, VotesService>();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

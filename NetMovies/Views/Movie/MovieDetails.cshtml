@@ -28,15 +28,14 @@
                         <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-7">
                             <div class="card__content">
                                 <div class="card__wrap">
-                                    <span class="card__rate"><i class="icon ion-ios-star"></i>@Model.Rate</span>
-
+                                    <a onclick="rate()"><span class="card__rate"><i class="icon ion-ios-star"></i></span></a>
                                     <ul class="card__list">
                                         <li>@Model.Year</li>
                                         <li>@Model.Quality</li>
                                         <li>@Model.AgeLimit+</li>
                                         <li>
                                             <a onclick="arata_ascunde(this);" id="show_hide_bt">
-                                                <i class="fas fa-plus-circle"></i> Add to my list
+                                                <i class="fas fa-plus-circle"></i> Add
                                             </a>
                                         </li>
                                     </ul>
@@ -79,7 +78,7 @@
 
                     @*Fallback for browsers that don't support the <video> element*@
                     <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-                </video>
+                </video>              
             </div>
             <!-- end player -->
             <div class="col-12">
@@ -98,7 +97,6 @@
                     <!-- share -->
                     <div class="details__share">
                         <span class="details__share-title">Share with friends:</span>
-
                         <ul class="details__share-list">
                             <li class="facebook"><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
                             <li class="instagram"><a href="#"><i class="icon ion-logo-instagram"></i></a></li>
@@ -114,32 +112,23 @@
     <!-- end details content -->
 </section>
 <!-- end details -->
+
 <script>
+    function rate() {
+        console.log('gedruckt')
+    }
 
     function arata_ascunde(button) {
         var x = $('#showhide');
         $(button).find('i').remove();
-        if ($(button).text().trim() == 'Add to my list') {
-            $(button).html($('<i/>', { class: 'fas fa-minus-circle' })).append(' Remove from my list');
+        if ($(button).text().trim() == 'Add') {
+            $(button).html($('<i/>', { class: 'fas fa-check' })).append(' Remove');
             x.fadeIn();
         }
         else {
-            $(button).html($('<i/>', { class: 'fas fa-plus-circle' })).append(' Add to my list');
+            $(button).html($('<i/>', { class: 'fas fa-plus-circle' })).append(' Add');
             x.fadeOut();
         }
     }
-
-    //function myFunction(x) {
-    //    x.classList.toggle("fa-thumbs-down");
-    //}
-
-    //let addToMyListButton = document.querySelector('#addToMyList');
-
-    //let addToMyList = addToMyListButton.addEventListener('click', (e) => {
-    //    e.preventDefault();
-
-    //    console.log('click');
-
-    //});
 
 </script>

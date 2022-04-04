@@ -1,5 +1,6 @@
 ﻿namespace NetMovies.Data.Models
 {
+    using Microsoft.AspNetCore.Identity;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -46,10 +47,13 @@
         public string CreatorId { get; set; }
 
         public bool IsDeleted { get; set; }
+        public ICollection<AppUsers> Users { get; set; } = new HashSet<AppUsers>();
 
         public ICollection<Director> MovieDirectors { get; set; } = new HashSet<Director>();
 
         public ICollection<Actor> MovieActors { get; set; } = new HashSet<Actor>();
+
+        public ICollection<Vote> Votes { get; set; } = new HashSet<Vote>();
 
     }
 }

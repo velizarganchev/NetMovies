@@ -5,7 +5,7 @@
 
     using Models;
 
-    public class NetMoviesDbContext : IdentityDbContext
+    public class NetMoviesDbContext : IdentityDbContext<AppUsers>
     {
         public NetMoviesDbContext(DbContextOptions<NetMoviesDbContext> options)
             : base(options)
@@ -17,6 +17,7 @@
         public DbSet<Country> Countries { get; init; }
         public DbSet<Genre> Genres { get; init; }
         public DbSet<Quality> Qualities { get; init; }
+        public DbSet<Vote> Votes { get; init; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

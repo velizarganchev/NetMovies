@@ -6,12 +6,22 @@
     using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
+    using Microsoft.AspNetCore.Identity;
+    using System.Threading.Tasks;
+    using NetMovies.Data.Models;
 
     public class MovieController : Controller
     {
         private readonly IMovieService movies;
+        private readonly UserManager<AppUsers> userManager;
 
-        public MovieController(IMovieService movies) => this.movies = movies;
+        public MovieController(
+            IMovieService movies,
+            UserManager<AppUsers> userManager)
+        {
+            this.movies = movies;
+            this.userManager = userManager;
+        }
 
         public IActionResult All(AllMovieQueryModel query, int id = 1)
         {
@@ -57,6 +67,17 @@
         }
 
         public IActionResult MovieDetails(int id) => View(this.movies.Details(id));
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> MovieDetails(MovieMyWatchlistModel model)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            //return this.Json(user);
+            var addMovie = movies.AddMovieInMyList(model.movieId, user);
+            return View();
+        }
     }
 
 }

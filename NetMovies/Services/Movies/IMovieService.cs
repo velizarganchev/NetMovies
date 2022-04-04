@@ -1,7 +1,7 @@
 ﻿namespace NetMovies.Services.Movies
 {
     using System.Collections.Generic;
-
+    using NetMovies.Data.Models;
     using NetMovies.Models.Movie;
     using Services.Movies.Models;
 
@@ -19,6 +19,8 @@
         public IEnumerable<MovieServiceModel> MyApiMovies(string userId);
 
         int Create(List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
+
+        bool AddMovieInMyList(int movieId, AppUsers user);
 
         public bool Edit(int id, List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
 
