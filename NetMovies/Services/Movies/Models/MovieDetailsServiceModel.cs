@@ -18,5 +18,7 @@ namespace NetMovies.Services.Movies.Models
         public int QualityId { get; set; }
 
         public string CreatorId { get; set; }
+
+        public int VotesCount { get; set; }
     }
 }

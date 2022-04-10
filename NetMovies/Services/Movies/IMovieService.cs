@@ -20,13 +20,19 @@
 
         int Create(List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
 
-        bool AddMovieInMyList(int movieId, AppUsers user);
+        string AddUserToMovie(int movieId, AppUsers user);
 
         public bool Edit(int id, List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
 
         public MovieDetailsServiceModel Details(int id);
 
+        public bool Remove(int movieId, string userId);
+
         public MovieQueryServiceModel MyMovies(
+            string userId,
+            int currentPage,
+            int moviesPerPage);
+        public MovieQueryServiceModel MyListMovies(
             string userId,
             int currentPage,
             int moviesPerPage);

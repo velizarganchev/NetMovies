@@ -194,6 +194,9 @@
                 .Include(x => x.MovieActors)
                 .FirstOrDefault();
 
+            movieData.MovieDirectors.Clear();
+            movieData.MovieActors.Clear();
+
             if (movieData == null)
             {
                 return false;
@@ -234,10 +237,6 @@
 
                 if (existDirectorInData != null)
                 {
-                    if (movieData.MovieDirectors.Any(x => x.FullName == currDirector.FullName))
-                    {
-                        continue;
-                    }
                     movieData.MovieDirectors.Add(existDirectorInData);
                 }
                 else
@@ -259,10 +258,6 @@
 
                 if (existActorInData != null)
                 {
-                    if (movieData.MovieActors.Any(x => x.FullName == currActor.FullName))
-                    {
-                        continue;
-                    }
                     movieData.MovieActors.Add(existActorInData);
                 }
                 else
@@ -281,6 +276,7 @@
                 .Where(m => m.IsDeleted == false)
                 .Select(m => new MovieDetailsServiceModel
                 {
+                    MovieId = m.MovieId,
                     Title = m.Title,
                     Year = m.Year,
                     ImageUrl = m.ImageUrl,
@@ -295,7 +291,9 @@
                     GenreId = m.GenreId,
                     Quality = m.Quality.QualityName,
                     QualityId = m.QualityId,
-                    CreatorId = m.CreatorId
+                    CreatorId = m.CreatorId,
+                    VotesCount = m.Votes.Sum(v => (int)v.Type),
+
                 }).FirstOrDefault();
 
             return movie;
@@ -354,15 +352,64 @@
             return false;
         }
 
-        public bool AddMovieInMyList(int movieId, AppUsers user)
+        public bool Remove(int movieId, string userId)
         {
-            var addToMLlist = this.data.Movies
+            var movie = this.data.Movies.Include(x => x.Users).FirstOrDefault(m => m.MovieId == movieId);         
+
+            if (movie != null)
+            {
+                var user = movie.Users.FirstOrDefault(x => x.Id == userId);
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    movie.Users.Remove(user);
+                    this.data.SaveChanges();
+                    return true;
+                }              
+            }
+            return false;
+        }
+
+        public string AddUserToMovie(int movieId, AppUsers user)
+        {
+
+            var movie = this.data.Movies
                 .Where(x => x.MovieId == movieId)
                 .Include(x => x.Users)
-                .Where(x => x.Users.Any(x => x.Id == user.Id))
                 .FirstOrDefault();
 
-            return false;
+            if (movie.Users.Contains(user))
+            {
+                return user.Id;
+            }
+            else
+            {
+                movie.Users.Add(user);
+
+                this.data.SaveChanges();
+                return user.Id;
+            }          
+        }
+
+        public MovieQueryServiceModel MyListMovies(string userId, int currentPage, int moviesPerPage)
+        {
+            var movies = this.data.Movies
+                .Where(x => x.Users.Any(x => x.Id == userId))
+                .Skip((currentPage - 1) * moviesPerPage)
+                .Take(moviesPerPage)
+                .OrderByDescending(m => m.MovieId)
+                .Where(m => m.IsDeleted == false)
+                .ProjectTo<MovieServiceModel>(this.mapper)
+                .ToList();
+
+            return new MovieQueryServiceModel
+            {
+                TotalMovies = movies.Count(),
+                Movies = movies,
+            };
         }
     }
 }

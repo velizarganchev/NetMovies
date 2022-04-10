@@ -20,7 +20,6 @@
                         <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-5">
                             <div class="card__cover">
                                 <img src="@Model.ImageUrl" alt="">
-                                <button class="card__play" id="addToMyList" type="button" style="color:hotpink"><i class="fas fa-hand-point-up fa-3x"></i></button>
                             </div>
                         </div>
                         <!-- end card cover -->
@@ -28,15 +27,16 @@
                         <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-7">
                             <div class="card__content">
                                 <div class="card__wrap">
-                                    <a onclick="rate()"><span class="card__rate"><i class="icon ion-ios-star"></i></span></a>
+                                    <span class="card__rate" id="voteCount">@Model.VotesCount<i class="icon ion-ios-star"></i></span>
                                     <ul class="card__list">
                                         <li>@Model.Year</li>
                                         <li>@Model.Quality</li>
                                         <li>@Model.AgeLimit+</li>
                                         <li>
-                                            <a onclick="arata_ascunde(this);" id="show_hide_bt">
+                                            <button type="button" style="color:hotpink" id="addtoList"
+                                                    onclick="addToMyList(@Model.MovieId)">
                                                 <i class="fas fa-plus-circle"></i> Add
-                                            </a>
+                                            </button>
                                         </li>
                                     </ul>
                                 </div>
@@ -55,6 +55,14 @@
                                 <div class="card__description card__description--details">
                                     @Model.Description
                                 </div>
+                            </div>
+                            <div class="vote">
+                                <button onclick="sendVote(@Model.MovieId, true)" type="button" style="color:hotpink">
+                                    <i class="fa fa-thumbs-up fa-3"></i>
+                                </button>
+                                <button onclick="sendVote(@Model.MovieId, false)" type="button" style="color:hotpink">
+                                    <i class="fa fa-thumbs-down fa-3"></i>
+                                </button>
                             </div>
                         </div>
                         <!-- end card content -->
@@ -78,7 +86,7 @@
 
                     @*Fallback for browsers that don't support the <video> element*@
                     <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-                </video>              
+                </video>
             </div>
             <!-- end player -->
             <div class="col-12">
@@ -114,21 +122,61 @@
 <!-- end details -->
 
 <script>
-    function rate() {
-        console.log('gedruckt')
+
+    function addToMyList(movieId) {
+        $.ajax({
+            url: 'https://localhost:44389/api/mymovies',
+            type: "POST",
+            data: JSON.stringify({ "movieId": movieId }),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data.userId);
+                $('#addtoList').html('<i class= "fas fa-check" ></i> Remove');
+            },
+        });
     }
 
-    function arata_ascunde(button) {
-        var x = $('#showhide');
-        $(button).find('i').remove();
-        if ($(button).text().trim() == 'Add') {
-            $(button).html($('<i/>', { class: 'fas fa-check' })).append(' Remove');
-            x.fadeIn();
-        }
-        else {
-            $(button).html($('<i/>', { class: 'fas fa-plus-circle' })).append(' Add');
-            x.fadeOut();
-        }
+
+    function sendVote(movieId, vote) {
+        $.ajax({
+            url: 'https://localhost:44389/api/votes',
+            type: "POST",
+            data: JSON.stringify({ "movieId": movieId, "isUpVote": vote }),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data) {
+                $('#voteCount').html(data.votesCount + '<i class= "icon ion-ios-star" ></i>');
+            },
+        });
+
+        //fetch("https://localhost:44389/api/votes", {
+        //    method: "post",
+        //    headers: {
+        //        'Accept': 'application/json',
+        //        'Content-Type': 'application/json'
+        //    },
+
+        //    body: JSON.stringify({ "movieId": movieId, "isUpVote": vote })
+        //})
+        //    .then((res) => res.json())
+        //    .then(result => {
+        //        console.log('Success:', result.votesCount);
+        //    });
+
     }
+
+    //function arata_ascunde(button) {
+    //    var x = $('#showhide');
+    //    $(button).find('i').remove();
+    //    if ($(button).text().trim() == 'Add') {
+    //        $(button).html($('<i/>', { class: 'fas fa-check' })).append(' Remove');
+    //        x.fadeIn();
+    //    }
+    //    else {
+    //        $(button).html($('<i/>', { class: 'fas fa-plus-circle' })).append(' Add');
+    //        x.fadeOut();
+    //    }
+    //}
 
 </script>

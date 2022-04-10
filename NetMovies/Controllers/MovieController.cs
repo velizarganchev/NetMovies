@@ -68,16 +68,16 @@
 
         public IActionResult MovieDetails(int id) => View(this.movies.Details(id));
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> MovieDetails(MovieMyWatchlistModel model)
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> MovieDetails(MovieMyWatchlistModel model)
+        //{
+        //    var user = await this.userManager.GetUserAsync(this.User);
 
-            //return this.Json(user);
-            var addMovie = movies.AddMovieInMyList(model.movieId, user);
-            return View();
-        }
+        //    return this.Json(user);
+        //    var addMovie = movies.AddMovieInMyList(model.movieId, user);
+        //    return View();
+        //}
     }
 
 }

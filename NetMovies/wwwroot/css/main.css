@@ -1940,6 +1940,12 @@ ul {
     justify-content: flex-start;
     align-items: center;
 }
+.vote {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+}
 
     .details__devices-list li {
         display: flex;

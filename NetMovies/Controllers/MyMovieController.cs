@@ -21,7 +21,7 @@
             query.TotalMovies = movies.TotalMovies;
 
             return View(query);
-        }
+        }      
 
         [Authorize]
         public IActionResult Edit(int id)
@@ -71,6 +71,7 @@
         }
 
 
+        [Authorize]
         public IActionResult Delete(int id)
         {
             var movieForDeletet = this.movies.Delete(id);
