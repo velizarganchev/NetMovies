@@ -11,7 +11,7 @@
             <div class="col-12">
                 <div class="section__wrap">
                     <!-- section title -->
-                    <h2 class="section__title">Catalog list</h2>
+                    <h2 class="section__title">All Movies</h2>
                     <!-- end section title -->
                     <!-- breadcrumb -->
                     <ul class="breadcrumb">
@@ -79,7 +79,7 @@
                                     </span>
 
                                     <div class="card__wrap">
-                                        <span class="card__rate"><i class="icon ion-ios-star"></i>@movie.Rate</span>
+                                        <span class="card__rate"><i class="icon ion-ios-star"></i>@movie.VotesCount</span>
 
                                         <ul class="card__list">
                                             <li>@movie.Quality</li>
@@ -100,23 +100,7 @@
             }
             <!-- end card -->
             <!-- paginator -->
-            <div class="col-12">
-                <ul class="paginator paginator--list">
-                    <li class="paginator__item paginator__item--prev" style="@(Model.HasPreviosPage ? string.Empty : "pointer-events: none")">
-                        <a asp-controller="Movie"
-                           asp-action="All"
-                           asp-route-Id="@Model.PreviosPageNumber"><i class="icon ion-ios-arrow-back"></i></a>
-                    </li>
-                    <li class="paginator__item paginator__item--active">
-                        <a asp-controller="Movie" asp-action="All" asp-route-Id="@Model.CurrentPage">@Model.CurrentPage</a>
-                    </li>
-                    <li class="paginator__item paginator__item--next" style="@(Model.HasNextPage ? string.Empty : "pointer-events: none")">
-                        <a asp-controller="Movie"
-                           asp-action="All"
-                           asp-route-Id="@Model.NextPageNumber"><i class="icon ion-ios-arrow-forward"></i></a>
-                    </li>
-                </ul>
-            </div>
+            <partial name="_PaginationPartial"/>
             <!-- end paginator -->
         </div>
     </div>

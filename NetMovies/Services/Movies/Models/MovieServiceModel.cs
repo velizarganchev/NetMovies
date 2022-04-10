@@ -14,8 +14,6 @@
 
         public string Genre { get; set; }
 
-        public double Rate { get; set; }
-
         public string Quality { get; set; }
 
         public int AgeLimit { get; set; }
@@ -23,6 +21,8 @@
         public string Description { get; set; }
 
         public string Country { get; init; }
+
+        public int VotesCount { get; set; }
 
     }
 }

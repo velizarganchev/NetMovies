@@ -42,11 +42,17 @@ namespace NetMovies
                 .AddEntityFrameworkStores<NetMoviesDbContext>();
 
             services
-                .AddControllersWithViews();
+                .AddControllersWithViews(options =>
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IStatisticService,StatisticService>();
+            services.AddTransient<IStatisticService, StatisticService>();
             services.AddTransient<IMovieService, MovieService>();
             services.AddTransient<IVotesService, VotesService>();
         }
@@ -69,7 +75,7 @@ namespace NetMovies
                .UseRouting()
                .UseAuthentication()
                .UseAuthorization()
-               .UseEndpoints(endpoints => 
+               .UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();

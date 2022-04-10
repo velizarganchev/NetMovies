@@ -26,11 +26,6 @@
             this.userManager = userManager;
         }
 
-        //public IEnumerable<MovieServiceModel> MyMovies()
-        //{          
-        //    return this.movies.MyApiMovies(this.User.Id());
-        //}
-
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<AddInMyListResponseModel>> Post(AddToMyListInputModel input)

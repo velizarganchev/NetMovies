@@ -27,16 +27,27 @@
                         <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-7">
                             <div class="card__content">
                                 <div class="card__wrap">
-                                    <span class="card__rate" id="voteCount">@Model.VotesCount<i class="icon ion-ios-star"></i></span>
+                                    <span class="card__rate" id="voteCount"><i class="icon ion-ios-star"></i>@Model.VotesCount</span>
                                     <ul class="card__list">
                                         <li>@Model.Year</li>
                                         <li>@Model.Quality</li>
                                         <li>@Model.AgeLimit+</li>
                                         <li>
-                                            <button type="button" style="color:hotpink" id="addtoList"
-                                                    onclick="addToMyList(@Model.MovieId)">
-                                                <i class="fas fa-plus-circle"></i> Add
-                                            </button>
+                                            <form id="addAndVoteBtnForm" method="post"></form>
+                                            @if (!Model.isAddedInMyList)
+                                            {
+                                                <button type="button" style="color:hotpink" id="addBtn"
+                                                        onclick="addToMyList(@Model.MovieId)">
+                                                    <i class="fas fa-plus-circle"></i>
+                                                </button>
+
+                                            }
+                                            else
+                                            {<button type="button" style="color:hotpink" id="RemoveBtn"
+                                                     disabled>
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            }
                                         </li>
                                     </ul>
                                 </div>
@@ -123,60 +134,34 @@
 
 <script>
 
+    var token = $("#addAndVoteBtnForm input[name=__RequestVerificationToken]").val();
+
+
     function addToMyList(movieId) {
         $.ajax({
             url: 'https://localhost:44389/api/mymovies',
             type: "POST",
-            data: JSON.stringify({ "movieId": movieId }),
+            data: JSON.stringify({ "movieId": movieId,}),
             contentType: 'application/json',
             dataType: 'json',
+            headers: {'X-CSRF-TOKEN': token},
             success: function (data) {
-                console.log(data.userId);
-                $('#addtoList').html('<i class= "fas fa-check" ></i> Remove');
+                $('#addBtn').html('<i class= "fas fa-check" ></i>');
             },
         });
     }
-
 
     function sendVote(movieId, vote) {
         $.ajax({
             url: 'https://localhost:44389/api/votes',
             type: "POST",
-            data: JSON.stringify({ "movieId": movieId, "isUpVote": vote }),
+            data: JSON.stringify({ "movieId": movieId, "isUpVote": vote, }),
             contentType: 'application/json',
             dataType: 'json',
+            headers: { 'X-CSRF-TOKEN': token },
             success: function (data) {
-                $('#voteCount').html(data.votesCount + '<i class= "icon ion-ios-star" ></i>');
+                $('#voteCount').html('<i class= "icon ion-ios-star" ></i>' + data.votesCount);
             },
         });
-
-        //fetch("https://localhost:44389/api/votes", {
-        //    method: "post",
-        //    headers: {
-        //        'Accept': 'application/json',
-        //        'Content-Type': 'application/json'
-        //    },
-
-        //    body: JSON.stringify({ "movieId": movieId, "isUpVote": vote })
-        //})
-        //    .then((res) => res.json())
-        //    .then(result => {
-        //        console.log('Success:', result.votesCount);
-        //    });
-
     }
-
-    //function arata_ascunde(button) {
-    //    var x = $('#showhide');
-    //    $(button).find('i').remove();
-    //    if ($(button).text().trim() == 'Add') {
-    //        $(button).html($('<i/>', { class: 'fas fa-check' })).append(' Remove');
-    //        x.fadeIn();
-    //    }
-    //    else {
-    //        $(button).html($('<i/>', { class: 'fas fa-plus-circle' })).append(' Add');
-    //        x.fadeOut();
-    //    }
-    //}
-
 </script>

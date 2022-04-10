@@ -270,7 +270,7 @@
             return true;
         }
 
-        public MovieDetailsServiceModel Details(int id)
+        public MovieDetailsServiceModel Details(int id, string userId)
         {
             var movie = this.data.Movies.Where(m => m.MovieId == id)
                 .Where(m => m.IsDeleted == false)
@@ -293,6 +293,7 @@
                     QualityId = m.QualityId,
                     CreatorId = m.CreatorId,
                     VotesCount = m.Votes.Sum(v => (int)v.Type),
+                    isAddedInMyList = m.Users.Any(x => x.Id == userId),
 
                 }).FirstOrDefault();
 

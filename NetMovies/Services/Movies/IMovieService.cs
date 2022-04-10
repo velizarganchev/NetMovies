@@ -24,7 +24,7 @@
 
         public bool Edit(int id, List<string> directorNames, string creatorId, MovieFormModel movie, List<string> actors);
 
-        public MovieDetailsServiceModel Details(int id);
+        public MovieDetailsServiceModel Details(int id, string userId);
 
         public bool Remove(int movieId, string userId);
 

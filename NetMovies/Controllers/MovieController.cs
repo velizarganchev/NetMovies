@@ -66,7 +66,8 @@
             return RedirectToAction(nameof(All));
         }
 
-        public IActionResult MovieDetails(int id) => View(this.movies.Details(id));
+        [Authorize]
+        public IActionResult MovieDetails(int id) => View(this.movies.Details(id, this.User.Id()));
 
         //[Authorize]
         //[HttpPost]

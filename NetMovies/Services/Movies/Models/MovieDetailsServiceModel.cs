@@ -19,6 +19,6 @@ namespace NetMovies.Services.Movies.Models
 
         public string CreatorId { get; set; }
 
-        public int VotesCount { get; set; }
+        public bool isAddedInMyList { get; set; }
     }
 }
