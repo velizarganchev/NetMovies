@@ -1,6 +1,9 @@
 ﻿@model AllMovieQueryModel
 
-@{ ViewBag.Title = "Watchlist"; }
+@{ ViewBag.Title = "Watchlist";
+    ViewBag.Controller = "WatchList";
+    ViewBag.Action = "MovieList";
+}
 
 
 @if (Model.TotalMovies < 1)
@@ -111,23 +114,7 @@ else
                 }
                 <!-- end card -->
                 <!-- paginator -->
-                <div class="col-12">
-                    <ul class="paginator paginator--list">
-                        <li class="paginator__item paginator__item--prev" style="@(Model.HasPreviosPage ? string.Empty : "pointer-events: none")">
-                            <a asp-controller="WatchList"
-                               asp-action="MovieList"
-                               asp-route-Id="@Model.PreviosPageNumber"><i class="icon ion-ios-arrow-back"></i></a>
-                        </li>
-                        <li class="paginator__item paginator__item--active">
-                            <a asp-controller="WatchList" asp-action="MovieList" asp-route-Id="@Model.CurrentPage">@Model.CurrentPage</a>
-                        </li>
-                        <li class="paginator__item paginator__item--next" style="@(Model.HasNextPage ? string.Empty : "pointer-events: none")">
-                            <a asp-controller="WatchList"
-                               asp-action="MovieList"
-                               asp-route-Id="@Model.NextPageNumber"><i class="icon ion-ios-arrow-forward"></i></a>
-                        </li>
-                    </ul>
-                </div>
+                <partial name="_PaginationPartial" model="@Model" />
                 <!-- end paginator -->
             </div>
         </div>

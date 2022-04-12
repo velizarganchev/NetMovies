@@ -10,8 +10,8 @@ using NetMovies.Data;
 namespace NetMovies.Migrations
 {
     [DbContext(typeof(NetMoviesDbContext))]
-    [Migration("20220404183256_addVotes")]
-    partial class addVotes
+    [Migration("20220410172126_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

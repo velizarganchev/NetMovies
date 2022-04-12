@@ -1,4 +1,5 @@
-﻿@model MovieDetailsServiceModel
+﻿
+@model MovieDetailsServiceModel
 <!-- details -->
 <section class="section details">
     <!-- details background -->
@@ -83,21 +84,7 @@
             <!-- end content -->
             <!-- player -->
             <div class="col-12 col-xl-6">
-                <video controls id="player">
-                    @*Video files*@
-                    <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4" size="576">
-                    <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-720p.mp4" type="video/mp4" size="720">
-                    <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4" type="video/mp4" size="1080">
-                    <source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1440p.mp4" type="video/mp4" size="1440">
-
-                    @*Caption files*@
-                    <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
-                           default>
-                    <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt">
-
-                    @*Fallback for browsers that don't support the <video> element*@
-                    <a href="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" download>Download</a>
-                </video>
+                <video src="https://www.youtube.com/watch?v=JM5joh1n75U" height="200" width="300" title="Iframe Example"></video>
             </div>
             <!-- end player -->
             <div class="col-12">
@@ -131,37 +118,38 @@
     <!-- end details content -->
 </section>
 <!-- end details -->
+@section Scripts{
+    <script>
 
-<script>
-
-    var token = $("#addAndVoteBtnForm input[name=__RequestVerificationToken]").val();
+        var token = $("#addAndVoteBtnForm input[name=__RequestVerificationToken]").val();
 
 
-    function addToMyList(movieId) {
-        $.ajax({
-            url: 'https://localhost:44389/api/mymovies',
-            type: "POST",
-            data: JSON.stringify({ "movieId": movieId,}),
-            contentType: 'application/json',
-            dataType: 'json',
-            headers: {'X-CSRF-TOKEN': token},
-            success: function (data) {
-                $('#addBtn').html('<i class= "fas fa-check" ></i>');
-            },
-        });
-    }
+        function addToMyList(movieId) {
+            $.ajax({
+                url: 'https://localhost:44389/api/mymovies',
+                type: "POST",
+                data: JSON.stringify({ "movieId": movieId, }),
+                contentType: 'application/json',
+                dataType: 'json',
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    $('#addBtn').html('<i class= "fas fa-check" ></i>');
+                },
+            });
+        }
 
-    function sendVote(movieId, vote) {
-        $.ajax({
-            url: 'https://localhost:44389/api/votes',
-            type: "POST",
-            data: JSON.stringify({ "movieId": movieId, "isUpVote": vote, }),
-            contentType: 'application/json',
-            dataType: 'json',
-            headers: { 'X-CSRF-TOKEN': token },
-            success: function (data) {
-                $('#voteCount').html('<i class= "icon ion-ios-star" ></i>' + data.votesCount);
-            },
-        });
-    }
-</script>
+        function sendVote(movieId, vote) {
+            $.ajax({
+                url: 'https://localhost:44389/api/votes',
+                type: "POST",
+                data: JSON.stringify({ "movieId": movieId, "isUpVote": vote, }),
+                contentType: 'application/json',
+                dataType: 'json',
+                headers: { 'X-CSRF-TOKEN': token },
+                success: function (data) {
+                    $('#voteCount').html('<i class= "icon ion-ios-star" ></i>' + data.votesCount);
+                },
+            });
+        }
+    </script>
+}

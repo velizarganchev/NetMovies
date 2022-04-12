@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "All Movies";
+    ViewBag.Controller = "Movie";
+    ViewBag.Action = "All";
 }
 
 <!-- page title -->
@@ -100,7 +102,7 @@
             }
             <!-- end card -->
             <!-- paginator -->
-            <partial name="_PaginationPartial"/>
+            <partial name="_PaginationPartial" model="@Model" />
             <!-- end paginator -->
         </div>
     </div>

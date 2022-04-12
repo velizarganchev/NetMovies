@@ -289,6 +289,30 @@ namespace NetMovies.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AppUsersMovie",
+                columns: table => new
+                {
+                    MoviesMovieId = table.Column<int>(type: "int", nullable: false),
+                    UsersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUsersMovie", x => new { x.MoviesMovieId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_AppUsersMovie_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppUsersMovie_Movies_MoviesMovieId",
+                        column: x => x.MoviesMovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DirectorMovie",
                 columns: table => new
                 {
@@ -312,10 +336,42 @@ namespace NetMovies.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    VoteId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MovieId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => x.VoteId);
+                    table.ForeignKey(
+                        name: "FK_Votes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Votes_Movies_MovieId",
+                        column: x => x.MovieId,
+                        principalTable: "Movies",
+                        principalColumn: "MovieId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ActorMovie_MovieActorsMovieId",
                 table: "ActorMovie",
                 column: "MovieActorsMovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUsersMovie_UsersId",
+                table: "AppUsersMovie",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -375,12 +431,25 @@ namespace NetMovies.Migrations
                 name: "IX_Movies_QualityId",
                 table: "Movies",
                 column: "QualityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_MovieId",
+                table: "Votes",
+                column: "MovieId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_UserId",
+                table: "Votes",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ActorMovie");
+
+            migrationBuilder.DropTable(
+                name: "AppUsersMovie");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -401,16 +470,19 @@ namespace NetMovies.Migrations
                 name: "DirectorMovie");
 
             migrationBuilder.DropTable(
+                name: "Votes");
+
+            migrationBuilder.DropTable(
                 name: "Actors");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Directors");
 
             migrationBuilder.DropTable(
-                name: "Directors");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Movies");
