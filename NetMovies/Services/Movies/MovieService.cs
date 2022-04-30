@@ -187,7 +187,6 @@
 
         public bool Edit(int id, List<string> directors, string creatorId, MovieFormModel movie, List<string> actors)
         {
-            // DEBUG IT !!!!!!!!!!!!!!!!!!!!!!!!!!!
             var movieData = this.data.Movies
                 .Where(x => x.MovieId == id )
                 .Include(x => x.MovieDirectors)

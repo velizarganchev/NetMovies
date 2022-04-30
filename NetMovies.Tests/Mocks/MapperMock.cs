@@ -1,7 +1,7 @@
 ﻿namespace NetMovies.Tests.Mocks
 {
     using AutoMapper;
-    using Moq;
+    using NetMovies.Infrastructure;
 
     public static class MapperMock
     {
@@ -9,12 +9,12 @@
         {
             get
             {
-                var mapperMock = new Mock<IMapper>();
-                mapperMock
-                    .SetupGet(x => x.ConfigurationProvider)
-                    .Returns(Mock.Of<IConfigurationProvider>());
+                var mapperConfiguration = new MapperConfiguration(config =>
+                {
+                    config.AddProfile<MyMappingProfile>();
+                });
 
-                return mapperMock.Object;
+                return new Mapper(mapperConfiguration);
             }
         }
     }
