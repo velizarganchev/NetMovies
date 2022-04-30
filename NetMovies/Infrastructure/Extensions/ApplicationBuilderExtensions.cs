@@ -1,33 +1,45 @@
 ﻿namespace NetMovies.Infrastructure
 {
+    using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.AspNetCore.Identity;
 
     using Data;
     using Data.Models;
+    using static WebConstants;
     public static class ApplicationBuilderExtensions
-    {
+    {       
         public static IApplicationBuilder PrepareDatabase(
             this IApplicationBuilder app)
         {
             using var scopedServices = app.ApplicationServices.CreateScope();
+            var serviceProvider = scopedServices.ServiceProvider;
 
-            var data = scopedServices
-                .ServiceProvider
-                .GetService<NetMoviesDbContext>();
+            MigrateDatabase(serviceProvider);
 
-            data.Database.Migrate();
-
-            SeedGenres(data);
+            SeedGenres(serviceProvider);
+            SeedAdministrator(serviceProvider);
 
             return app;
         }
 
-        private static void SeedGenres(NetMoviesDbContext data)
+        private static void MigrateDatabase(IServiceProvider serviceProvider)
         {
+            var data = serviceProvider
+                .GetRequiredService<NetMoviesDbContext>();
+
+            data.Database.Migrate();
+        }
+        private static void SeedGenres(IServiceProvider serviceProvider)
+        {
+            var data = serviceProvider
+                .GetRequiredService<NetMoviesDbContext>();
+
             if (data.Genres.Any())
             {
                 return;
@@ -79,6 +91,34 @@
                 new Quality { QualityName = "460p" }
             });
             data.SaveChanges();
+        }
+        private static void SeedAdministrator(IServiceProvider serviceProvider)
+        {
+            var userManager = serviceProvider.GetRequiredService<UserManager<AppUsers>>();
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            Task.Run(async () =>
+            {
+                if (await roleManager.RoleExistsAsync(AdministratorRoleName))
+                {
+                    return;
+                }
+
+                var role = new IdentityRole { Name = AdministratorRoleName };
+                await roleManager.CreateAsync(role);
+
+                var user = new AppUsers
+                {
+                    Email = "admin@abv.bg",
+                    UserName = "admin@abv.bg"
+                };
+
+                await userManager.CreateAsync(user, "admin1");
+                await userManager.AddToRoleAsync(user, role.Name);
+            })
+                .GetAwaiter()
+                .GetResult();
+
         }
     }
 }

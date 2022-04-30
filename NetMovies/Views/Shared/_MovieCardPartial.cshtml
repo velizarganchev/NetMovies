@@ -1,0 +1,61 @@
+﻿@foreach (var movie in Model.Movies)
+{
+    <div class="col-6 col-sm-12 col-lg-6">
+        <div class="card card--list">
+            <div class="row">
+                <div class="col-12 col-sm-4">
+                    <div class="card__cover">
+                        <img src="@movie.ImageUrl" alt="">
+                        <a href="@movie.WatchUrl" class="card__play">
+                            <i class="icon ion-ios-play"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <div class="card__content">
+                        <h3 class="card__title"><a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId">@movie.Title</a></h3>
+                        <span class="card__category">
+                            <a href="#">@movie.Genre</a>
+                        </span>
+
+                        <div class="card__wrap">
+                            <span class="card__rate"><i class="icon ion-ios-star"></i>@movie.VotesCount</span>
+
+                            <ul class="card__list">
+                                <li>@movie.Quality</li>
+                                <li>@movie.AgeLimit</li>
+                            </ul>
+
+                        </div>
+
+                        <div class="card__description">
+                            <p>
+                                @movie.Description
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        @if (ViewBag.AllowMovieEdit == true || User.IsInRole(WebConstants.AdministratorRoleName))
+                        {
+                            <div>
+                                <a asp-controller="MyMovie" asp-action="Edit" asp-route-id="@movie.MovieId" class="btn btn-warning" style="color:yellow">Edit</a>
+                            </div>
+                        }
+                        @if (@ViewBag.Controller == "WatchList")
+                        {
+                            <div>
+                                <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-id="@movie.MovieId" class="btn btn-danger" style="color:red">Remove</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <a asp-controller="MyMovie" asp-action="Delete" asp-route-id="@movie.MovieId" class="btn btn-danger" style="color:red">Delete</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

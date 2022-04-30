@@ -47,15 +47,15 @@
                                 {
                                     <li class="header__nav-item">
                                         <a class="dropdown-toggle header__nav-link"
-                                           href="#"
-                                           role="button"
-                                           id="dropdownMenuHome"
-                                           data-toggle="dropdown"
-                                           aria-haspopup="true"
-                                           aria-expanded="false">My Section</a>
+                                       href="#"
+                                       role="button"
+                                       id="dropdownMenuHome"
+                                       data-toggle="dropdown"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">My Section</a>
 
                                         <ul class="dropdown-menu header__dropdown-menu"
-                                            aria-labelledby="dropdownMenuHome">
+                                        aria-labelledby="dropdownMenuHome">
                                             <li><a asp-area="" asp-controller="Movie" asp-action="Add">Add Movie</a></li>
                                             <li><a asp-area="" asp-controller="MyMovie" asp-action="MyAllMovies">My Movies</a></li>
                                         </ul>
@@ -74,18 +74,10 @@
 
                                     <ul class="dropdown-menu header__dropdown-menu"
                                         aria-labelledby="dropdownMenuCatalog">
-                                        <li><a asp-area="" asp-controller="Movie" asp-action="All">Movies</a></li>
+                                        <li><a asp-area="" asp-controller="Movie" asp-action="All">All Movies</a></li>
                                         <li><a asp-area="" asp-controller="WatchList" asp-action="MovieList">My List</a></li>
                                     </ul>
                                 </li>
-                                
-                                @if (SignInManager.IsSignedIn(User))
-                                { 
-                                    <li class="header__nav-item">
-                                        <a asp-controller="Home" asp-action="Pricing" class="header__nav-link">Pricing Plan</a>
-                                    </li>
-                                }
-
                                 <li class="dropdown header__nav-item">
                                     <a class="dropdown-toggle header__nav-link header__nav-link--more"
                                        href="#"
@@ -96,12 +88,14 @@
                                        aria-expanded="false">
                                         <i class="fas fa-grip-horizontal"></i>
                                     </a>
-
                                     <ul class="dropdown-menu header__dropdown-menu"
                                         aria-labelledby="dropdownMenuMore">
                                         <li><a asp-controller="Home" asp-action="About">About</a></li>
-                                        <li><a asp-area="Identity" asp-page="/Account/Login">Sign In</a></li>
-                                        <li><a asp-area="Identity" asp-page="/Account/Register">Sign Up</a></li>
+                                        @if (!SignInManager.IsSignedIn(User))
+                                        {
+                                            <li><a asp-area="Identity" asp-page="/Account/Login">Sign In</a></li>
+                                            <li><a asp-area="Identity" asp-page="/Account/Register">Sign Up</a></li>
+                                        }
                                     </ul>
                                 </li>
                                 <!-- end dropdown -->
@@ -163,7 +157,6 @@
                     <h6 class="footer__title">Resources</h6>
                     <ul class="footer__list">
                         <li><a asp-controller="Home" asp-action="About">About Us</a></li>
-                        <li><a asp-controller="Home" asp-action="Pricing">Pricing Plan</a></li>
                     </ul>
                 </div>
                 <!-- end footer list -->

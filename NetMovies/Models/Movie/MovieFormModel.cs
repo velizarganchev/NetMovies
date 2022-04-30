@@ -29,11 +29,11 @@
         public string Country { get; set; }
 
         [Required]
-        [StringLength(200, MinimumLength = 2, ErrorMessage = "The field Directors must be between 2 and  200 symbols.")]
+        [RegularExpression(@"(([A-Z][a-z]+\s[A-Z][a-z]+)(, )?){1,}", ErrorMessage = "Input must be in the following format: Pesho Peshev, Misho Georgiev")]
         public string Directors { get; set; }
 
         [Required]
-        [StringLength(200, MinimumLength = 2, ErrorMessage = "The field Actors must be between 2 and  200 symbols.")]
+        [RegularExpression(@"(([A-Z][a-z]+\s[A-Z][a-z]+)(, )?){1,}", ErrorMessage = "Input must be in the following format: Pesho Peshev, Misho Georgiev")]
         public string Actors { get; set; }
 
         [Range(1, 300)]

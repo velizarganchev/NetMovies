@@ -2,15 +2,15 @@
     <ul class="paginator paginator--list">
         <li class="paginator__item paginator__item--prev" style="@(Model.HasPreviosPage ? string.Empty : "pointer-events: none")">
             <a asp-controller="@ViewBag.Controller"
-               asp-action="@ViewBag.Action"
+               asp-action="@ViewBag.ActionPagination"
                asp-route-Id="@Model.PreviosPageNumber"><i class="icon ion-ios-arrow-back"></i></a>
         </li>
         <li class="paginator__item paginator__item--active">
-            <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.Action" asp-route-Id="@Model.CurrentPage">@Model.CurrentPage</a>
+            <a asp-controller="@ViewBag.Controller" asp-action="@ViewBag.ActionPagination" asp-route-Id="@Model.CurrentPage">@Model.CurrentPage</a>
         </li>
         <li class="paginator__item paginator__item--next" style="@(Model.HasNextPage ? string.Empty : "pointer-events: none")">
             <a asp-controller="@ViewBag.Controller"
-               asp-action="@ViewBag.Action"
+               asp-action="@ViewBag.ActionPagination"
                asp-route-Id="@Model.NextPageNumber"><i class="icon ion-ios-arrow-forward"></i></a>
         </li>
     </ul>

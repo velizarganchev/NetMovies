@@ -234,7 +234,6 @@ namespace NetMovies.Migrations
                     CountryId = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 10000, nullable: false),
-                    Rate = table.Column<double>(type: "float", nullable: true),
                     AgeLimit = table.Column<int>(type: "int", nullable: false),
                     GenreId = table.Column<int>(type: "int", nullable: false),
                     QualityId = table.Column<int>(type: "int", nullable: false),

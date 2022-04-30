@@ -10,7 +10,7 @@ using NetMovies.Data;
 namespace NetMovies.Migrations
 {
     [DbContext(typeof(NetMoviesDbContext))]
-    [Migration("20220410172126_InitialCreate")]
+    [Migration("20220425194857_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -388,9 +388,6 @@ namespace NetMovies.Migrations
 
                     b.Property<int>("QualityId")
                         .HasColumnType("int");
-
-                    b.Property<double?>("Rate")
-                        .HasColumnType("float");
 
                     b.Property<string>("Title")
                         .IsRequired()

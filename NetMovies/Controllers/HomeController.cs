@@ -44,8 +44,6 @@
             return View(query);
         }
 
-        public IActionResult Pricing() => View();
-
         public IActionResult About() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

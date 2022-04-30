@@ -119,7 +119,6 @@
                 Description = movie.Descriptions,
                 GenreId = movie.GenreId,
                 QualityId = movie.QualityId,
-                Rate = 0.0
             };
 
             var existCountry = data.Countries.FirstOrDefault(x => x.Name == movie.Country);
@@ -188,8 +187,9 @@
 
         public bool Edit(int id, List<string> directors, string creatorId, MovieFormModel movie, List<string> actors)
         {
+            // DEBUG IT !!!!!!!!!!!!!!!!!!!!!!!!!!!
             var movieData = this.data.Movies
-                .Where(x => x.MovieId == id)
+                .Where(x => x.MovieId == id )
                 .Include(x => x.MovieDirectors)
                 .Include(x => x.MovieActors)
                 .FirstOrDefault();
@@ -211,7 +211,6 @@
             movieData.Description = movie.Descriptions;
             movieData.GenreId = movie.GenreId;
             movieData.QualityId = movie.QualityId;
-            movieData.Rate = 0.0;
 
             var existCountry = data.Countries.FirstOrDefault(x => x.Name == movie.Country);
 
@@ -303,10 +302,11 @@
 
         public MovieQueryServiceModel MyMovies(
             string userId,
+            bool isAdmin,
             int currentPage,
             int moviesPerPage)
         {
-            var movies = this.data.Movies.Where(m => m.CreatorId == userId)
+            var movies = this.data.Movies.Where(m => m.CreatorId == userId || isAdmin == true)
                 .Skip((currentPage - 1) * moviesPerPage)
                 .Take(moviesPerPage)
                 .OrderByDescending(m => m.MovieId)
@@ -314,7 +314,7 @@
                 .ProjectTo<MovieServiceModel>(this.mapper)
                 .ToList();
 
-            var totalStatistics = this.statistics.MyTotal(userId);
+            var totalStatistics = this.statistics.MyTotal(userId, isAdmin);
 
             return new MovieQueryServiceModel
             {

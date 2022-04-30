@@ -15,7 +15,7 @@
         [Authorize]
         public IActionResult MyAllMovies(AllMovieQueryModel query, int id = 1)
         {
-            var movies = this.movies.MyMovies(this.User.Id(), query.CurrentPage = id, query.MoviesPerPage);
+            var movies = this.movies.MyMovies(this.User.Id(), this.User.IsAdmin(), query.CurrentPage = id, query.MoviesPerPage);
 
             query.Movies = movies.Movies;
             query.TotalMovies = movies.TotalMovies;
@@ -65,7 +65,7 @@
             var directoraList = movies.DirectorsList(movie);
             var actorsList = movies.ActorsList(movie);
 
-            var movieId = this.movies.Edit(id, directoraList, this.User.Id(), movie, actorsList);
+            var isEdit = this.movies.Edit(id, directoraList, this.User.Id(), movie, actorsList);
 
             return RedirectToAction(nameof(MyAllMovies));
         }

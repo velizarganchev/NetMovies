@@ -30,6 +30,7 @@
 
         public MovieQueryServiceModel MyMovies(
             string userId,
+             bool isAdmin,
             int currentPage,
             int moviesPerPage);
         public MovieQueryServiceModel MyListMovies(

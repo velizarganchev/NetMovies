@@ -7,7 +7,6 @@
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
     using Microsoft.AspNetCore.Identity;
-    using System.Threading.Tasks;
     using NetMovies.Data.Models;
 
     public class MovieController : Controller
@@ -68,18 +67,6 @@
 
         [Authorize]
         public IActionResult MovieDetails(int id) => View(this.movies.Details(id, this.User.Id()));
-
-        //[Authorize]
-        //[HttpPost]
-        //public async Task<IActionResult> MovieDetails(MovieMyWatchlistModel model)
-        //{
-        //    var user = await this.userManager.GetUserAsync(this.User);
-
-        //    return this.Json(user);
-        //    var addMovie = movies.AddMovieInMyList(model.movieId, user);
-        //    return View();
-        //}
     }
-
 }
 

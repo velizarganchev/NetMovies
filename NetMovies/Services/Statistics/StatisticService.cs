@@ -22,9 +22,9 @@
                 TotalMovies = totalMovies,
             };
         }
-        public StatisticServiceModel MyTotal(string userId)
+        public StatisticServiceModel MyTotal(string userId, bool isAdmin)
         {
-            var myTotalMovies = this.data.Movies.Where(m => m.CreatorId == userId).Count();
+            var myTotalMovies = this.data.Movies.Where(m => m.CreatorId == userId || isAdmin == true).Count();
 
 
             return new StatisticServiceModel

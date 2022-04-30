@@ -3,6 +3,6 @@
     public interface IStatisticService
     {
         StatisticServiceModel Total(); 
-        StatisticServiceModel MyTotal(string userId);
+        StatisticServiceModel MyTotal(string userId, bool isAdmin);
     }
 }

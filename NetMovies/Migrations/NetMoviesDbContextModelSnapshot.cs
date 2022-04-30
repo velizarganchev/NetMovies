@@ -387,9 +387,6 @@ namespace NetMovies.Migrations
                     b.Property<int>("QualityId")
                         .HasColumnType("int");
 
-                    b.Property<double?>("Rate")
-                        .HasColumnType("float");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(150)
