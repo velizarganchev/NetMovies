@@ -20,9 +20,6 @@ namespace NetMovies.Controllers.Api
             this.votesService = votesService;
         }
 
-        // Request body {"movieId":1, "isUpVote":true}
-        // Response { "votesCount": 3 }
-
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<VoteResponseModel>> Post(VoteInputModel input)

@@ -14,29 +14,6 @@
     {
 
         [Fact]
-        public void ShoudReturnCorrectMovieQueryServiceModel()
-        {
-            //Arrange
-            using var data = DatabaseMock.Instance;
-
-            data.Movies.AddRange(new[] { new Movie { MovieId = 111,  }, new Movie { MovieId = 112 } });
-            data.SaveChanges();
-         
-            var mapper = MapperMock.Instance;
-
-            var movieService = new MovieService(data, null, mapper);
-
-            //Act
-
-            var result = movieService.Index();
-
-            //Assert
-
-            //Assert.Equal(2, result.Movies.Count());
-        }
-
-
-        [Fact]
         public void ShoudReturnCorrectCategorisCount()
         {
             //Arrange

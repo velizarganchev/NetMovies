@@ -20,7 +20,6 @@
            using var data = DatabaseMock.Instance;
 
 
-            //var movieService = new MovieService();
         }
     }
 }
