@@ -67,7 +67,7 @@
             var movies = movisQuery
                 .Skip((currentPage - 1) * moviesPerPage)
                 .Take(moviesPerPage)
-                .OrderByDescending(m => m.MovieId)
+                .OrderBy(m => m.MovieId)
                 .Where(m => m.IsDeleted == false)
                 .ProjectTo<MovieServiceModel>(this.mapper)
                 .ToList();

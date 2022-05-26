@@ -1,18 +1,18 @@
 namespace NetMovies
 {
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
 
     using Data;
     using Infrastructure;
     using Services.Movies;
     using Services.Statistics;
-    using Microsoft.AspNetCore.Mvc;
     using NetMovies.Data.Models;
     using NetMovies.Services.Votes;
 

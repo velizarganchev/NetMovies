@@ -1,0 +1,31 @@
+[
+
+  {
+    "Title": "The Dark Knight",
+    "Directors": "Christopher Nolan",
+    "Actors": "Christian Bale, Heath Ledger, Liam Neeson, Morgan Freeman",
+    "Year": 2008,
+    "ImageUrl": "https://m.media-amazon.com/images/I/91KkWf50SoL._SL1500_.jpg",
+    "WatchUrl": "https://www.youtube.com/watch?v=_64S_ixM5Ng",
+    "AgeLimit": 16,
+    "Country": "USA",
+    "Duration": 152,
+    "Genre": "Action / Adventure",
+    "Quality": "HD 1080p",
+    "Description": "Gotham City hat viele finstere Gestalten hervorgebracht,doch der Joker ist anders.Mit brillantem Verstand und grotesk geschminktem Gesicht versucht er,Batmans Revier ins Chaos zu stürzen. Dem nihilistischen Clown geht es nicht um Reichtümer oder Macht,er will Anarchie. Und er möchte, dass Gothams Bewohner tatkräftig dabei mithelfen.Deswegen hat er es auf Bezirksstaatsanwalt Harvey Dent abgesehen,einen strahlenden Helden, dessen tadellose Gesinnung der Joker ihm auszutreiben versucht."
+  },
+  {
+    "Title": "Mad Max: Fury Road",
+    "Directors": "George Miller",
+    "Actors": "Tom Hardy, Charlize Theron, Nicholas Hoult, Mel Gibson",
+    "Year": 2015,
+    "ImageUrl": "https://cache.pressmailing.net/thumbnail/story_hires/458b00c0-5c0f-46fa-90a0-34e8135632fb/image.jpg",
+    "WatchUrl": "https://www.youtube.com/watch?v=yBzC7MCl3f8",
+    "AgeLimit": 16,
+    "Country": "USA",
+    "Duration": 123,
+    "Genre": "Action / Adventure",
+    "Quality": "HD 1080p",
+    "Description": "Die beiden Außenseiter Max und Furiosa treffen in einer kargen Wüstenlandschaft aufeinander, als Furiosa und einige Ex-Sklavinnen auf der Flucht sind. Der Warlord Immortan Joe stellt ihnen nach, denn Frauen sind in der postapokalyptischen Welt kostbare Güter. Schwer bewaffnet und in einem zum Panzer umgebauten Sattelschlepper liefern sich die beiden Parteien einen erbitterten Krieg, der sie im rasanten Tempo durch die Wüste jagt."
+  }
+]
