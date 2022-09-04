@@ -9,8 +9,8 @@ using NetMovies.Infrastructure.Extensions;
 
 namespace NetMovies.Controllers.Api
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/votes")]
     public class VotesController : ControllerBase
     {
         private readonly IVotesService votesService;
@@ -22,7 +22,7 @@ namespace NetMovies.Controllers.Api
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<VoteResponseModel>> Post(VoteInputModel input)
+        public async Task<ActionResult<VoteResponseModel>> Votes(VoteInputModel input)
         {
             await this.votesService.VoteAsync(input.MovieId, this.User.Id(), input.isUpVote);
             var votes = this.votesService.GetVotes(input.MovieId);

@@ -27,7 +27,7 @@
         public IActionResult Edit(int id, string userId)
         {
             var movie = this.movies.Details(id, userId);
-
+            
             return View(new MovieFormModel
             {
                 Title = movie.Title,

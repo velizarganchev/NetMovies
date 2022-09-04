@@ -95,7 +95,7 @@
             return movies;
         }
 
-        public IEnumerable<MovieServiceModel> MyApiMovies(string userId)
+        public IEnumerable<MovieServiceModel> MyApiMovies(string userId) 
         {
             var movies = this.data.Movies.Where(m => m.CreatorId == userId)
                 .OrderByDescending(m => m.MovieId)
@@ -106,7 +106,7 @@
             return movies;
         }
         public int Create(List<string> directors, string creatorId, MovieFormModel movie, List<string> actors)
-        {
+        { 
             var movieData = new Movie
             {
                 CreatorId = creatorId,

@@ -12,8 +12,6 @@
     using Data;
     using Data.Models;
     using static WebConstants;
-    using System.IO;
-    using System.Text.Json;
 
     public static class ApplicationBuilderExtensions
     {
@@ -132,12 +130,6 @@
         private static void SeedMovies(IServiceProvider serviceProvider)
         {
             var data = serviceProvider.GetRequiredService<NetMoviesDbContext>();
-
-            //string movieInJson = "MoviesForecast.json";
-            //string jsonString = File.ReadAllText(movieInJson);
-            //Movie movieForCast = JsonSerializer.Deserialize<Movie>(jsonString)!;
-
-            //Console.WriteLine(movieForCast);
 
             if (data.Movies.Any())
             {
