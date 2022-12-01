@@ -4,15 +4,12 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using NetMovies.Data.Models;
-    using NetMovies.Infrastructure.Extensions;
     using NetMovies.Models.Movie;
     using NetMovies.Services.Movies;
-    using NetMovies.Services.Movies.Models;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/mymovies")]
     public class MyMovieApiController : ControllerBase
     {
         private readonly IMovieService movies;
@@ -28,7 +25,7 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult<AddInMyListResponseModel>> Post(AddToMyListInputModel input)
+        public async Task<ActionResult<AddInMyListResponseModel>> MyMovies(AddToMyListInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
 

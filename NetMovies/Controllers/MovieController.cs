@@ -50,7 +50,7 @@
                 this.ModelState.AddModelError(nameof(movie.GenreId), "Genre does not exist.");
             }
 
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
                 movie.Genres = this.movies.GenreCategories();
                 movie.Qualities = this.movies.Qualities();
