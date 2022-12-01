@@ -46,7 +46,7 @@ namespace NetMovies
             services.AddCors(options => options.AddPolicy(name: nameOfSite,
                 policy =>
                 {
-                    policy.WithOrigins("http://velizarg-001-site1.btempurl.com")
+                    policy.WithOrigins("http://velizarg-001-site1.btempurl.com/")
                     .AllowAnyMethod()
                     .AllowAnyHeader();
                 }));
@@ -83,6 +83,7 @@ namespace NetMovies
             app.UseHttpsRedirection()
                .UseStaticFiles()
                .UseRouting()
+               .UseCors(nameOfSite)
                .UseAuthentication()
                .UseAuthorization()
                .UseEndpoints(endpoints =>

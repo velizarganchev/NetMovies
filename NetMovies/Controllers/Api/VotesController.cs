@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using NetMovies.Models.Votes;
 using NetMovies.Services.Votes;
 using NetMovies.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Cors;
 
 namespace NetMovies.Controllers.Api
 {
@@ -21,6 +22,7 @@ namespace NetMovies.Controllers.Api
         }
 
         [Authorize]
+        [EnableCors("nameOfSite")]
         [HttpPost]
         public async Task<ActionResult<VoteResponseModel>> Votes(VoteInputModel input)
         {

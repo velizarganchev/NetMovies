@@ -127,10 +127,9 @@
 
         var token = $("#addAndVoteBtnForm input[name=__RequestVerificationToken]").val();
 
-        //????????????????????????????????????????????????????????????????????????????
         function addToMyList(movieId) {
             $.ajax({
-                url: 'https://localhost:44389/api/mymovieapi',
+                url: 'http://velizarg-001-site1.btempurl.com/api/mymovieapi',
                 type: "POST",
                 data: JSON.stringify({ "movieId": movieId, }),
                 contentType: 'application/json',
@@ -144,7 +143,7 @@
 
         function sendVote(movieId, vote) {
             $.ajax({
-                url: 'https://localhost:44389/api/votes',
+                url: 'http://velizarg-001-site1.btempurl.com/api/votes',
                 type: "POST",
                 data: JSON.stringify({ "movieId": movieId, "isUpVote": vote, }),
                 contentType: 'application/json',
