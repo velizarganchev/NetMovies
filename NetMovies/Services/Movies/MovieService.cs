@@ -113,13 +113,15 @@
                 Title = movie.Title,
                 Year = movie.Year,
                 ImageUrl = movie.ImageUrl,
-                WatchUrl = movie.WatchUrl,
+                WatchUrl = movie.WatchUrl.Substring(movie.WatchUrl.IndexOf("=") + 1),
                 Duration = movie.Duration,
                 AgeLimit = movie.AgeLimit,
                 Description = movie.Descriptions,
                 GenreId = movie.GenreId,
                 QualityId = movie.QualityId,
             };
+
+            
 
             var existCountry = data.Countries.FirstOrDefault(x => x.Name == movie.Country);
 

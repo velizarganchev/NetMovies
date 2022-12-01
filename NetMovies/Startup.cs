@@ -18,6 +18,7 @@ namespace NetMovies
 
     public class Startup
     {
+        readonly string nameOfSite = "NetMovies";
         public Startup(IConfiguration configuration)
             => Configuration = configuration;
 
@@ -41,6 +42,14 @@ namespace NetMovies
                 })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<NetMoviesDbContext>();
+
+            services.AddCors(options => options.AddPolicy(name: nameOfSite,
+                policy =>
+                {
+                    policy.WithOrigins("http://velizarg-001-site1.btempurl.com")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                }));
 
             services
                 .AddControllersWithViews(options =>

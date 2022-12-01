@@ -10,7 +10,7 @@ using NetMovies.Data;
 namespace NetMovies.Migrations
 {
     [DbContext(typeof(NetMoviesDbContext))]
-    [Migration("20220425194857_InitialCreate")]
+    [Migration("20221201145800_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

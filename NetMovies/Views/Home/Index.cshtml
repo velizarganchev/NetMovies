@@ -51,7 +51,7 @@
                                     <div class="col-12 col-sm-4">
                                         <div class="card__cover">
                                             <img src="@movie.ImageUrl" alt="">
-                                            <a href="@movie.WatchUrl" class="card__play">
+                                            <a asp-controller="Movie" asp-action="MovieDetails" asp-route-id="@movie.MovieId" class="card__play">
                                                 <i class="icon ion-ios-play"></i>
                                             </a>
                                         </div>
