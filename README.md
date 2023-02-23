@@ -1,2 +1,2 @@
 # NetMovies
-//velizarg-001-site1.btempurl.com/
+velizarg-001-site1.btempurl.com
